@@ -1,0 +1,662 @@
+@font-face {
+  font-family: 'MetaLight';
+  src:   font-url('MetaWebPro-Light.eot');
+  src:   font-url('MetaWebPro-Light.eot?#iefix') format('embedded-opentype'),
+  font-url('MetaWeb-Normal.svg#MetaNormal') format('svg'),
+  font-url('MetaWebPro-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MetaNormal';
+  src:   font-url('MetaWeb-Normal.eot');
+  src:   font-url('MetaWeb-Normal.eot?#iefix') format('embedded-opentype'),
+  font-url('MetaWeb-Normal.svg#MetaNormal') format('svg'),
+  font-url('MetaWeb-Normal.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MetaMedium';
+  src:   font-url('MetaWeb-Medium.eot');
+  src:   font-url('MetaWeb-Medium.eot?#iefix') format('embedded-opentype'),
+  font-url('MetaWeb-Medium.svg#MetaMedium') format('svg'),
+  font-url('MetaWeb-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MetaBold';
+  src:   font-url('MetaWeb-Bold.eot');
+  src:   font-url('MetaWeb-Bold.eot?#iefix') format('embedded-opentype'),
+  font-url('MetaWeb-Bold.svg#MetaBold') format('svg'),
+  font-url('MetaWeb-Bold.woff') format('woff');
+}
+
+// Core variables and mixins
+//@import "bootstrap/variables";
+@import "ws-variables";
+
+//$screen-xxs:                  520px !default;
+//$screen-xxs-min:              $screen-xxs !default;
+//$carousel-indicator-inverted-active-bg:                $brand-primary !default;
+//$carousel-indicator-inverted-border-color:             $gray-light !default;
+//$screen-xxxs:                  359px !default;
+//$screen-xxxs-min:              $screen-xxxs !default;
+//$font-family-sans-serif-medium:  "MetaMedium", Helvetica, Arial, sans-serif !default;
+//$foreground:             #fff !default;
+
+@import "bootstrap/mixins";
+
+// Reset
+@import "bootstrap/normalize";
+@import "bootstrap/print";
+
+// Core CSS
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+@import "bootstrap/buttons";
+
+// Components
+@import "bootstrap/component-animations";
+@import "bootstrap/glyphicons";
+@import "glyphicons-pro"; //additional glyphicons
+
+.glyphicon-white, .glyphicon-white a {
+  color: #fff;
+}
+
+.glyphicon-yellow, .glyphicon-yellow a {
+  color: $brand-warning;
+}
+
+@import "bootstrap/dropdowns";
+@import "bootstrap/button-groups";
+@import "bootstrap/input-groups";
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+
+@import "triangle";
+
+.navbar-inverse .navbar-nav > li > a {
+  font-size: 19px;
+  &:hover {
+    @include box-shadow(0 6px 12px rgba(0,0,0,.175));
+    z-index: $zindex-popover;
+  }
+  @media (min-width:$screen-md-min) {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+.navbar {
+  border: none;
+  margin-bottom: 22px;
+}
+
+.navbar .nav.ws-angebote {
+  border-left: 1px dashed $brand-primary;
+  .triangle {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 35px 35px 0;
+    border-color: transparent #ec6521 transparent transparent;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+}
+
+@import "bootstrap/breadcrumbs";
+@import "bootstrap/pagination";
+@import "bootstrap/pager";
+@import "bootstrap/labels";
+@import "bootstrap/badges";
+@import "bootstrap/jumbotron";
+@import "bootstrap/thumbnails";
+@import "bootstrap/alerts";
+@import "bootstrap/progress-bars";
+@import "bootstrap/media";
+@import "bootstrap/list-group";
+@import "bootstrap/panels";
+@import "bootstrap/wells";
+@import "bootstrap/close";
+
+// Components w/ JavaScript
+@import "bootstrap/modals";
+@import "bootstrap/tooltip";
+@import "bootstrap/popovers";
+@import "bootstrap/carousel";
+
+#ws-start-carousel {
+  margin-bottom: 30px;
+}
+
+.carousel-inner .item img {
+  @include box-shadow(0 2px 3px rgba(0,0,0,.175));
+}
+
+.carousel-control {
+  background-repeat: no-repeat!important;
+  @media (max-width: $screen-xxs-min) {
+    background-size: 70%;
+  }
+  width: 11%;
+  filter: none!important;
+  &:focus, &:hover {
+    outline: none;
+  }
+  &:focus { @include opacity($carousel-control-opacity); }
+  &:hover { @include opacity(.9); }
+  &.left {
+    background-image: url(../img/slide-left.png);
+    background-position: left center;
+    @media (max-width: $screen-lg-min) {
+      background-position: right center;
+    }
+  }
+  &.right {
+    background-image: url(../img/slide-right.png);
+    background-position: right center;
+    @media (max-width: $screen-lg-min) {
+      background-position: left center;
+    }
+  }
+}
+
+.carousel-indicators {
+  bottom: -45px;
+  li {
+    width:  9px;
+    height: 9px;
+    border: 2px solid $carousel-indicator-inverted-border-color;
+    margin: 2px;
+  }
+  .active {
+    margin: 2px;
+    width:  9px;
+    height: 9px;
+    background-color: $carousel-indicator-inverted-active-bg;
+    border: none;
+  }
+}
+
+.ws-carousel-slides {
+  text-align: center;
+  .carousel-inner {
+    .item { padding-bottom: 5px; }
+    img {
+      @include center-block();
+      border: 5px solid white;
+      border-radius: 3px;
+    }
+  }
+}
+
+.ws-indicator {
+  position: absolute;
+  top: 55%;
+  left: 70%;
+  .ws-indicator-spot {
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    background: $navbar-inverse-bg;
+    border: 5px solid white;
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+    padding: 9px;
+    @media (max-width: $grid-float-breakpoint) {
+      width: 30px;
+      height: 30px;
+      padding: 2px;
+      border: 4px solid white;
+      font-size: 14px;
+    }
+  }
+}
+
+.cssgradients .ws-indicator .ws-indicator-spot {
+  //#gradient > .vertical($gray; $gray-darker);
+}
+
+
+// Utility classes
+@import "bootstrap/utilities";
+@import "bootstrap/responsive-utilities";
+
+body {
+  position: relative; /* For scrollyspy */
+  padding-top: 12px;
+  font-size: 14px;
+}
+
+.brand {
+  display: block;
+  width: 228px;
+  height: 118px;
+  background: url('wohnstore-logo.png');
+  @media (max-width: $grid-float-breakpoint) {
+    width: 198px;
+    height: 102px;
+    background: url('wohnstore-logo-xs.png');
+    float: left;
+  }
+}
+
+.ws-service-list {
+  li {
+    margin-right: 10px;
+    letter-spacing: -0.0006em;
+    @media (max-width: $screen-sm-max) { margin-right: 52px; }
+    i { margin-right: 5px; }
+  }
+  li:last-child {
+    margin-right: 0;
+    padding-right: 0;
+  }
+}
+
+.ws-user-nav ul  {
+  li a {
+    padding:  1px 12px;
+  }
+
+  //li:last-child a { padding-right: 0px; }
+}
+
+#ws-head-mainrow {
+  margin-top: 5px;
+  margin-bottom: 22px;
+  @media (max-width: $screen-md) {margin-top: -24px; }
+}
+.badge {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+  top: -1px;
+}
+
+.price {
+  font-size: 20px;
+}
+//-----------------------------
+//  Search Styles
+//-----------------------------
+
+#search-bar {
+  text-align: center;
+  margin-top: 55px;
+  z-index: 999;
+  .dropdown-menu {
+    text-align: left;
+  }
+  @media (max-width: $screen-md) { padding-top: 41px; }
+  > .show-search {
+    font-size: 25px;
+    line-height: 15px;
+    margin-right: 15px;
+    display: none;
+  }
+  @media (max-width: $grid-float-breakpoint) {
+    float: left;
+    padding-top: 30px;
+  }
+  @media (max-width: $screen-xxs-min) {
+    float: right;
+    padding-top: 56px;
+    padding-left: 0;
+    .searchbox { display:none; }
+    .dropdown-menu {
+      float: left;
+      left: -216px;
+      position: absolute;
+      top: 0;
+    }
+    > .show-search {
+      display: block;
+    }
+  }
+  @media (max-width: $screen-xxxs-min) {
+    padding-top: 10px;
+    padding-right: 22px;
+  }
+}
+
+//-----------------------------
+//  Basket Styles
+//-----------------------------
+
+#ws-cart {
+  text-align: center;
+  margin-top: 72px;
+
+
+  #link-to-cart {
+    @media (max-width: $screen-md) {
+      padding-top: 47px;
+      .basket-title { display: none; }
+    }
+
+    @media (max-width: $screen-xxs-min) {
+      padding-top: 83px;
+      a { margin-right: 15px!important; }
+      .basket-title {
+        display:none;
+      }
+    }
+
+    > a {
+      @include center-block();
+      font-size: $font-size-large;
+      font-family: $font-family-sans-serif-medium;
+      .icon-basket {
+        background: asset-url('ws-sprite.png');
+        background-position: -64px -16px;
+        width: 31px;
+        height: 27px;
+        position: relative;
+        top: -8px;
+        margin-right: 4px;
+        display: inline-block;
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1;
+        font-size: 14px;
+        padding-left: 4px;
+      }
+      span {
+        z-index: $zindex-tooltip;
+        position: relative;
+      }
+      .basket-size {
+        position: relative;
+      }
+    }
+  }
+
+
+  #minicart {
+    margin-top: -45px;
+    padding-top: 50px;
+    #minicart-items {
+      list-style: none outside none;
+      padding-left: 0;
+      padding-bottom: 20px;
+      width: 100%;
+      .ws-cart-item {
+        text-align:left;
+        margin-bottom: 10px;
+        .ws-cart-image { margin-right: 10px; }
+        .ws-cart-title { display: block; }
+        .ws-cart-amount { display: block; font-size: 12px; }
+        .ws-cart-remove {
+          @extend .pull-right;
+          margin-top: -20px;
+          color: $gray-light;
+          padding: 0;
+          clear: none;
+        }
+      }
+    }
+
+    @media (max-width: $grid-float-breakpoint) {
+      padding-top: 57px;
+      > a { @extend .pull-right; }
+      .dropdown-menu {
+        position: relative;
+        margin-top: 15px!important;
+        padding-top: 15px!important;
+      }
+    }
+
+    #minicart-footer {
+      background: asset-url('zigzag.png') repeat-x left bottom transparent;
+      margin-bottom: -9px;
+      padding-bottom: 20px;
+    }
+  }
+}
+
+
+.ws-social {
+  @extend .pull-right;
+  margin-top: -16px;
+  li {
+    background: url(../img/social-media.png);
+    width: 36px;
+    height: 36px;
+    @include hide-text();
+    margin-right: 5px;
+  }
+  .ws-facebook {background-position: 0 0; }
+  .ws-twitter {background-position: 36px 0; }
+  .ws-feed {background-position: 76px 0; }
+
+}
+
+//-----------------------------
+//  Footer Styles
+//-----------------------------
+
+.ws-footer {
+  padding-bottom: 25px;
+  margin-top: 25px;
+  background: #ede4da;
+  border-top: $navbar-height solid $navbar-inverse-bg;
+  a {
+    color: $navbar-inverse-bg;
+  }
+
+  .ws-footer-toprow {
+    margin-top: -41px;
+    color: $navbar-inverse-link-color;
+  }
+  .ws-footer-mainrow {
+    margin-top: 25px;
+    h3 {
+      margin-bottom: 25px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        padding-left: 25px;
+        margin-bottom: 8px;
+        span {
+          margin-left: -28px;
+          float: left;
+        }
+      }
+    }
+  }
+
+  .ws-font-catch {
+    font-size: 20px;
+    @media (max-width: $screen-md-min) {
+      font-size: 16px;
+    }
+    span {
+      font-size: 24px;
+      font-family: MetaMedium;
+      @media (max-width: $screen-md-min) {
+        font-size: 20px;
+      }
+    }
+  }
+}
+//-----------------------------
+//  Service-List Styles
+//-----------------------------
+
+.ws-service-list-group {
+
+  .list-group-item {
+    border-width: 0 0 2px 0;
+    padding: 20px 15px;
+  }
+
+  .list-group-item:last-child { border: none; }
+
+  i {
+    margin-top: 10px;
+    font-size: 45px;
+    color: $brand-primary;
+  }
+
+  @media (max-width: $screen-lg-min) {
+    .list-group-item-heading {
+      font-size: 15px;
+    }
+    i {
+      font-size: 35px;
+    }
+  }
+
+}
+
+
+//-----------------------------
+//  Megadrop Styles
+//-----------------------------
+
+.megadrop {
+
+  .ws-megadrop-content {
+    padding: 0 25px 15px;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        line-height: 1.8em;
+        color: $gray-light;
+      }
+    }
+  }
+
+  .ws-navbar-heading {
+    text-transform: uppercase;
+    font-family: MetaBold;
+    font-size: 15px;
+    display: block;
+    margin: 20px 0 10px;
+  }
+
+  // reset positions
+  .nav, .collapse, .dropup, .dropdown {
+    position: static;
+  }
+
+  // propagate menu position under container for fw navbars
+  .container {
+    position: relative;
+  }
+
+  // by default aligns menu to left
+  .dropdown-menu {
+    left: auto;
+    border-top: none;
+  }
+  // ensure a good position
+  .nav.navbar-right .dropdown-menu {
+    left: auto;
+    right: 0;
+  }
+
+  // Content with padding
+  .megadrop-content {
+    padding: 20px 30px;
+  }
+
+  // Fullwidth menu
+  .dropdown.megadrop-fw .dropdown-menu {
+    left: 0; right: 0;
+    @include box-shadow(0 3px 12px rgba(0,0,0,.175));
+    padding-top: 0;
+  }
+
+}
+
+//-----------------------------
+//  Product Block Styles
+//-----------------------------
+
+.ws-product {
+  background-color: $foreground;
+  @include box-shadow(0 2px 3px rgba(0,0,0,.175));
+  @include border-bottom-radius(3px);
+  margin-bottom: 35px;
+  h3 {
+    @media (max-width: $screen-lg-min) { font-size: $font-size-h4; }
+    @media (max-width: $screen-md-min) { font-size: $font-size-h3; }
+
+  }
+  .description {
+
+  }
+  hr {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .test {
+    height: 95px;
+    overflow: hidden;
+  }
+  .rating{
+    text-align: right;
+    color: $gray-light;
+  }
+  .availability {
+    margin-bottom: 10px;
+    span {
+      margin-right: 8px;
+    }
+  }
+  .image {
+    height: 168px;
+    overflow: hidden;
+    position: relative;
+    .arrow {
+      @include cssTriangle(12px, $foreground, top);
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+    }
+    @include border-top-radius(3px);
+    img {
+      width: 100%;
+      @media (max-width: $screen-lg-min) { width: 125%; }
+    }
+  }
+}
+
+
+//-----------------------------
+//  Popover
+//-----------------------------
+
+.popover-title {
+  margin: 0; // reset heading margin
+  padding: 14px 14px 8px 14px;
+  background-color: rgba(255,255,255,0.4);
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+  font-family: $font-family-sans-serif-medium;
+}
+
+//-----------------------------
+//  Alerts
+//-----------------------------
+.alert-error, .alert-registration_error { @extend .alert-danger; }
+.alert-alert { @extend .alert-info; }
+.alert-notice { @extend .alert-success; }
+
+
+
+//-----------------------------
+//  Spree Styles
+//-----------------------------
