@@ -2,14 +2,30 @@
 
   <header id="header" data-hook>
     <div class="container">
-        <figure id="logo" class="col-md-4" data-hook>
+      <div id="ws-head-toprow" class="row">
+        <%= render :partial => 'spree/shared/services' %>
+        <%= render :partial => 'spree/shared/user_nav' %>
+      </div>
+
+      <div id="ws-head-mainrow" class="row">
+        <div id="logo" class="col-sm-4 col-md-3" data-hook>
           <%= logo %>
-        </figure>
-        <%= render :partial => 'spree/shared/nav_bar' %>
+        </div>
+
+        <div id="search-bar" class="col-sm-5" data-hook>
+          <%= render :partial => 'spree/shared/search' %>
+        </div>
+
+        <div id="ws-cart" class="col-sm-3 col-md-offset-1">
+          <div id="link-to-cart" data-hook><%= link_to_cart %></div>
+        </div>
+      </div>
+
+      <%#= render :partial => 'spree/shared/nav_bar' %>
+      <div id="ws-head-navrow">
+        <%= render :partial => 'spree/shared/main_nav_bar' if store_menu? %>
+      </div>
+
     </div>
   </header>
-  <div class="container">
-    <%= render :partial => 'spree/shared/main_nav_bar' if store_menu? %>
-  </div>
-
 </div>

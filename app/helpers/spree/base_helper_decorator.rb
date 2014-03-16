@@ -1,19 +1,20 @@
 Spree::BaseHelper.module_eval do
   def link_to_cart(text = nil)
-    return "" if current_spree_page?(spree.cart_path)
+    #return "" if current_spree_page?(spree.cart_path) #minicart needs the cart link on all pages
 
     text = text ? h(text) : Spree.t('cart')
     css_class = nil
 
+    #<span class='amount'>#{current_order.display_total.to_html}</span>
     if current_order.nil? or current_order.item_count.zero?
-      text = "<span class='glyphicon glyphicon-shopping-cart'></span> #{text}: (#{Spree.t('empty')})".html_safe
+      text = "<span class='icon-basket'>0</span> <span class='basket-title'>#{text}</span>".html_safe
       css_class = 'empty'
     else
-      text = "<span class='glyphicon glyphicon-shopping-cart'></span> #{text}: (#{current_order.item_count})  <span class='amount'>#{current_order.display_total.to_html}</span>".html_safe
+      text = "<span class='icon-basket'>#{current_order.item_count}</span> <span class='basket-title'>#{text}</span>".html_safe
       css_class = 'full'
     end
 
-    link_to text, spree.cart_path, :class => "cart-info #{css_class}"
+    link_to text, spree.cart_path, :class => "cart-info #{css_class}"#, :data => {:toggle => 'dropdown'}
   end
 
   def flash_messages(opts = {})
@@ -54,4 +55,19 @@ Spree::BaseHelper.module_eval do
     crumb_list = content_tag(:ol, raw(crumbs.flatten.map{|li| li.mb_chars}.join), class: 'breadcrumb')
     content_tag(:nav, crumb_list, id: 'breadcrumbs', class: 'col-md-12')
   end
+
+  def get_categories(opts = {})
+    exclude = Array(opts[:not])
+    Spree::Taxonomy.find_by(name: 'Kategorien').root.children.order(:position).reject { |taxon| exclude.include? taxon.name }
+  end
+
+  def link_to_wishlist
+    if spree_current_user
+      #TODO Wishlist Size Bdge is onlly form first/default list either allow only one list or count all or remove badge!
+      wishlist_length = spree_current_user.wishlist.wished_products.length
+      text = "Merkliste <span class='badge'>#{wishlist_length}</span>".html_safe
+      link_to text, spree.wishlists_path
+    end
+  end
+
 end

@@ -1,10 +1,19 @@
-<nav class="col-md-12">
-  <div id="main-nav-bar" class="navbar">
+<nav class="navbar navbar-inverse megadrop collapse navbar-collapse bs-navbar-collapse">
+  <div id="main-nav-bar">
     <ul class="nav navbar-nav" data-hook>
-      <li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>
+      <!--li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>-->
+      <% get_categories({not: %w(Angebote Sale)}).each do |category| %>
+          <li class="dropdown megadrop-fw"><a href="<%= category.permalink %>"><%= category.name %></a></li>
+      <% end %>
     </ul>
-    <ul class="nav navbar-nav navbar-right" data-hook>
+
+    <ul class="nav navbar-nav navbar-right ws-angebote">
+      <li class="dropdown megadrop-fw">
+        <a href="../about" class="dropdown-toggle" data-hover="dropdown">Angebote</a>
+      </li>
+    </ul>
+    <!--<ul class="nav navbar-nav navbar-right" data-hook>
       <li id="link-to-cart" data-hook><%= link_to_cart %></li>
-    </ul>
+    </ul>-->
   </div>
 </nav>
