@@ -1,10 +1,48 @@
 <div id="spree-footer">
-	<div class="container">
-		<footer id="footer" class="row" data-hook>
-		  <div id="footer-left" class="col-md-6" data-hook>
-		    <p><%= Spree.t :powered_by  %>&nbsp;<%= link_to 'Spree', 'http://spreecommerce.com/' %></p>
-		  </div>
-		  <div id="footer-right" class="col-md-6" data-hook></div>
-		</footer>
-	</div>
+<footer id="footer" class="ws-footer" data-hook>
+  <div class="container">
+    <div class="row ws-footer-toprow">
+      <div id="footer-left" class="col-xs-9" data-hook>
+        <span class="ws-font-catch">Fragen? Rufen Sie unsere WohnStore-Profis an: <span>0 41 32 / 999 39 00</span></span>
+      </div>
+      <div id="footer-right" class="col-xs-3">
+        <ul class="ws-social list-inline">
+          <li class="ws-facebook">facebook</li>
+          <li class="ws-twitter">twitter</li>
+          <li class="ws-feed">feed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row ws-footer-mainrow">
+      <div id="footer-first" class="col-sm-3" data-hook>
+        <h3>Service</h3>
+      </div>
+      <div id="footer-second" class="col-sm-3" data-hook>
+        <h3>meinWohnStore</h3>
+      </div>
+      <div id="footer-third" class="col-sm-3" data-hook>
+        <h3>Zahlungsarten</h3>
+        <ul>
+          <% Spree::PaymentMethod.available(:front_end).each do |pm| %>
+            <li><span class="glyphicon glyphicon-chevron-right"></span><a href="#"><%= pm.name %></a></li>
+          <% end %>
+        </ul>
+      </div>
+      <div id="footer-fourth" class="col-sm-3" data-hook>
+        <h3>Newsletter</h3>
+        <p>Unsere aktuellen Angebote und Empfehlungen per E-Mail</p>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Ihre E-Mail-Adresse">
+              <span class="input-group-btn">
+                <button class="btn btn-default btn-primary" type="button">
+                  <span class="visible-lg">Anmelden</span>
+                  <span class="hidden-lg"><span class="glyphicon glyphicon-chevron-right"></span></span>
+                </button>
+              </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
 </div>
