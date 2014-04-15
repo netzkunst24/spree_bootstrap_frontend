@@ -1,0 +1,10 @@
+<% if defined? edit_enabled
+     state = ""
+     name = "review[rating]"
+   else
+     state = 'disabled'
+     name = defined?(review).nil? ? Time.now.tv_usec.to_s : "review_#{review}"
+   end %>
+<% (1..NB_STARS).each_with_index do |i|%>
+    <span class="glyphicon <%= 'glyphicon-yellow' if i <= stars %> glyphicon-star"></span>
+<% end %>

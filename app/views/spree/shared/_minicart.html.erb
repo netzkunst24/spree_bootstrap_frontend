@@ -10,14 +10,6 @@
 
   <% else %>
     <div data-hook="outside_minicart_form">
-
-      <div id="minicart-details" data-hook="minicart_details" class="clearfix">
-        <p>
-          <span><%= Spree.t(:subtotal) %>: <span class="order-total"><%= current_order.display_item_total %></span></span>
-          <%= link_to Spree.t(:checkout), checkout_path, :class => 'button checkout primary', :id => 'checkout-link' %>
-        </p>
-      </div>
-
       <%= form_for current_order, :url => update_cart_path, :html => {:id => 'update-minicart'}, :remote => true do |order_form| %>
         <div data-hook="inside_minicart_form">
 
@@ -30,10 +22,19 @@
             </ul>
           </div>
 
-          <div id="minicart-footer" class="col-md-12" data-hook="minicart_footer">
-            <%= link_to Spree.t(:view_shopping_cart), cart_path, :class => 'btn btn-primary btn-block' %>
+          <div id="minicart-details" data-hook="minicart_details" class="clearfix">
+            <div class="col-md-6">
+              <span><%= Spree.t(:subtotal) %>: <span class="order-total"><%= current_order.display_item_total %></span></span>
+            </div>
+            <div class="col-md-6">
+              <%= link_to Spree.t(:checkout), checkout_path, :class => 'btn btn-primary btn-block checkout', :id => 'checkout-link' %>
+            </div>
           </div>
 
+          <div id="minicart-footer" class="col-md-12" data-hook="minicart_footer">
+            <%= link_to Spree.t(:view_shopping_cart), cart_path, :class => 'btn btn-default btn-block' %>
+            <span></span>
+          </div>
         </div>
       <% end %>
 

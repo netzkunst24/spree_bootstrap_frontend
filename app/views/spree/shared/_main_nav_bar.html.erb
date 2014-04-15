@@ -3,7 +3,7 @@
     <ul class="nav navbar-nav" data-hook>
       <!--li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>-->
       <% get_categories({not: %w(Angebote Sale)}).each do |category| %>
-          <li class="dropdown megadrop-fw"><a href="<%= category.permalink %>"><%= category.name %></a></li>
+          <li class="dropdown megadrop-fw"><%= link_to(category.name , seo_url(category)) %></li>
       <% end %>
     </ul>
 

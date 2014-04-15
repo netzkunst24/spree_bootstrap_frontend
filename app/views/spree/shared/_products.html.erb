@@ -18,14 +18,26 @@
 <% if products.any? %>
 <div id="products" class="row" data-hook>
   <% products.each do |product| %>
-    <div id="product_<%= product.id %>" class="col-md-3 col-sm-6" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
-      <div class="panel panel-default">
-        <div class="panel-body text-center product-body">
-          <%= link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url' %><br/>
-          <%= link_to truncate(product.name, :length => 50), product, :class => 'info', :itemprop => "name", :title => product.name %>
+    <div id="product_<%= product.id %>" class="<%= !content_for?(:sidebar) ? "col-md-3 col-sm-6" : "col-md-4 col-sm-6" %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+      <div class="ws-product clearfix">
+        <div class="image">
+          <%= link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url' %>
+          <span class="arrow"></span>
         </div>
-        <div class="panel-footer text-center">
-          <span class="price selling lead" itemprop="price"><%= display_price(product) %></span>
+        <div class="product_main col-md-12">
+          <% name = "#{category_and_manufacturer(product)} <span class='name' itemprop='name'>#{truncate(product.name, :length => 48)}</span>".html_safe %>
+          <h3><%= link_to name, product, :class => 'info', :title => "#{product.cached_manufacturer} #{product.name}" %></h3>
+          <span class="price selling lead" itemprop="price"><%= display_price_per(product) %></span>
+        </div>
+        <div class="product_footer col-sm-12">
+          <div class="availability pull-left"><span class="glyphicon glyphicon-clock"></span>Auf Lager</div>
+          <div class="rating pull-right">
+            <span class="glyphicon glyphicon-yellow glyphicon-star"></span>
+            <span class="glyphicon glyphicon-yellow glyphicon-star"></span>
+            <span class="glyphicon glyphicon-yellow glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star"></span>
+          </div>
         </div>
       </div>
     </div>

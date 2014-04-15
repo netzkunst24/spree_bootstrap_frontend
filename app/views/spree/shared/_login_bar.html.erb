@@ -5,8 +5,8 @@
     </a>
     <ul class="dropdown-menu">
       <li><%= link_to Spree.t(:my_account), spree.account_path %></li>
+      <li id="watchlist"><%=link_to_wishlist %></li>
       <li><%= link_to Spree.t(:logout), spree.logout_path %></li>
-      <li><a>etc...</a></li>
     </ul>
   </li>
 <% else %>

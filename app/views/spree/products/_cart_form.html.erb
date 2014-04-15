@@ -23,16 +23,28 @@
     <% end%>
 
     <% if @product.price_in(current_currency) and !@product.price.nil? %>
-      <div data-hook="product_price" class="col-md-5">
+      <div data-hook="product_price" class="col-md-12">
         
         <div id="product-price">
-          <h3 class="product-section-title"><%= Spree.t(:price) %></h3>
           <div>
-            <span class="lead price" itemprop="price">
-              <%= display_price(@product) %>
+            <span class="unit price" itemprop="price">
+              <%= display_price_per(@product) %>
             </span>
             <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
           </div>
+
+          <% if @product.property('Paket qm') %>
+          <div>
+            <span class="lead price" itemprop="price">
+              Preis&nbsp;pro&nbsp;Paket&nbsp;<%= display_price(@product) %>
+            </span>
+            <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
+          </div>
+          <% end %>
+
+          <div class="vat-and-shipping"><%=vat_and_shipping(@product) %></div>
+
+          <div class="availability"><%=estimated_delivery(@product) %></div>
 
           <% if @product.master.in_stock? %>
             <link itemprop="availability" href="http://schema.org/InStock" />

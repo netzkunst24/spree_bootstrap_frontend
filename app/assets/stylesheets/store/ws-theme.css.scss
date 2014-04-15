@@ -93,7 +93,7 @@
 
 .navbar {
   border: none;
-  margin-bottom: 22px;
+  margin-bottom: 15px;
 }
 
 .navbar .nav.ws-angebote {
@@ -140,6 +140,15 @@
 }
 
 .carousel-control {
+  span {
+    display: block;
+    width: 31px;
+    height: 58px;
+    background: asset-url('ws-sprite.png');
+    top: 50%;
+    position: relative;
+    margin-top: -29px;
+  }
   background-repeat: no-repeat!important;
   @media (max-width: $screen-xxs-min) {
     background-size: 70%;
@@ -152,17 +161,25 @@
   &:focus { @include opacity($carousel-control-opacity); }
   &:hover { @include opacity(.9); }
   &.left {
-    background-image: url(../img/slide-left.png);
-    background-position: left center;
-    @media (max-width: $screen-lg-min) {
-      background-position: right center;
+    background: none;
+    span {
+      background-position: -207px -11px;
+      float: left;
+      margin-left: 20px;
+      @media (max-width: $screen-lg-min) {
+        background-position: right center;
+      }
     }
   }
   &.right {
-    background-image: url(../img/slide-right.png);
-    background-position: right center;
-    @media (max-width: $screen-lg-min) {
-      background-position: left center;
+    background: none;
+    span {
+      background-position: -239px -11px;
+      float: right;
+      margin-right: 20px;
+      @media (max-width: $screen-lg-min) {
+        background-position: left center;
+      }
     }
   }
 }
@@ -231,7 +248,7 @@
 
 body {
   position: relative; /* For scrollyspy */
-  padding-top: 12px;
+  padding-top: 8px;
   font-size: 14px;
 }
 
@@ -248,7 +265,12 @@ body {
   }
 }
 
+#ws-head-toprow {
+  margin-bottom: 6px;
+}
+
 .ws-service-list {
+  margin-bottom: 0;
   li {
     margin-right: 10px;
     letter-spacing: -0.0006em;
@@ -270,8 +292,8 @@ body {
 }
 
 #ws-head-mainrow {
-  margin-top: 5px;
-  margin-bottom: 22px;
+  margin-top: 0;
+  margin-bottom: 15px;
   @media (max-width: $screen-md) {margin-top: -24px; }
 }
 .badge {
@@ -289,10 +311,19 @@ body {
 
 #search-bar {
   text-align: center;
-  margin-top: 55px;
+  margin-top: 45px;
   z-index: 999;
+  .btn.adjust-icon {
+    padding: 8px 20px 3px;
+  }
+  .form-group {
+    width: 100%;
+  }
   .dropdown-menu {
     text-align: left;
+    .active {
+      background: $gray-lighter;
+    }
   }
   @media (max-width: $screen-md) { padding-top: 41px; }
   > .show-search {
@@ -332,7 +363,7 @@ body {
 
 #ws-cart {
   text-align: center;
-  margin-top: 72px;
+  margin-top: 55px;
 
 
   #link-to-cart {
@@ -355,7 +386,7 @@ body {
       font-family: $font-family-sans-serif-medium;
       .icon-basket {
         background: asset-url('ws-sprite.png');
-        background-position: -64px -16px;
+        background-position: -175px -11px;
         width: 31px;
         height: 27px;
         position: relative;
@@ -381,13 +412,29 @@ body {
 
   #minicart {
     margin-top: -45px;
-    padding-top: 50px;
+    padding-top: 60px;
+    #minicart-details {
+      .order-total {
+        font-size: $font-size-large;
+        display:block;
+      }
+      div {
+        text-align: left;
+      }
+    }
     #minicart-items {
       list-style: none outside none;
       padding-left: 0;
-      padding-bottom: 20px;
+      padding-bottom: 0;
+      margin-bottom: 0;
       width: 100%;
+      .ws-cart-item:first-child {
+        border-top: 1px dotted $gray-lighter;
+      }
       .ws-cart-item {
+        border-bottom: 1px dotted $gray-lighter;
+        padding-top: 5px;
+        padding-bottom: 5px;
         text-align:left;
         margin-bottom: 10px;
         .ws-cart-image { margin-right: 10px; }
@@ -399,6 +446,10 @@ body {
           color: $gray-light;
           padding: 0;
           clear: none;
+        }
+
+        a {
+          color: #333;
         }
       }
     }
@@ -412,29 +463,35 @@ body {
         padding-top: 15px!important;
       }
     }
-
     #minicart-footer {
-      background: asset-url('zigzag.png') repeat-x left bottom transparent;
-      margin-bottom: -9px;
-      padding-bottom: 20px;
+      margin-bottom: -21px;
+      padding-bottom: 33px;
+      span {
+        display: block;
+        background: asset-url('ws-sprite.png');
+        height: 10px;
+        width: 100%;
+        position: absolute;
+        margin: 15px 0px 0px -15px;
+      }
     }
   }
 }
 
 
-.ws-social {
+#ws-social {
   @extend .pull-right;
   margin-top: -16px;
   li {
-    background: url(../img/social-media.png);
+    background: asset-url('ws-sprite.png');
     width: 36px;
     height: 36px;
     @include hide-text();
     margin-right: 5px;
   }
-  .ws-facebook {background-position: 0 0; }
-  .ws-twitter {background-position: 36px 0; }
-  .ws-feed {background-position: 76px 0; }
+  .ws-facebook {background-position: 0 -11px; }
+  .ws-twitter {background-position: -40px -11px; }
+  .ws-feed {background-position: -80px -11px; }
 
 }
 
@@ -493,6 +550,7 @@ body {
 //-----------------------------
 
 .ws-service-list-group {
+  padding-bottom: 18px;
 
   .list-group-item {
     border-width: 0 0 2px 0;
@@ -589,6 +647,30 @@ body {
   background-color: $foreground;
   @include box-shadow(0 2px 3px rgba(0,0,0,.175));
   @include border-bottom-radius(3px);
+
+  .product_main {
+    padding-bottom: 10px;
+    a { text-decoration: none; }
+    .category, .manufacturer {
+      font-size: $font-size-small;
+      color: #333;
+    }
+
+    .name {
+      display: block;
+      color: #333
+    }
+
+    .price {
+    }
+  }
+
+  .product_footer {
+    background-color: rgb(245, 245, 245);
+    padding-top: 12px;
+    border-top: 1px solid rgb(235, 235, 235);
+  }
+
   margin-bottom: 35px;
   h3 {
     @media (max-width: $screen-lg-min) { font-size: $font-size-h4; }
@@ -606,22 +688,23 @@ body {
     height: 95px;
     overflow: hidden;
   }
-  .rating{
-    text-align: right;
-    color: $gray-light;
-  }
   .availability {
     margin-bottom: 10px;
     span {
       margin-right: 8px;
     }
   }
+
+  .rating {
+    text-align: right;
+    color: $gray-light;
+  }
   .image {
-    height: 168px;
+    height: 230px;
     overflow: hidden;
     position: relative;
     .arrow {
-      @include cssTriangle(12px, $foreground, top);
+      @include cssTriangle(12px, #fff, bottom);
       position: absolute;
       bottom: 0;
       left: 10%;
@@ -633,6 +716,79 @@ body {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.rating {
+  color: $gray-light;
+}
+
+.brand-wrapper {
+  width: 100px;
+  height: 100px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+h1.product-title {
+  margin-top: 0;
+}
+
+.ratings-stars, .ratings-basedupon {
+  display: inline-block;
+}
+
+.unit.price {
+  font-size: $font-size-h1;
+  .per-unit {
+    font-size: 16px;
+  }
+}
+
+.lead.price {
+  font-size: $font-size-base;
+}
+
+.vat-and-shipping {
+  font-size: $font-size-small;
+  color: $gray-light;
+}
+
+.availability .available {
+  color: $brand-success;
+}
+
+#product-details {
+  #thumbnails {
+    margin-top: 10px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //-----------------------------
@@ -656,7 +812,32 @@ body {
 .alert-notice { @extend .alert-success; }
 
 
-
 //-----------------------------
 //  Spree Styles
 //-----------------------------
+
+
+//-----------------------------
+//  Breadcrumbs
+//-----------------------------
+.breadcrumb {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 15px;
+  li a {
+    color: #000;
+    text-decoration: underline;
+  }
+}
+
+//-----------------------------
+//  PDS
+//-----------------------------
+h1.product-title {
+  //font-size: 20px;
+  .product-brand {
+    display: block;
+    font-size: $font-size-small;
+    padding-left: 3px;
+  }
+}

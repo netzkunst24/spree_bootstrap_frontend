@@ -28,6 +28,16 @@ Spree::BaseHelper.module_eval do
     nil
   end
 
+  def display_price_per(product_or_variant, property_name = 'Paket qm', unit = 'm²')
+    value = product_or_variant.property(property_name)
+    return display_price(product_or_variant) if value.nil?
+
+    divisor = /\d+,\d*/.match(value)[0].gsub(',', '.').to_f
+    price = product_or_variant.price_in(current_currency).price
+    Spree::Money.new(price/divisor).to_html + "&nbsp;<span class='per-unit'>/#{unit}</span>".html_safe
+  end
+
+
   def taxons_tree(root_taxon, current_taxon, max_level = 1)
     return '' if max_level < 1 || root_taxon.children.empty?
     content_tag :ul, class: 'list-group' do
@@ -41,8 +51,8 @@ Spree::BaseHelper.module_eval do
     end
   end
 
-  def breadcrumbs(taxon, separator="&nbsp;")
-    return "" if current_page?("/") || taxon.nil?
+  def breadcrumbs(taxon, separator='&nbsp;', product=nil)
+    return "" if current_page?('/') || taxon.nil?
     separator = raw(separator)
     crumbs = [content_tag(:li, link_to(Spree.t(:home), spree.root_path) + separator)]
     if taxon
@@ -52,6 +62,9 @@ Spree::BaseHelper.module_eval do
     else
       crumbs << content_tag(:li, content_tag(:span, Spree.t(:products)))
     end
+
+    crumbs << content_tag(:li, product.name, class: 'active') if product
+
     crumb_list = content_tag(:ol, raw(crumbs.flatten.map{|li| li.mb_chars}.join), class: 'breadcrumb')
     content_tag(:nav, crumb_list, id: 'breadcrumbs', class: 'col-md-12')
   end
@@ -68,6 +81,14 @@ Spree::BaseHelper.module_eval do
       text = "Merkliste <span class='badge'>#{wishlist_length}</span>".html_safe
       link_to text, spree.wishlists_path
     end
+  end
+
+  def category_and_manufacturer(product)
+    category = product.cached_category
+    brand = product.cached_manufacturer
+    category_tag = category.nil? ? '' : content_tag(:span, category.name, class: 'category')
+    brand_tag = brand.nil? ? '' : content_tag(:span, brand.name, class: 'manufacturer', itemprop: 'brand')
+    brand_tag + ' ' + category_tag
   end
 
 end

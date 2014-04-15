@@ -3,7 +3,15 @@
   <ul id="product-thumbnails" class="thumbnails list-inline" data-hook>
     <% @product.images.each do |i| %>
       <li class='tmb-all tmb-<%= i.viewable.id %>'>
-        <%= link_to(image_tag(i.attachment.url(:mini), class: "thumbnail"), i.attachment.url(:product)) %>
+        <%= link_to(
+                    image_tag(i.attachment.url(:mini),
+                              class: 'thumbnail cloudzoom-gallery',
+                              data: {
+                                    cloudzoom: "useZoom: '#main-image .cloudzoom', image: '#{i.attachment.url(:product)}', zoomImage: '#{i.attachment.url(:zoom)}'".html_safe,
+                                }
+                    ),
+                    i.attachment.url(:zoom)
+                    ) %>
       </li>
     <% end %>
 
@@ -11,7 +19,7 @@
       <% @product.variant_images.each do |i| %>
         <% next if @product.images.include?(i) %>
         <li class='vtmb tmb-<%= i.viewable.id %>'>
-          <%= link_to(image_tag(i.attachment.url(:mini), class: "thumbnail"), i.attachment.url(:product)) %>
+          <%= link_to(image_tag(i.attachment.url(:mini), class: 'thumbnail'), i.attachment.url(:product), class: 'cloudzoom-gallery') %>
         </li>
       <% end %>
     <% end %>
