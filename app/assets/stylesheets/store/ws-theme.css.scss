@@ -66,7 +66,7 @@
   src: font-path('#{$icon-font-path}#{$icon-font-name}.eot');
   src: font-path('#{$icon-font-path}#{$icon-font-name}.eot?#iefix') format('embedded-opentype'),
   font-path('#{$icon-font-path}#{$icon-font-name}.woff'), format('woff'),
-  font-path('#{$icon-font-path}#{$icon-font-name}.ttf'), '#{$icon-font-path}#{$icon-font-name}.ttf')) format('truetype'),
+  font-path('#{$icon-font-path}#{$icon-font-name}.ttf'), format('truetype'),
   font-path('#{$icon-font-path}#{$icon-font-name}.svg##{$icon-font-svg-id}') format('svg');
 }
 @import "glyphicons-pro"; //additional glyphicons
