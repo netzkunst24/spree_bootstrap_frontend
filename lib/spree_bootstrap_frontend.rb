@@ -1,3 +1,3 @@
 require 'spree_core'
-require 'kaminari-bootstrap'
+require 'bootstrap-kaminari-views'
 require 'spree_bootstrap_frontend/engine'
