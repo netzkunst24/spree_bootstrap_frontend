@@ -17,7 +17,7 @@ $ ->
   # TODO check on pageload
   # TODO REFACTOR
   currency = "€"
-  $(".add-to-cart input.ve").on "keyup mouseup", ->
+  $("body").on "keyup mouseup", ".add-to-cart input.ve", ->
     amountField = $ this
     qmField = $ ".add-to-cart input.qm"
     amount = Math.ceil(amountField.val().replace(",", "."))
@@ -30,7 +30,7 @@ $ ->
     priceTag.text((amount * $(".price.selling").data("price-amount")).toFixed(2).replace(".", ",") + " " + currency)
 
   # TODO REFACTOR
-  $(".add-to-cart input.qm").on "keyup mouseup", ->
+  $("body").on "keyup mouseup", ".add-to-cart input.qm", ->
     amountField = $(".add-to-cart input.ve")
     qmField = $ this
     priceTag = $ "#add-to-cart-button .btn-price"
