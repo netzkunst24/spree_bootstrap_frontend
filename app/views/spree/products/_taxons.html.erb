@@ -1,11 +1,14 @@
 <% if !@product.taxons.blank? %>
   <div id="taxon-crumbs" data-hook class=" five ">
-    <h3 class="product-section-title"><%= Spree.t(:look_for_similar_items) %></h3>
+    <!--<h3 class="product-section-title"><%= Spree.t(:look_for_similar_items) %></h3>-->
 
     <div data-hook="product_taxons">
-      <ul class="nav nav-pills" id="similar_items_by_taxon" data-hook>
-      <% @product.taxons.each do |taxon| %>
-        <li><%= link_to "#{Spree.t(:more)} #{taxon.name}", seo_url(taxon) %></li>
+      <ul class="list-group" id="similar_items_by_taxon" data-hook>
+      <% #TODO REFACTOR %>
+      <% hide_taxons = %w(Kategorie Hersteller) %>
+      <% @product.taxons.reject { |t| hide_taxons.include?(t.parent.name) }.each do |taxon| %>
+        <!--<li><%= link_to "#{Spree.t(:more)} #{taxon.name}", seo_url(taxon) %></li>-->
+        <li class="list-group-item"><%= link_to "#{taxon.parent.name}: #{taxon.name}", seo_url(taxon) %></li>
       <% end %>
       </ul>
     </div>

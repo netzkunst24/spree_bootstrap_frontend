@@ -21,11 +21,11 @@
     <div id="product_<%= product.id %>" class="<%= !content_for?(:sidebar) ? "col-md-3 col-sm-6" : "col-md-4 col-sm-6" %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
       <div class="ws-product clearfix">
         <div class="image">
-          <%= link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url' %>
+          <%= link_to list_image(product, :itemprop => "image"), product, :itemprop => 'url' %>
           <span class="arrow"></span>
         </div>
         <div class="product_main col-md-12">
-          <% name = "#{category_and_manufacturer(product)} <span class='name' itemprop='name'>#{truncate(product.name, :length => 48)}</span>".html_safe %>
+          <% name = "#{category_and_manufacturer(product)} <span class='name' itemprop='name'>#{truncate(product.name, :length => 55)}</span>".html_safe %>
           <h3><%= link_to name, product, :class => 'info', :title => "#{product.cached_manufacturer} #{product.name}" %></h3>
           <span class="price selling lead" itemprop="price"><%= display_price_per(product) %></span>
         </div>

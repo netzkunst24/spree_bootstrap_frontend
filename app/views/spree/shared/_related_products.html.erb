@@ -1,0 +1,16 @@
+<% if @product.has_related_products?(related_type) && @product.send(related_type).any? %>
+    <div id="ws-accessories">
+      <h3><%= headline %></h3>
+
+      <div class="frame">
+        <ul>
+          <% @product.accessories.each do |p| %>
+              <% link_text = "#{small_image(p, :itemprop => 'image')} #{truncate(p.name, :length => 30)}<br>#{display_price_per(p)}".html_safe %>
+              <li><%= link_to link_text.html_safe , p %></li>
+          <% end -%>
+        </ul>
+      </div>
+      <a class="prev glyphicon glyphicon-chevron-left"></a>
+      <a class="next glyphicon glyphicon-chevron-right"></a>
+    </div>
+<% end %>

@@ -7,6 +7,6 @@ Spree::BaseHelper.module_eval do
 
   def estimated_delivery(product)
     quantifier = Spree::Stock::Quantifier.new(product)
-    "<span class='#{'available' if quantifier.can_supply?(1)}'>Lieferbar</span> in 3-5 Werktagen (#{quantifier.total_on_hand})".html_safe
+    "<span class='#{'available' if quantifier.can_supply?(1)}'>Lieferbar</span> in 3-5 Werktagen <!--(#{quantifier.total_on_hand})-->".html_safe
   end
 end

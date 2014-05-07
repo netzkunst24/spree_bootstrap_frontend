@@ -1,58 +1,76 @@
 <div data-hook="product_show" itemscope itemtype="http://schema.org/Product">
   <% @body_id = 'product-details' %>
-
-  <div class="col-md-4" data-hook="product_left_part_2">
-    <%= link_to image_tag(@product.cached_manufacturer.icon.url(:pds)), seo_url(@product.cached_manufacturer), class: 'brand-wrapper' %>
-    <h1 class="product-title">
-      <small class="product-brand" itemprop="brand"><%= @product.cached_manufacturer.name %></small>
-      <span itemprop="name"><%= accurate_title %></span>
-    </h1>
-    <%= render :partial => 'taxons' %>
-  </div>
-
-  <div class="col-md-4" data-hook="product_left_part">
-    <div data-hook="product_left_part_wrap">
-
-      <div id="product-images" data-hook="product_images">
-        <div id="main-image" data-hook>
-          <%= render :partial => 'image' %>
-        </div>
-        <div id="thumbnails" data-hook>
-          <%= render :partial => 'thumbnails' %>
-        </div>
-      </div>
-
-      <div data-hook="product_properties">
-        <%= render :partial => 'properties' %>
-      </div>
-
-      <div data-hook="promotions">
-        <%= render :partial => 'promotions' %>
-      </div>
-
+  <div class="row">
+    <div class="col-md-4" data-hook="product_left_part_2">
+      <%= link_to image_tag(@product.cached_manufacturer.icon.url(:pds)), seo_url(@product.cached_manufacturer), class: 'brand-wrapper' %>
+      <h1 class="product-title">
+        <small>
+          <span class="product-brand" itemprop="brand"><%= @product.cached_manufacturer.name %> - </span>
+          <span class="product-category" itemprop=""><%= @product.cached_category.name %></span>
+        </small>
+        <span itemprop="name"><%= accurate_title %></span>
+      </h1>
+      <%= render :partial => 'taxons' %>
     </div>
-  </div>
 
-  <div class="col-md-4" data-hook="product_right_part">
-    <div data-hook="product_right_part_wrap">
-
-      <div id="product-description" data-hook="product_description">
-        <div id="cart-form" data-hook="cart_form">
-          <%= render :partial => 'cart_form' %>
+    <div class="col-md-4" data-hook="product_left_part">
+      <div class="center-block" data-hook="product_left_part_wrap">
+        <div id="product-images" data-hook="product_images">
+          <div id="main-image" data-hook>
+            <%= render :partial => 'image' %>
+          </div>
+          <div id="thumbnails" data-hook>
+            <%= render :partial => 'thumbnails' %>
+          </div>
         </div>
       </div>
+    </div>
 
+    <div class="col-md-4" data-hook="product_right_part">
+      <div data-hook="product_right_part_wrap">
+
+        <div id="product-description" data-hook="product_description">
+          <div id="cart-form" data-hook="cart_form">
+            <%= render :partial => 'cart_form' %>
+            <%= link_to request_quote_path(product: @product.master.id),
+                        class: 'btn btn-info btn-block fancybox.ajax',
+                        id: 'request-quote-button',
+                        data: { 'fancybox-type' => 'ajax' } do %>
+              <div class="btn-left">Individuelles Angebot anfordern</div>
+            <% end %>
+
+          </div>
+          <div id="additionals" class="row">
+
+          </div>
+        </div>
+        <div data-hook="promotions">
+          <%= render :partial => 'promotions' %>
+        </div>
+
+      </div>
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-6">
+      <h3><%= Spree.t(:description) %></h3>
+
       <div itemprop="description" data-hook="description">
         <%= product_description(@product) rescue Spree.t(:product_has_no_description) %>
       </div>
+      <div data-hook="product_properties">
+        <%= render :partial => 'properties' %>
+      </div>
     </div>
-    <div class="col-md-6">
 
+    <div class="col-md-6">
+        <%= render partial: 'spree/shared/related_products', locals: {related_type: 'accessories', headline: Spree.t(:related_accessories)} %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12" data-hook="product_ratings">
     </div>
   </div>
 

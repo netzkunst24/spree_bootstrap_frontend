@@ -1,74 +1,127 @@
 <%= form_for :order, :url => populate_orders_path do |f| %>
   <div class="row" id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
-    <% if @product.variants_and_option_values(current_currency).any? %>
-      <div id="product-variants" class="col-md-6">
+    <%
+       sample_option_type = @product.option_types.find_by(name: 'Muster')
+       if sample_option_type
+         sample_option = @product.options.find_by(id: sample_option_type.id)
+         if sample_option
+           sample_variant = @product.variants.find_by(product_id: sample_option.product_id)
+         end
+       end
+
+    %>
+
+
+    <% if @product.variants_and_option_values(current_currency).reject{|v| v == sample_variant }.any? %>
+      <div id="product-variants" class="col-md-12">
         <h3 class="product-section-title"><%= Spree.t(:variants) %></h3>
         <ul class="list-group">
-          <% @product.variants_and_option_values(current_currency).each_with_index do |variant, index| %>
+          <% @product.variants_and_option_values(current_currency).reject{|v| v == sample_variant }.each_with_index do |variant, index| %>
             <li class="list-group-item">
-              <%= radio_button_tag "products[#{@product.id}]", variant.id, index == 0, 'data-price' => display_price(variant) %>
-              <label for="<%= ['products', @product.id, variant.id].join('_') %>">
-                <span class="variant-description">
+              <div class="radio">
+                <label for="<%= ['products', @product.id, variant.id].join('_') %>">
+                  <%= radio_button_tag "products[#{@product.id}]", variant.id, index == 0, 'data-price' => display_price(variant) %>
                   <%= variant_options variant %>
-                </span>
-                <% if variant_price variant %>
-                  <span class="price diff"><%= variant_price variant %></span>
-                <% end %>
-              </label>
+                  <% if variant_price variant %>
+                    <span class="price diff"> <%= variant_price variant %></span>
+                  <% end %>
+                </label>
+              </div>
             </li>
-          <% end%>
+          <% end %>
         </ul>
       </div>
-    <% end%>
+    <% end %>
 
     <% if @product.price_in(current_currency) and !@product.price.nil? %>
       <div data-hook="product_price" class="col-md-12">
-        
+
         <div id="product-price">
           <div>
-            <span class="unit price" itemprop="price">
+            <span class="unit price <%= 'selling' unless @product.property('Paket qm') %>" data-price-amount="<%= @product.price_in(current_currency).amount %>" itemprop="price">
               <%= display_price_per(@product) %>
             </span>
             <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
           </div>
 
           <% if @product.property('Paket qm') %>
-          <div>
-            <span class="lead price" itemprop="price">
-              Preis&nbsp;pro&nbsp;Paket&nbsp;<%= display_price(@product) %>
-            </span>
-            <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
-          </div>
+            <div>
+              Preis&nbsp;pro&nbsp;Paket (<%= @product.property('Paket qm') %>)&nbsp;
+              <span class="lead price selling" itemprop="price" data-price-amount="<%= @product.price_in(current_currency).amount %>">
+                <%= display_price(@product) %>
+              </span>
+              <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
+            </div>
           <% end %>
 
-          <div class="vat-and-shipping"><%=vat_and_shipping(@product) %></div>
-
-          <div class="availability"><%=estimated_delivery(@product) %></div>
+          <div class="vat-and-shipping"><%= vat_and_shipping(@product) %></div>
 
           <% if @product.master.in_stock? %>
-            <link itemprop="availability" href="http://schema.org/InStock" />
-          <% end %> 
-        </div>
-
-        <div class="add-to-cart">
-          <br/>
-          <div class="input-group">
-            <%= number_field_tag (@product.variants_and_option_values.any? ? :quantity : "variants[#{@product.master.id}]"),
-                  1, :class => 'title form-control', :min => 1 %>
-            <span class="input-group-btn">
-              <%= button_tag :class => 'btn btn-success', :id => 'add-to-cart-button', :type => :submit do %>
-                  <%= Spree.t(:add_to_cart) %>
-            </span>
-          </div>
+            <link itemprop="availability" href="http://schema.org/InStock"/>
           <% end %>
         </div>
-      </div>
-    <% else %>
-        <div id="product-price">
+
+        <%
+           # TODO REFACTOR SAMPLE ORDERING and get this on load of app or cache!?
+           if sample_variant %>
+          <div id="product-sample">
+            <ul class="list-group" class="col-md-12">
+              <li class="list-group-item">
+                <div class="checkbox">
+                  <label for="<%= ['products', @product.id, sample_variant.id].join('_') %>">
+                    <%= check_box_tag "products[#{@product.id}]", sample_variant.id, false, data: {'price-with' => display_price(sample_variant), 'price-without' => display_price(@product)} %>
+                    Muster bestellen (<%= display_price(sample_variant) %>)
+                    <% if variant_price sample_variant %>
+                      <span class="price diff hidden"> <%= variant_price sample_variant %></span>
+                    <% end %>
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        <% end %>
+
+
+        <div class="add-to-cart">
+          <div class="form-inline row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <%= number_field_tag (@product.variants_and_option_values.reject{|v| v == sample_variant }.any? ? :quantity : "variants[#{@product.master.id}]"),
+                                       1, :class => 'title form-control ve', :min => 1 %>
+                  <span class="input-group-addon">Paket&nbsp;&nbsp;</span>
+                </div>
+              </div>
+            </div>
+            <% if @product.property('Paket qm') %>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <% qm = @product.property('Paket qm').to_s.gsub(',', '.').to_f %>
+                    <%= text_field_tag 'qm', qm.to_s.gsub('.', ','), :class => 'title form-control qm', min: qm %>
+                    <span class="input-group-addon">m²</span>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="availability"><%= estimated_delivery(@product) %></div>
+          <%= button_tag class: 'btn btn-primary btn-lg btn-block', id: 'add-to-cart-button', type: :submit do %>
+            <div class="btn-left"><%= Spree.t(:add_to_cart) %></div>
+            <span class="btn-separator"></span>
+            <div class="btn-right"><span class="btn-price"><%= display_price(@product) %></div>
+          <% end %>
           <br>
-          <div><span class="price selling" itemprop="price"><%= Spree.t('product_not_available_in_this_currency') %></span></div>
         </div>
-    <% end %>    
+      </div>
+
+    <% else %>
+      <div id="product-price">
+        <div>
+          <span class="price selling" itemprop="price" data-price-amount="<%= @product.price_in(current_currency).amount %>"><%= Spree.t('product_not_available_in_this_currency') %></span>
+        </div>
+      </div>
+    <% end %>
   </div>
 <% end %>
