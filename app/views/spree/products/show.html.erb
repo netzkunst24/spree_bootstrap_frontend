@@ -5,8 +5,8 @@
       <%= link_to image_tag(@product.cached_manufacturer.icon.url(:pds)), seo_url(@product.cached_manufacturer), class: 'brand-wrapper' %>
       <h1 class="product-title">
         <small>
-          <span class="product-brand" itemprop="brand"><%= @product.cached_manufacturer.name %> - </span>
-          <span class="product-category" itemprop=""><%= @product.cached_category.name %></span>
+          <span class="product-brand" itemprop="brand"><%= @product.cached_manufacturer.name unless @product.cached_manufacturer.nil? %> - </span>
+          <span class="product-category" itemprop=""><%= @product.cached_category.name unless @product.cached_category.nil?%></span>
         </small>
         <span itemprop="name"><%= accurate_title %></span>
       </h1>

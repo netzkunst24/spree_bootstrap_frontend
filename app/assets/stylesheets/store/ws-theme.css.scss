@@ -936,12 +936,23 @@ h1.product-title {
   }
 }
 
-#request-quote-form {
+#new_request_quote_request {
   .product.row { margin-bottom: 20px; }
 }
 
-.fancybox-inner {
-  .page-header {
-    margin-top: 5px;
+.fancybox-skin {
+  .fancybox-close {
+    top: 6px;
+    right: 5px;
+  }
+  .fancybox-inner {
+    .modal-header {
+      padding: 5px 15px;
+      background: $gray-lighter;
+      @include border-top-radius(5px)
+    }
+    .modal-footer {
+      padding: 15px 20px
+    }
   }
 }
