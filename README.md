@@ -41,7 +41,7 @@ Then copy the default stylesheet into your project
 rails generate spree_bootstrap_frontend:install
 ```
 
-Done.
+You'll want to select to overwrite `all.css`. Done.
 
 The `Master` branch is actively developed against spree edge, so it's not recommended to use this in production
 
