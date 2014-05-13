@@ -1,23 +1,31 @@
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
-<h1><%= Spree.t(:registration) %></h1>
+<%= render :partial => 'spree/shared/error_messages', :locals => {:target => @user} %>
+<h1><%= Spree.t(:registrate) %></h1>
 <div id="registration" class="row" data-hook>
+  <div id="login">
+    <div class="col-md-4">
+      <%= render :partial => 'spree/shared/login' %>
+    </div>
+  </div>
   <div id="account">
-    <%= render :partial => 'new_user' %>
+    <div class="col-md-4">
+      <%= render :partial => 'new_user' %>
+    </div>
   </div>
   <% if Spree::Config[:allow_guest_checkout] %>
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><%= Spree.t(:guest_user_account) %></h3>
+          <h3 class="panel-title"><%= Spree.t(:guest_user_account) %><br><small><%= Spree.t(:checkout_without_registration) %></small></h3>
         </div>
         <div id="guest_checkout" class="panel-body" data-hook>
           <% if flash[:registration_error] %>
             <div class='flash error'><%= flash[:registration_error] %></div>
           <% end %>
-          <%= form_for @order, :url => update_checkout_registration_path, :method => :put, :html => { :id => 'checkout_form_registration' } do |f| %>
+          <%= form_for @order, :url => update_checkout_registration_path, :method => :put, :html => {:id => 'checkout_form_registration'} do |f| %>
             <p>
               <%= f.email_field :email, :class => 'form-control title', :placeholder => Spree.t(:email) %>
             </p>
+
             <p><%= f.submit Spree.t(:continue), :class => 'btn btn-lg btn-success btn-block' %></p>
           <% end %>
         </div>
