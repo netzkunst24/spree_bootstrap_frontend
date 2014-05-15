@@ -4,6 +4,3 @@ Spree::Page.class_eval do
   scope :footer_third, -> { where(:show_in => 'footer_third').visible }
   scope :footer_fourth, -> { where(:show_in => 'footer_fourth').visible }
 end
-
-
-

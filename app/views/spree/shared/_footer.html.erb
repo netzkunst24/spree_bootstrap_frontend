@@ -23,24 +23,9 @@
       </div>
       <div id="footer-third" class="col-sm-3" data-hook>
         <h3>Zahlungsarten</h3>
-        <ul>
-          <% Spree::PaymentMethod.available(:front_end).each do |pm| %>
-            <li><span class="glyphicon glyphicon-chevron-right"></span><a href="#"><%= pm.name %></a></li>
-          <% end %>
-        </ul>
+        <%= payment_methods %>
       </div>
       <div id="footer-fourth" class="col-sm-3" data-hook>
-        <h3>Newsletter</h3>
-        <p>Unsere aktuellen Angebote und Empfehlungen per E-Mail</p>
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Ihre E-Mail-Adresse">
-              <span class="input-group-btn">
-                <button class="btn btn-default btn-primary" type="button">
-                  <span class="visible-lg">Anmelden</span>
-                  <span class="hidden-lg"><span class="glyphicon glyphicon-chevron-right"></span></span>
-                </button>
-              </span>
-        </div>
       </div>
     </div>
   </div>

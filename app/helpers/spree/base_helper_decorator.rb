@@ -66,6 +66,14 @@ Spree::BaseHelper.module_eval do
     content_tag(:nav, crumb_list, id: 'breadcrumbs', class: 'col-md-12')
   end
 
+  def payment_methods
+    content_tag :ul, class: 'payment-methods' do
+      Spree::PaymentMethod.available(:front_end).collect do |payment|
+        concat content_tag(:li, link_to(payment.name, '#') + tag(:span, class: 'glyphicon glyphicon-chevron-right'), class: payment.name.downcase)
+      end
+    end
+  end
+
   def get_categories(opts = {})
     exclude = Array(opts[:not])
     Spree::Taxonomy.find_by(name: 'Kategorien').root.children.order(:position).reject { |taxon| exclude.include? taxon.name }

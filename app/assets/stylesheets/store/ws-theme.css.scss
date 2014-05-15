@@ -414,6 +414,7 @@ body {
   #minicart {
     margin-top: -45px;
     padding-top: 60px;
+    min-width: 293px;
     #minicart-details {
       .order-total {
         font-size: $font-size-large;

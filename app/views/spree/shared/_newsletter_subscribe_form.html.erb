@@ -1,0 +1,16 @@
+<div id="mailchimp_subscribe_wrap">
+  <h3>Newsletter</h3>
+
+  <p>Unsere aktuellen Angebote und Empfehlungen per E-Mail</p>
+  <%= form_for :user, :url => :subscriptions, remote: true do |f| %>
+    <div class="input-group">
+      <%= email_field_tag :email, '', id: 'subscribe_email', class: 'form-control email', placeholder: Spree.t(:enter_your_email) %>
+      <%= content_tag :span, class: 'input-group-btn' do %>
+        <%= button_tag class: 'btn btn-default btn-primary', id: 'op_subscribe' do %>
+          <%= content_tag :span, 'Anmelden', class: 'visible-lg' %>
+          <%= content_tag(:span, content_tag(:span, '', class: 'glyphicon glyphicon-chevron-right'), class: 'hidden-lg') %>
+        <% end %>
+      <% end %>
+  <% end %>
+  </div>
+</div>

@@ -6,4 +6,3 @@ Spree::Taxon.class_eval do
                     path: ':rails_root/public/spree/taxons/:id/:style/:basename.:extension',
                     default_url: '/assets/default_taxon.png'
 end
-
