@@ -55,6 +55,9 @@
 @import "bootstrap/code";
 @import "bootstrap/grid";
 @import "bootstrap/tables";
+
+th.no-border, td.no-border { border: none!important; }
+
 @import "bootstrap/forms";
 @import "bootstrap/buttons";
 

@@ -66,10 +66,15 @@ Spree::BaseHelper.module_eval do
     content_tag(:nav, crumb_list, id: 'breadcrumbs', class: 'col-md-12')
   end
 
-  def payment_methods
+  def payment_methods(opts = {})
+    #TODO defaults and merge hash ?
+    icon = opts[:icon] || false
+    link = opts[:link] || false
     content_tag :ul, class: 'payment-methods' do
       Spree::PaymentMethod.available(:front_end).collect do |payment|
-        concat content_tag(:li, link_to(payment.name, '#') + tag(:span, class: 'glyphicon glyphicon-chevron-right'), class: payment.name.downcase)
+        icon_tag = icon ?  tag(:span, class: 'glyphicon glyphicon-chevron-right') : ''
+        link_tag = link ?  link_to(payment.name, '#') : payment.name
+        concat content_tag :li, (link_tag + icon_tag).html_safe, class: payment.name.downcase
       end
     end
   end

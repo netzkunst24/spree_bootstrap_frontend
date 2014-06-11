@@ -6,7 +6,8 @@ Spree::BaseHelper.module_eval do
  end
 
   def estimated_delivery(product)
-    quantifier = Spree::Stock::Quantifier.new(product)
+    #TODO check for selected VAriant her not for first !!!
+    quantifier = Spree::Stock::Quantifier.new(product.variants.first)
     "<span class='#{'available' if quantifier.can_supply?(1)}'>Lieferbar</span> in 3-5 Werktagen <!--(#{quantifier.total_on_hand})-->".html_safe
   end
 end

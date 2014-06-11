@@ -3,7 +3,8 @@
     <h3 class="panel-title"><%= Spree.t(:payment_information) %></h3>
   </div>
   <div class="panel-body" data-hook="checkout_payment_step">
-    <ul class="list-group">
+    <div class="row">
+    <ul class="list-group col-md-3">
       <% @order.available_payment_methods.each do |method| %>
       <li class="list-group-item">
         <label>
@@ -14,7 +15,7 @@
       <% end %>
     </ul>
 
-    <ul class="nav" id="payment-methods" data-hook>
+    <ul class="nav col-md-9" id="payment-methods" data-hook>
       <% @order.available_payment_methods.each do |method| %>
         <li id="payment_method_<%= method.id %>" class="<%= 'last' if method == @order.available_payment_methods.last %>" data-hook>
             <%= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
@@ -27,6 +28,7 @@
       <%= form.text_field :coupon_code, :class => 'form-control' %>
     </p>
     <% end %>
+    </div>
   </div>
 </div>
 

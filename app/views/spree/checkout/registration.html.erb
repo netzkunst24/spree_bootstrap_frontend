@@ -1,3 +1,7 @@
+<% content_for :sidebar_right do %>
+  <%= render :partial => 'spree/shared/mini_order_details', locals: {order: @order} %>
+<% end %>
+
 <%= render :partial => 'spree/shared/error_messages', :locals => {:target => @user} %>
 <h1><%= Spree.t(:registrate) %></h1>
 <div id="registration" class="row" data-hook>
@@ -26,7 +30,7 @@
               <%= f.email_field :email, :class => 'form-control title', :placeholder => Spree.t(:email) %>
             </p>
 
-            <p><%= f.submit Spree.t(:continue), :class => 'btn btn-lg btn-success btn-block' %></p>
+            <p><%= f.submit Spree.t(:continue), :class => 'btn btn-lg btn-primary btn-block' %></p>
           <% end %>
         </div>
       </div>
