@@ -1,5 +1,19 @@
 <% address_id = address_type.chars.first %>
 <div class="inner row" data-hook=<%="#{address_type}_inner" %>>
+
+  <div class="control-group radio_buttons col-xs-12" id=<%="#{address_id}salutation" %>>
+    <%= form.label :salutation, Spree.t(:salutation), class: 'radio_buttons control_label' %><span class="required">*</span>
+    <div class="controls">
+      <%= label :salutation, :m, class: 'radio inline' do %>
+        <%= form.radio_button :salutation, 'm', :class => 'radio_buttons required' %>
+        Herr
+      <% end %>
+      <%= label :salutation, :f, class: 'radio inline' do %>
+        <%= form.radio_button :salutation, 'f', :class => 'radio_buttons required' %>
+        Frau
+      <% end %>
+    </div>
+  </div>
   <div class="field form-group col-xs-6" id=<%="#{address_id}firstname" %>>
     <%= form.label :firstname, Spree.t(:first_name), class: 'sr-only' %><span class="required sr-only">*</span>
     <%= form.text_field :firstname, :class => 'form-control required', placeholder: Spree.t(:first_name) + '*' %>
