@@ -39,15 +39,15 @@
 
         <div id="product-price">
           <div>
-            <span class="unit price <%= 'selling' unless @product.property('Paket qm') %>" data-price-amount="<%= @product.price_in(current_currency).amount %>" itemprop="price">
+            <span class="unit price <%= 'selling' unless @product.is_flooring? %>" data-price-amount="<%= @product.price_in(current_currency).amount %>" itemprop="price">
               <%= display_price_per(@product) %>
             </span>
             <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
           </div>
 
-          <% if @product.property('Paket qm') %>
+          <% if @product.is_flooring? %>
             <div>
-              Preis&nbsp;pro&nbsp;Paket (<%= @product.property('Paket qm') %>)&nbsp;
+              Preis&nbsp;pro&nbsp;Paket (<%= @product.content_per_package %>)&nbsp;
               <span class="lead price selling" itemprop="price" data-price-amount="<%= @product.price_in(current_currency).amount %>">
                 <%= display_price(@product) %>
               </span>
@@ -94,11 +94,11 @@
                 </div>
               </div>
             </div>
-            <% if @product.property('Paket qm') %>
+            <% if @product.is_flooring? %>
               <div class="col-md-6">
                 <div class="form-group">
                   <div class="input-group">
-                    <% qm = @product.property('Paket qm').to_s.gsub(',', '.').to_f %>
+                    <% qm = @product.content_per_package.to_s.gsub(',', '.').to_f %>
                     <%= text_field_tag 'qm',
                                        qm.to_s.gsub('.', ','),
                                        class: 'title form-control qm',

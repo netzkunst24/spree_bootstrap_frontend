@@ -28,11 +28,12 @@ Spree::BaseHelper.module_eval do
     nil
   end
 
-  def display_price_per(product_or_variant, property_name = 'Paket qm', unit = 'm²')
+  def display_price_per(product_or_variant, property_name = nil, unit = 'm²')
+    property_name ||= Spree::Config.content_per_package_property
     value = product_or_variant.property(property_name)
     return display_price(product_or_variant) if value.nil?
 
-    divisor = /\d+,\d*/.match(value)[0].gsub(',', '.').to_f
+    divisor = /\d+(,|.)\d*/.match(value)[0].gsub(',', '.').to_f
     price = product_or_variant.price_in(current_currency).price
     Spree::Money.new(price/divisor).to_html + "&nbsp;<span class='per-unit'>/#{unit}</span>".html_safe
   end
@@ -81,8 +82,8 @@ Spree::BaseHelper.module_eval do
 
   def get_categories(opts = {})
     exclude = Array(opts[:not])
-    cat = Spree::Taxonomy.find_by(name: 'Kategorien')
-    cat.root.children.order(:position).reject { |taxon| exclude.include? taxon.name } if cat
+    categories = Spree::Taxonomy.find_by(name: 'Kategorien')
+    categories.root.children.order(:position).reject { |taxon| exclude.include? taxon.name } if categories
   end
 
   def link_to_wishlist
