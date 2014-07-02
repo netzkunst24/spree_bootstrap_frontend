@@ -9,7 +9,8 @@
     <%= render :partial => 'spree/home/first_row' %>
 <% end %>
 
-<div data-hook="homepage_products">
-  <h4>Top Angebote</h4>
-  <%= render :partial => 'spree/shared/products', :locals => { :products => @products } %>
+<div id="featured_products" data-hook="homepage_products">
+  <h4>Empfohlene Produkte</h4>
+  <%= render :partial => 'spree/shared/products', :locals => { :products => @featured_products } %>
 </div>
+
