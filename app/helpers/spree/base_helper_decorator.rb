@@ -31,9 +31,10 @@ Spree::BaseHelper.module_eval do
   def display_price_per(product_or_variant, property_name = nil, unit = 'm²')
     property_name ||= Spree::Config.content_per_package_property
     value = product_or_variant.property(property_name)
-    return display_price(product_or_variant) if value.nil?
+    divisor = /\d+(,|.)\d*/.match(value)
+    return display_price(product_or_variant) if value.nil? || divisor.nil?
 
-    divisor = /\d+(,|.)\d*/.match(value)[0].gsub(',', '.').to_f
+    divisor = divisor[0].gsub(',', '.').to_f
     price = product_or_variant.price_in(current_currency).price
     Spree::Money.new(price/divisor).to_html + "&nbsp;<span class='per-unit'>/#{unit}</span>".html_safe
   end
