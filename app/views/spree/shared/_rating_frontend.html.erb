@@ -1,4 +1,5 @@
 <% product ||= @product %>
+<% only_stars ||= false %>
 <% stars = product.stars %>
 <% reviews_count = product.reviews_count %>
 <div class="rating">
@@ -8,12 +9,18 @@
       <%= render 'spree/reviews/stars_frontend', :stars => stars %>
     </span>
     </p>
+
+    <% if !only_stars %>
     <p class="ratings-basedupon">
       <%= reviews_count %>&nbsp;<%= Spree.t(:rating) %>
     </p>
+    <% end %>
+
   </a>
+  <% if !only_stars %>
   <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
     <meta itemprop="ratingValue" content="<%= stars %>" />
     <meta itemprop="reviewCount" content="<%= reviews_count %>" />
   </div>
+  <% end %>
 </div>

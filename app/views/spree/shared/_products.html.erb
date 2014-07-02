@@ -32,11 +32,8 @@
         <div class="product_footer col-sm-12">
           <div class="availability pull-left"><span class="glyphicon glyphicon-clock"></span>Auf Lager</div>
           <div class="rating pull-right">
-            <span class="glyphicon glyphicon-yellow glyphicon-star"></span>
-            <span class="glyphicon glyphicon-yellow glyphicon-star"></span>
-            <span class="glyphicon glyphicon-yellow glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
+            <%= render :partial => 'spree/shared/rating_frontend', locals: {product: product, only_stars: true} %>
+
           </div>
         </div>
       </div>
