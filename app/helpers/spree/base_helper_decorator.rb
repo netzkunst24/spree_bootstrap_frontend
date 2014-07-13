@@ -28,22 +28,31 @@ Spree::BaseHelper.module_eval do
     nil
   end
 
-  def display_price_per(product_or_variant, property_name = nil, unit = 'm²')
-    property_name ||= Spree::Config.content_per_package_property
-    value = product_or_variant.property(property_name)
-    divisor = /\d+(,|.)\d*/.match(value)
-    return display_price(product_or_variant) if value.nil? || divisor.nil?
+  def display_price_per(product_or_variant, unit = :square_meter)
+    if unit == :square_meter
+      price = product_or_variant.price_in(current_currency).price
+      return Spree::Money.new(price).to_html + '&nbsp;<span class="per-unit">/m²</span>'.html_safe
+    end
 
-    divisor = divisor[0].gsub(',', '.').to_f
-    price = product_or_variant.price_in(current_currency).price
-    Spree::Money.new(price/divisor).to_html + "&nbsp;<span class='per-unit'>/#{unit}</span>".html_safe
+    if unit == :package
+      product_or_variant.price_per_package(current_currency).to_html
+    end
+  end
+
+  def seo_url(taxon)
+    if params[:keywords]
+      return spree.nested_taxons_path(taxon.permalink, utf8: params[:utf8], keywords: params[:keywords])
+    else
+      return spree.nested_taxons_path(taxon.permalink)
+    end
   end
 
 
   def taxons_tree(root_taxon, current_taxon, max_level = 1)
-    return '' if max_level < 1 || root_taxon.children.empty?
+    return '' if max_level < 1 || root_taxon.children.empty? || !root_taxon.visible?
     content_tag :div, class: 'list-group' do
       root_taxon.children.map do |taxon|
+        next unless taxon.visible?
         css_class = (current_taxon && current_taxon.self_and_ancestors.include?(taxon)) ? 'list-group-item active' : 'list-group-item'
         link_to(taxon.name, seo_url(taxon), class: css_class) + taxons_tree(taxon, current_taxon, max_level - 1)
       end.join("\n").html_safe
