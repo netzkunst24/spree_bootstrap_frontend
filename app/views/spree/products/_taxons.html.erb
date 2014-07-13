@@ -4,9 +4,7 @@
 
     <div data-hook="product_taxons">
       <ul class="list-group" id="similar_items_by_taxon" data-hook>
-      <% #TODO REFACTOR %>
-      <% hide_taxons = %w(Kategorie Hersteller) %>
-      <% @product.taxons.reject { |t| hide_taxons.include?(t.parent.name) }.each do |taxon| %>
+      <% @product.taxons.each do |taxon| %>
         <!--<li><%= link_to "#{Spree.t(:more)} #{taxon.name}", seo_url(taxon) %></li>-->
         <li class="list-group-item"><%= link_to "#{taxon.parent.name}: #{taxon.name}", seo_url(taxon) %></li>
       <% end %>
