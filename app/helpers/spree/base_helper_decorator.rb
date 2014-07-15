@@ -30,12 +30,7 @@ Spree::BaseHelper.module_eval do
 
   def display_price_per(product_or_variant, unit = :square_meter)
     if unit == :square_meter
-      price = product_or_variant.price_in(current_currency).price
-      return Spree::Money.new(price).to_html + '&nbsp;<span class="per-unit">/m²</span>'.html_safe
-    end
-
-    if unit == :package
-      product_or_variant.price_per_package(current_currency).to_html
+      product_or_variant.price_per_unit(current_currency).to_html + '&nbsp;<span class="per-unit">/m²</span>'.html_safe
     end
   end
 
@@ -92,8 +87,9 @@ Spree::BaseHelper.module_eval do
 
   def get_categories(opts = {})
     exclude = Array(opts[:not])
-    categories = Spree::Taxonomy.find_by(name: 'Kategorien')
-    categories.root.children.order(:position).reject { |taxon| exclude.include? taxon.name } if categories
+    categories = Spree::Taxonomy.find_by(name: 'Kategorie')
+    return categories.root.children.order(:position).reject { |taxon| exclude.include? taxon.name } if categories
+    []
   end
 
   def link_to_wishlist

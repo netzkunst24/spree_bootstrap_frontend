@@ -9,9 +9,9 @@ Spree::Product.class_eval do
     content_per_package.present?
   end
 
-  #TODO refactor calculate ONCE on import!?
-  def price_per_package(currency)
-    return price_in(currency).price unless is_flooring?
-    Spree::Money.new(price_in(currency).price * content_per_package)
+  #TODO refactor calculate on import!?
+  def price_per_unit(currency)
+    return Spree::Money.new(price_in(currency).price) unless is_flooring?
+    Spree::Money.new(price_in(currency).price / content_per_package)
   end
 end
