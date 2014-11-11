@@ -1,0 +1,109 @@
+$size: 12px;
+$thickness: 2px;
+$angle: 40deg;
+$angleHover: 30deg;
+$angleActive: 25deg;
+
+@mixin transition( $value ) {
+  -webkit-transition: $value;
+  -moz-transition: $value;
+  -ms-transition: $value;
+  transition: $value;
+}
+
+@mixin transform( $value ) {
+  -webkit-transform: $value;
+  -moz-transform: $value;
+  -ms-transform: $value;
+  transform: $value;
+}
+
+@mixin transform-origin( $value ) {
+  -webkit-transform-origin: $value;
+  -moz-transform-origin: $value;
+  -ms-transform-origin: $value;
+  transform-origin: $value;
+}
+
+@mixin arrowTransform( $angle, $x: 0, $y: 0 ) {
+  i:first-child {
+    @include transform( translate( $x, $y ) rotate( $angle ) );
+  }
+
+  i:last-child {
+    @include transform( translate( $x, -$y ) rotate( -$angle ) );
+  }
+}
+
+.paginate {
+  @include transform( translate3d(0,0,0) ); // fixes flicker in webkit
+  height: 34px;
+  width: 34px;
+  i {
+    position: absolute;
+    top: 50%;
+
+    width: $size;
+    height: $thickness;
+    border-radius: $thickness / 2;
+    background: $gray-light;
+
+    @include transition( all 0.15s ease );
+  }
+
+  &.left {
+    i {
+      @include transform-origin( 0% 50% );
+      left: 35%;
+    }
+
+    @include arrowTransform( $angle, 0, 0px );
+
+    &:hover {
+      @include arrowTransform( $angleHover, 0, 0px );
+    }
+
+    &:active {
+      @include arrowTransform( $angleActive,01px, 0px );
+    }
+
+    &[data-state=disabled] {
+      @include arrowTransform( 0deg, -5px, 0 );
+
+      &:hover {
+        @include arrowTransform( 0deg, -5px, 0 );
+      }
+    }
+  }
+
+  &.right {
+
+    i {
+      @include transform-origin( 100% 50% );
+      right: 35%;
+    }
+
+    @include arrowTransform( $angle, 0, 0px );
+
+    &:hover {
+      @include arrowTransform( $angleHover, 0, 0px );
+    }
+
+    &:active {
+      @include arrowTransform( $angleActive, 1px, 0px );
+    }
+
+    &[data-state=disabled] {
+      @include arrowTransform( 0deg, 5px, 0 );
+
+      &:hover {
+        @include arrowTransform( 0deg, 5px, 0 );
+      }
+    }
+  }
+
+  &[data-state=disabled] {
+    opacity: 0.3;
+    cursor: default;
+  }
+}
