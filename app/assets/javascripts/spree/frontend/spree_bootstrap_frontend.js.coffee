@@ -7,6 +7,9 @@ $ ->
     $this.addClass "active"
     $this.parents(".input-group-btn").find("button").html $this.text() + " <span class='caret'></span>"
     $("#search-select").val $this.data("value")
+    keywords = $('.typeahead').typeahead('val');
+    $(".typeahead").typeahead('val', '').focus().typeahead('val', keywords).focus() if keywords
+
 
   $("#search-bar").on "submit", "form", ->
       false  if $.trim($("#keywords").val()) is ""
