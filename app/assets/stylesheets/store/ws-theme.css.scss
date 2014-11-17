@@ -34,6 +34,8 @@
 //@import "bootstrap/variables";
 @import "ws-variables";
 
+@import "pagination-arrows";
+
 //$screen-xxs:                  520px !default;
 //$screen-xxs-min:              $screen-xxs !default;
 //$carousel-indicator-inverted-active-bg:                $brand-primary !default;
@@ -96,6 +98,8 @@ th.no-border, td.no-border { border: none!important; }
 }
 
 .navbar {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   border: none;
   margin-bottom: 15px;
 }
@@ -116,6 +120,10 @@ th.no-border, td.no-border { border: none!important; }
 
 @import "bootstrap/breadcrumbs";
 @import "bootstrap/pagination";
+
+.pagination {
+  margin: 12px 0;
+}
 @import "bootstrap/pager";
 @import "bootstrap/labels";
 @import "bootstrap/badges";
@@ -314,14 +322,19 @@ body {
 //-----------------------------
 
 #search-bar {
-  text-align: center;
-  margin-top: 45px;
+  text-align: left;
+  margin-top: 50px;
   z-index: 999;
   .btn.adjust-icon {
-    padding: 8px 20px 3px;
+    padding: 9px 20px 3px;
   }
   .form-group {
     width: 100%;
+    margin-bottom: 0;
+    input {
+      top: 3px!important;
+      //height: 33px;
+    }
   }
   .dropdown-menu {
     text-align: left;
@@ -367,7 +380,7 @@ body {
 
 #ws-cart {
   text-align: center;
-  margin-top: 55px;
+  margin-top: 58px;
 
 
   #link-to-cart {
