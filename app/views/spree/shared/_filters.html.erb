@@ -1,43 +1,37 @@
-<!--<% filters = @taxon ? @taxon.applicable_filters : [Spree::Core::ProductFilters.all_taxons] %>
-<% unless filters.empty? %>
-  <%= form_tag '', :method => :get, :id => 'sidebar_products_search' do %>
-    <% params[:search] ||= {} %>
-    <%= hidden_field_tag 'per_page', params[:per_page] %>
-    <% filters.each do |filter| %>
-      <% labels = filter[:labels] || filter[:conds].map {|m,c| [m,m]} %>
-      <% next if labels.empty? %>
-      <div class="navigation" data-hook="navigation">
-        <h4 class="filter-title"> <%= filter[:name] %> </h4>
-        <ul class="list-group">
-          <% labels.each do |nm,val| %>
-            <% label = "#{filter[:name]}_#{nm}".gsub(/\s+/,'_') %>
-            <li class="list-group-item">
-              <input type="checkbox"
-                     id="<%= label %>"
-                     name="search[<%= filter[:scope].to_s %>][]"
-                     value="<%= val %>"
-                     <%= params[:search][filter[:scope]] && params[:search][filter[:scope]].include?(val.to_s) ? "checked" : "" %> />
-              <label class="nowrap" for="<%= label %>"> <%= nm %> </label>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <%= submit_tag Spree.t(:search), :name => nil, :class => 'btn btn-primary' %>
-  <% end %>
-<% end %>
-  -->
-
-
 <% unless @products.empty? %>
-  <%= form_tag '', :method => :get, :id => 'sidebar_products_search' do %>
-    <% params[:search] ||= {} %>
-    <%= hidden_field_tag 'per_page', params[:per_page] %>
-    <% facets = process_facets(@products.facets) %>
-    <%= render :partial => 'spree/shared/filter_price', :locals => { :facet => facets.find {|facet| facet.name == 'price'} } %>
-    <%= render :partial => 'spree/shared/filter_properties', :locals => { :facets => facets.select {|facet| ((facet.name != "price") && (facet.name != "taxons")) && (facet.type == 'terms')} || [] } %>
-    <%= submit_tag Spree.t(:search), :name => nil %>
+  <h4>Nach Eigenschaften filtern</h4>
+
+  <div class="properties panel panel-default">
+    <p class="panel-heading">Preis <%#= link_to 'All Authors &rarr;'.html_safe, search_path(params.merge(a: nil))%></p>
+    <div class="list-group">
+     <%= @products.results.response.response['aggregations']['price_stats'].inspect %>
+    </div>
+  </div>
+
+  <% @searcher.aggregations['properties'].each do |p| %>
+    <% next if p.last.length <= 1 %>
+  <div class="properties panel panel-default">
+    <p class="panel-heading"><%= p.first %><%#= link_to 'All Authors &rarr;'.html_safe, search_path(params.merge(a: nil))%></p>
+    <div class="list-group">
+        <% p.last.each do |v| %>
+         <% v[:value] ||= 'keine Angabe' %>
+        <%=
+            link_to product_path(params.merge(v[:key] => v[:value])),
+                    class: "list-group-item#{' active' if params[v[:key]] == v[:value]}" do
+              v[:value].titleize.html_safe + content_tag(:small, v[:count], class: 'badge').html_safe
+            end
+        %>
+      <% end %>
+    </div>
+  </div>
   <% end %>
+  <%#= form_tag '', :method => :get, :id => 'sidebar_products_search' do %>
+    <%# params[:search] ||= {} %>
+    <%#= hidden_field_tag 'per_page', params[:per_page] %>
+    <%#= hidden_field_tag 'keywords', params[:keywords] if params[:keywords]%>
+    <%# facets = get_facets %>
+    <%#= render :partial => 'spree/shared/filter_price', :locals => { :facet => facets[:price] } %>
+    <%#= render :partial => 'spree/shared/filter_properties', :locals => { :facets => facets[:properties] } if @taxon %>
+    <%#= submit_tag Spree.t(:search), :name => nil %>
+  <%# end %>
 <% end %>
-
-

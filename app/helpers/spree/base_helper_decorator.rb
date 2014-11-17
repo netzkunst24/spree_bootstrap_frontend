@@ -30,18 +30,19 @@ Spree::BaseHelper.module_eval do
 
   def display_price_per(product_or_variant, unit = :square_meter)
     if unit == :square_meter
-      product_or_variant.price_per_unit(current_currency).to_html + '&nbsp;<span class="per-unit">/m²</span>'.html_safe
+      "#{product_or_variant.price_per_unit(current_currency)} &nbsp;<span class='per-unit'>/m²</span>".html_safe
     end
   end
 
-  def seo_url(taxon)
-    if params[:keywords]
-      return spree.nested_taxons_path(taxon.permalink, utf8: params[:utf8], keywords: params[:keywords])
+  #TODO use *args instead of opts = {}
+  def seo_url(taxon, opts = {})
+    keep_params = opts[:keep_params] || false
+    if keep_params
+      return spree.nested_taxons_path(taxon.permalink, keywords: params[:keywords], utf8: params[:utf8])
     else
       return spree.nested_taxons_path(taxon.permalink)
     end
   end
-
 
   def taxons_tree(root_taxon, current_taxon, max_level = 1)
     return '' if max_level < 1 || root_taxon.children.empty? || !root_taxon.visible?
@@ -49,7 +50,7 @@ Spree::BaseHelper.module_eval do
       root_taxon.children.map do |taxon|
         next unless taxon.visible?
         css_class = (current_taxon && current_taxon.self_and_ancestors.include?(taxon)) ? 'list-group-item active' : 'list-group-item'
-        link_to(taxon.name, seo_url(taxon), class: css_class) + taxons_tree(taxon, current_taxon, max_level - 1)
+        link_to("#{taxon.name} <small class='badge'>#{taxon.products.count}</small>".html_safe, seo_url(taxon, {keep_params: true}), class: css_class) + taxons_tree(taxon, current_taxon, max_level - 1)
       end.join("\n").html_safe
     end
   end
@@ -87,9 +88,8 @@ Spree::BaseHelper.module_eval do
 
   def get_categories(opts = {})
     exclude = Array(opts[:not])
-    categories = Spree::Taxonomy.find_by(name: 'Kategorie')
+    categories = Spree::Taxonomy.find_by(name: Spree::Config.category_taxon)
     return categories.root.children.order(:position).reject { |taxon| exclude.include? taxon.name } if categories
-    []
   end
 
   def link_to_wishlist
@@ -102,11 +102,18 @@ Spree::BaseHelper.module_eval do
   end
 
   def category_and_manufacturer(product)
-    category = product.cached_category
-    brand = product.cached_manufacturer
-    category_tag = category.nil? ? '' : content_tag(:span, category.name, class: 'category')
-    brand_tag = brand.nil? ? '' : content_tag(:span, brand.name, class: 'manufacturer', itemprop: 'brand')
+    category = product.category_name
+    brand = product.manufacturer_name
+    category_tag = category.nil? ? '' : content_tag(:span, category, class: 'category')
+    brand_tag = brand.nil? ? '' : content_tag(:span, brand, class: 'manufacturer', itemprop: 'brand')
     brand_tag + ' ' + category_tag
+  end
+
+  #TODO Fishy?
+  def render_with_fallback(partial, fallback, locals)
+    render :partial => partial, :locals => locals
+  rescue ActionView::MissingTemplate
+    render :partial => fallback, :locals => locals
   end
 
 end

@@ -1,17 +1,3 @@
 <% facets.each do |facet| %>
-  <div class="navigation facet" data-hook="navigation">
-    <h4 class="filter-title"><%= facet.name %></h4>
-      <ul class="list-group">
-        <% facet.body["terms"].each do |term| %>
-        <li class="list-group-item">
-          <input type="checkbox"
-                 id="<%= term["term"] %>"
-                 name="search[properties][<%= facet.name %>][]"
-                 value="<%= term["term"] %>"
-                 <%= params[:search][:properties] && params[:search][:properties][facet.name] && params[:search][:properties][facet.name].include?(term["term"]) ? "checked" : "" %> />
-          <label class="nowrap" for="<%= term["term"] %>"> <%= term["term"] %> (<%= term["count"] %>)</label>
-        </li>
-        <% end %>
-      </ul>
-  </div>
+  <%= render_with_fallback("spree/shared/#{facet.name.to_url}_facet", 'spree/shared/default_facet', { facet: facet }) %>
 <% end %>
