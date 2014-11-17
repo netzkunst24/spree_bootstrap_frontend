@@ -1,6 +1,6 @@
 <% @taxons = @taxon && @taxon.parent ? @taxon.parent.children : get_categories %>
-<%= form_tag spree.products_path, :method => :get, class: "navbar-form" do %>
-  <% if @taxon %>
+<%= form_tag spree.products_path, :method => :get, class: '' do %>
+  <% if @taxons %>
     <span class="hidden">
       <%= select_tag :taxon,
                      options_for_select([[Spree.t(:all_departments), '']] +
@@ -11,18 +11,19 @@
 <div class="form-group">
   <div class="input-group">
     <div class="input-group-btn">
-      <% if @taxon %>
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><%= Spree.t(:all) %> <span class="caret"></span></button>
+      <% if @taxons %>
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Alles <span class="caret"></span></button>
       <ul class="dropdown-menu">
+          <li><a href="#" data-value="">Alle Bereiche</a></li>
           <% @taxons.each do |taxon| %>
           <li><a href="#" data-value="<%= taxon.id %>"><%= taxon.name %></a></li>
           <% end %>
       </ul>
       <% end %>
     </div>
-    <%= search_field_tag :keywords, params[:keywords], :placeholder => Spree.t(:search), class: "form-control" %>
-    <!--<span class="input-group-btn"><%= button_tag Spree.t(:search), :name => nil, class: "btn btn-primary" %></span>-->
-    <span class="input-group-btn"><%= button_tag '<span class="glyphicon glyphicon-search"></span>'.html_safe, :name => nil, class: "btn btn-primary adjust-icon" %></span>
+    <%= search_field_tag :keywords, params[:keywords], :placeholder => Spree.t(:search), class: 'form-control typeahead' %>
+    <!--<span class="input-group-btn"><%= button_tag Spree.t(:search), :name => nil, class: 'btn btn-primary' %></span>-->
+    <span class="input-group-btn"><%= button_tag '<span class="glyphicon glyphicon-search"></span>'.html_safe, :name => nil, class: 'btn btn-primary adjust-icon' %></span>
 
   </div>
 </div>

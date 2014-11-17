@@ -1,10 +1,11 @@
 <% content_for :sidebar do %>
   <div data-hook="homepage_sidebar_navigation">
-    <% if "spree/products" == params[:controller] && @taxon %>
+    <%= render :partial => 'spree/shared/taxonomies' %>
+    <%# if "spree/products" == params[:controller] && @taxon %>
       <%= render :partial => 'spree/shared/filters' %>
-    <% else %>
-      <%= render :partial => 'spree/shared/taxonomies' %>
-    <% end %>
+    <%# else %>
+      <%#= render :partial => 'spree/shared/taxonomies' %>
+    <%# end %>
   </div>
 <% end %>
 
@@ -13,8 +14,17 @@
 
   <div data-hook="search_results">
     <% if @products.empty? %>
-      <h6 class="search-results-title"><%= Spree.t(:no_products_found) %></h6>
-    <% else %>
+      <div class="alert alert-warning">
+      <h3 class="search-results-title"><%= Spree.t(:no_products_found) %></h3>
+      <% if @searcher.suggestions.any?  %>
+          <p>Meinten Sie vielleicht
+          <%= @searcher.suggestions.map {|suggestion| suggestion[:text]}.uniq.map do |term|
+            link_to term, spree.products_path(params.merge keywords: term)
+          end.to_sentence(words_connector: ', ', two_words_connector: " #{Spree.t(:or)} ", last_word_connector: " #{Spree.t(:or)} ").html_safe %>?
+          </p>
+      <% end %>
+      </div>
+  <% else %>
       <%= render :partial => 'spree/shared/products', :locals => { :products => @products, :taxon => @taxon } %>
     <% end %>
   </div>
