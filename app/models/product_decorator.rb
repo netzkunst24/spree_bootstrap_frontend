@@ -10,7 +10,7 @@ Spree::Product.class_eval do
   end
 
   #TODO refactor calculate on import!?
-  def price_per_unit(currency)
+  def price_per_unit(currency = Spree::Config[:currency])
     return Spree::Money.new(price_in(currency).price) unless is_flooring?
     Spree::Money.new(price_in(currency).price / content_per_package)
   end
