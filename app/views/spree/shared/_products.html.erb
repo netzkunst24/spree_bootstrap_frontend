@@ -29,12 +29,22 @@
   </div>
 
   <% if paginated_products.respond_to?(:num_pages) %>
-    <div class="col-sm-12">
-      <div class="pull-left">
+    <div id="paginator" class="col-sm-12">
+      <div class="row">
+      <div class="col-sm-3">
+        <%= form_tag do %>
+          <% options_sort = options_for_select([['Preis aufsteigend', 'a_price_per'],['Preis absteigend', 'price_per'],['Name', 'name']], params[:sort] || 'name') %>
+          <%= select_tag(:sort, options_sort, {class: 'form-control'}) %>
+        <% end %>
+      </div>
+      <div class="col-sm-4 entries-info">
         <%= page_entries_info paginated_products, entry_name: Spree.t(:product) %>
       </div>
-      <div class="pull-right">
-        <%= paginate paginated_products, theme: 'twitter-bootstrap-3', left: 1, right: 1, window: 2 %>
+      <div class="col-sm-5">
+        <div class="pull-right">
+          <%= paginate paginated_products, theme: 'twitter-bootstrap-3', left: 1, right: 1, window: 3 %>
+        </div>
+      </div>
       </div>
     </div>
   <% end %>
@@ -59,7 +69,6 @@
           <div class="availability pull-left"><span class="glyphicon glyphicon-clock"></span>Auf Lager</div>
           <div class="rating pull-right">
             <%= render :partial => 'spree/shared/rating_frontend', locals: {product: product, only_stars: true} %>
-
           </div>
         </div>
       </div>

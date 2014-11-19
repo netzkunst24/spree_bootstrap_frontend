@@ -1,10 +1,23 @@
 <% unless @products.empty? %>
+  <% price_stats = @products.results.response.response['aggregations']['price_stats'] %>
   <h4>Nach Eigenschaften filtern</h4>
 
   <div class="properties panel panel-default">
-    <p class="panel-heading">Preis <%#= link_to 'All Authors &rarr;'.html_safe, search_path(params.merge(a: nil))%></p>
+    <p class="panel-heading">Preis<%= '/m²' if Spree::Product.find_by_id(@products.first.id).is_flooring? %> <%#= link_to 'All Authors &rarr;'.html_safe, search_path(params.merge(a: nil))%></p>
     <div class="list-group">
-     <%= @products.results.response.response['aggregations']['price_stats'].inspect %>
+      <div class="list-group-item">
+        <%= form_tag do %>
+          <%= text_field_tag 'price-range', '', data: {
+              min: price_stats[:min]-1,
+              max: price_stats[:max]+1,
+              from: params[:preis_von],
+              to: params[:preis_bis],
+              prefix: '',
+              type: 'double',
+              postfix: Money::Currency.new(Spree::Config[:currency]).symbol }
+          %>
+         <% end %>
+      </div>
     </div>
   </div>
 
@@ -16,7 +29,7 @@
         <% p.last.each do |v| %>
          <% v[:value] ||= 'keine Angabe' %>
         <%=
-            link_to product_path(params.merge(v[:key] => v[:value])),
+            link_to url_for(params.merge(v[:key] => v[:value])),
                     class: "list-group-item#{' active' if params[v[:key]] == v[:value]}" do
               v[:value].titleize.html_safe + content_tag(:small, v[:count], class: 'badge').html_safe
             end

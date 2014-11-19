@@ -1,8 +1,15 @@
-<nav id="taxonomies" class="sidebar-item" data-hook>
-  <% get_taxonomies.each do |taxonomy| %>
-    <% next unless taxonomy.root.visible? %>
-    <%# next if @taxon && taxonomy.root.name == Spree::Config.category_taxon %>
-    <h4 class='taxonomy-root'><%= Spree.t(:shop_by_taxonomy, :taxonomy => taxonomy.name) %></h4>
-    <%= taxons_tree(taxonomy.root, @taxon, Spree::Config[:max_level_in_taxons_menu] || 1) %>
-  <% end %>
-</nav>
+<% if @taxon.present? && @taxon.parent.present? %>
+  <div id="taxonomies">
+    <h1><%= @taxon.name %></h1>
+    <%= link_to 'Alle Kategorien anzeigen', seo_url(Spree::Taxon.find_by name: 'Kategorie'), class: 'show-all-taxons' %>
+  </div>
+<% else %>
+  <nav id="taxonomies" class="sidebar-item" data-hook>
+    <% get_taxonomies.each do |taxonomy| %>
+      <% next unless taxonomy.root.visible? %>
+      <%# next if @taxon && taxonomy.root.name == Spree::Config.category_taxon %>
+      <!--<h4 class='taxonomy-root'><%= Spree.t(:shop_by_taxonomy, :taxonomy => taxonomy.name) %></h4>-->
+      <%= taxons_tree(taxonomy.root, @taxon, Spree::Config[:max_level_in_taxons_menu] || 1) %>
+      <% end %>
+  </nav>
+<% end %>

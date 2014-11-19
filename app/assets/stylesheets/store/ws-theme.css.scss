@@ -121,9 +121,18 @@ th.no-border, td.no-border { border: none!important; }
 @import "bootstrap/breadcrumbs";
 @import "bootstrap/pagination";
 
-.pagination {
+#paginator {
   margin: 12px 0;
+  .pagination {
+    margin-top: 0;
+  }
+
+  .entries-info {
+    text-align: right;
+    margin-top: 8px;
+  }
 }
+
 @import "bootstrap/pager";
 @import "bootstrap/labels";
 @import "bootstrap/badges";
@@ -930,6 +939,23 @@ h1.product-title {
   a {
     color: #333;
   }
+}
+
+#sidebar {
+  div#taxonomies {
+    h1 {
+      margin-top: 15px;
+      margin-bottom: 0;
+    }
+    .show-all-taxons {
+      font-size: 12px;
+      padding-top: 4px;
+      text-decoration: underline;
+      color: #000;
+    }
+    margin-bottom: 25px;
+  }
+
 }
 
 #product-images{

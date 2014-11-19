@@ -533,11 +533,11 @@ $progress-bar-info-bg:        $brand-info !default;
 
 // List group
 // -------------------------
-$list-group-bg:               $body-bg !default;
+$list-group-bg:               #fff !default;
 $list-group-border:           #ddd !default;
 $list-group-border-radius:    $border-radius-base !default;
 
-$list-group-hover-bg:         #fff !default;
+$list-group-hover-bg:         $gray-lighter !default;
 $list-group-active-color:     $component-active-color !default;
 $list-group-active-bg:        $component-active-bg !default;
 $list-group-active-border:    $list-group-active-bg !default;
