@@ -23,15 +23,33 @@
 
   <% @searcher.aggregations['properties'].each do |p| %>
     <% next if p.last.length <= 1 %>
-  <div class="properties panel panel-default">
+     <% facets_with_icons = ['Fuge', 'Ausführung', 'Verlegesystem', 'Farbe'] %>
+      <% icon_list = facets_with_icons.include?(p.first) %>
+  <div class="properties panel panel-default <%= 'icon-list' if icon_list %>">
     <p class="panel-heading"><%= p.first %><%#= link_to 'All Authors &rarr;'.html_safe, search_path(params.merge(a: nil))%></p>
-    <div class="list-group">
-        <% p.last.each do |v| %>
-         <% v[:value] ||= 'keine Angabe' %>
+    <div class="list-group clearfix">
+        <% p.last.each do |prop| %>
+          <% prop[:value] ||= 'k.A.' %>
+          <% v = prop[:value]; k = prop[:key] %>
+          <% v = 'k.A.' if v == 'keine Angabe' %>
+        <% params[k] ||= [] %>
+          <% title = v.html_safe; badge = content_tag(:small, params[k].empty? || params[k].include?(v) ? prop[:count] : '+', class: 'badge').html_safe  %>
+          <% icon = "<svg class='flooring-icon flooring-icon-#{v.downcase.gsub('.','')}'><use xlink:href='#{asset_path('flooring-icons.svg')}#icon-#{v.downcase.gsub('.','')}'></use></svg>".html_safe %>
+          <% icon_tag = icon_list ? icon : '' %>
         <%=
-            link_to url_for(params.merge(v[:key] => v[:value])),
-                    class: "list-group-item#{' active' if params[v[:key]] == v[:value]}" do
-              v[:value].titleize.html_safe + content_tag(:small, v[:count], class: 'badge').html_safe
+            #TODO: REFACTOR TO HELPER
+            if params[k].include?(v)
+              link_to url_for(params.merge({k =>  params[k] - [v]})),
+                      class: "list-group-item active #{'col-sm-4' if icon_list}" do
+                icon_tag.html_safe + title.html_safe + badge.html_safe
+              end
+            elsif prop[:count] == 0 && params[k].empty?
+              content_tag(:span, icon_tag.html_safe + title.html_safe, class: "list-group-item  #{'col-sm-4' if icon_list} #{'disabled' if prop[:count] == 0}")
+            else
+              link_to url_for(params.merge({k =>  params[k] | [v]})),
+                      class: "list-group-item  #{'col-sm-4' if icon_list}" do
+                icon_tag.html_safe + title.html_safe + badge.html_safe
+              end
             end
         %>
       <% end %>

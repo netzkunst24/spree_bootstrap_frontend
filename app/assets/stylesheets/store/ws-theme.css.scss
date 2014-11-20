@@ -77,6 +77,47 @@ th.no-border, td.no-border { border: none!important; }
   color: $brand-warning;
 }
 
+
+.flooring-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.properties.panel.icon-list .panel-heading { margin-bottom: 0px;}
+
+.icon-list .list-group-item {
+  .badge {
+    position: absolute;
+    right: 8px;
+    top: 5px;
+  }
+}
+
+.icon-list .list-group-item {
+  border-top-width: 0!important;
+  color: #999!important;
+  padding-bottom: 0;
+  font-size: 11px;
+  .flooring-icon {
+    fill: #999;
+  }
+}
+
+.icon-list .list-group-item.active {
+  background: #fff!important;
+  border-bottom-width: 0!important;
+  .flooring-icon {
+    fill: #EC6621;
+  }
+}
+
+.icon-list .list-group-item.disabled {
+  color: #999;
+  .flooring-icon {
+    fill: #999;
+  }
+}
+
 @import "bootstrap/dropdowns";
 @import "bootstrap/button-groups";
 @import "bootstrap/input-groups";
