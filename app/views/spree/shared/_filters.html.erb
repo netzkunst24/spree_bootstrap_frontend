@@ -1,9 +1,12 @@
 <% unless @products.empty? %>
   <% price_stats = @products.results.response.response['aggregations']['price_stats'] %>
+  <% #TODO: REFACTOR WHOLE PARTIAL TO HELPER AND SUBPARTIALS e.g. slider iconliststs and normal list
+     #MAYBE PARTE FACETS/AGGS BEFOR STARTING HERE INTO OBJECTS........     .......%>
   <h4>Nach Eigenschaften filtern</h4>
 
   <div class="properties panel panel-default">
     <p class="panel-heading">Preis<%= '/m²' if Spree::Product.find_by_id(@products.first.id).is_flooring? %> <%#= link_to 'All Authors &rarr;'.html_safe, search_path(params.merge(a: nil))%></p>
+
     <div class="list-group">
       <div class="list-group-item">
         <%= form_tag do %>
@@ -14,55 +17,57 @@
               to: params[:preis_bis],
               prefix: '',
               type: 'double',
-              postfix: Money::Currency.new(Spree::Config[:currency]).symbol }
+              postfix: Money::Currency.new(Spree::Config[:currency]).symbol}
           %>
-         <% end %>
+        <% end %>
       </div>
     </div>
   </div>
 
   <% @searcher.aggregations['properties'].each do |p| %>
     <% next if p.last.length <= 1 %>
-     <% facets_with_icons = ['Fuge', 'Ausführung', 'Verlegesystem', 'Farbe'] %>
-      <% icon_list = facets_with_icons.include?(p.first) %>
-  <div class="properties panel panel-default <%= 'icon-list' if icon_list %>">
-    <p class="panel-heading"><%= p.first %><%#= link_to 'All Authors &rarr;'.html_safe, search_path(params.merge(a: nil))%></p>
-    <div class="list-group clearfix">
+    <% icon_list = Spree::Config.facet_types[p.first][:type] == 'icon_list' %>
+    <div class="properties panel panel-default <%= 'icon-list' if icon_list %>">
+      <p class="panel-heading"><%= p.first %><%#= link_to 'All Authors &rarr;'.html_safe, search_path(params.merge(a: nil))%></p>
+
+      <div class="list-group clearfix">
         <% p.last.each do |prop| %>
           <% prop[:value] ||= 'k.A.' %>
           <% v = prop[:value]; k = prop[:key] %>
           <% v = 'k.A.' if v == 'keine Angabe' %>
-        <% params[k] ||= [] %>
-          <% title = v.html_safe; badge = content_tag(:small, params[k].empty? || params[k].include?(v) ? prop[:count] : '+', class: 'badge').html_safe  %>
-          <% icon = "<svg class='flooring-icon flooring-icon-#{v.downcase.gsub('.','')}'><use xlink:href='#{asset_path('flooring-icons.svg')}#icon-#{v.downcase.gsub('.','')}'></use></svg>".html_safe %>
+          <% params[k] ||= [] %>
+          <% title = v.html_safe; badge = content_tag(:small, params[k].empty? || params[k].include?(v) ? prop[:count] : '+', class: 'badge').html_safe %>
+          <% icon = "<svg class='flooring-icon flooring-icon-#{v.downcase.gsub('.', '')}'><use xlink:href='#{asset_path('flooring-icons.svg')}#icon-#{v.downcase.gsub('.', '')}'></use></svg>".html_safe %>
           <% icon_tag = icon_list ? icon : '' %>
-        <%=
-            #TODO: REFACTOR TO HELPER
-            if params[k].include?(v)
-              link_to url_for(params.merge({k =>  params[k] - [v]})),
-                      class: "list-group-item active #{'col-sm-4' if icon_list}" do
-                icon_tag.html_safe + title.html_safe + badge.html_safe
+          <%=
+              if params[k].include?(v)
+                # Value is already in URI link_to remove it
+                link_to url_for(params.merge({k => params[k] - [v]})),
+                        class: "list-group-item active #{'col-sm-4' if icon_list}" do
+                  icon_tag.html_safe + title.html_safe + badge.html_safe
+                end
+              elsif prop[:count] == 0 && params[k].empty?
+                # Property is not in URI and the aggregation size is 0 only show disabled text
+                content_tag(:span, icon_tag.html_safe + title.html_safe, class: "list-group-item  #{'col-sm-4' if icon_list} #{'disabled' if prop[:count] == 0}")
+              else
+                # Property can be added
+                link_to url_for(params.merge({k => params[k] | [v]})),
+                        class: "list-group-item  #{'col-sm-4' if icon_list}" do
+                  icon_tag.html_safe + title.html_safe + badge.html_safe
+                end
               end
-            elsif prop[:count] == 0 && params[k].empty?
-              content_tag(:span, icon_tag.html_safe + title.html_safe, class: "list-group-item  #{'col-sm-4' if icon_list} #{'disabled' if prop[:count] == 0}")
-            else
-              link_to url_for(params.merge({k =>  params[k] | [v]})),
-                      class: "list-group-item  #{'col-sm-4' if icon_list}" do
-                icon_tag.html_safe + title.html_safe + badge.html_safe
-              end
-            end
-        %>
-      <% end %>
+          %>
+        <% end %>
+      </div>
     </div>
-  </div>
   <% end %>
   <%#= form_tag '', :method => :get, :id => 'sidebar_products_search' do %>
-    <%# params[:search] ||= {} %>
-    <%#= hidden_field_tag 'per_page', params[:per_page] %>
-    <%#= hidden_field_tag 'keywords', params[:keywords] if params[:keywords]%>
-    <%# facets = get_facets %>
-    <%#= render :partial => 'spree/shared/filter_price', :locals => { :facet => facets[:price] } %>
-    <%#= render :partial => 'spree/shared/filter_properties', :locals => { :facets => facets[:properties] } if @taxon %>
-    <%#= submit_tag Spree.t(:search), :name => nil %>
+  <%# params[:search] ||= {} %>
+  <%#= hidden_field_tag 'per_page', params[:per_page] %>
+  <%#= hidden_field_tag 'keywords', params[:keywords] if params[:keywords]%>
+  <%# facets = get_facets %>
+  <%#= render :partial => 'spree/shared/filter_price', :locals => { :facet => facets[:price] } %>
+  <%#= render :partial => 'spree/shared/filter_properties', :locals => { :facets => facets[:properties] } if @taxon %>
+  <%#= submit_tag Spree.t(:search), :name => nil %>
   <%# end %>
 <% end %>
