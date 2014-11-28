@@ -24,7 +24,7 @@
         <% end %>
       </div>
     <% elsif params.key?(:keywords) %>
-      <h6 class="search-results-title"><%= Spree.t(:search_results, :keywords => h(params[:keywords])) %> <%= products.total %> <%= Spree.t(:articles) %></h6>
+      <h6 class="search-results-title"><%= Spree.t(:search_results, :keywords => h(params[:keywords])) %> <%= products.total_count %> <%= Spree.t(:articles) %></h6>
     <% end %>
   </div>
 
@@ -79,5 +79,7 @@
 <% end %>
 
 <% if paginated_products.respond_to?(:num_pages) %>
+    <div class="pull-right">
   <%= paginate paginated_products, theme: 'twitter-bootstrap-3', left: 1, right: 1  %>
+    </div>
 <% end %>
