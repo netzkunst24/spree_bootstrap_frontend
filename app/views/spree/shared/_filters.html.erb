@@ -11,10 +11,7 @@
       <div class="list-group-item">
         <%= form_tag do %>
           <%= text_field_tag 'price-range', '', data: {
-              min: price_stats[:min]-1,
-              max: price_stats[:max]+1,
-              from: params[:preis_von],
-              to: params[:preis_bis],
+              values: @searcher.prices.join(','),
               prefix: '',
               type: 'double',
               postfix: Money::Currency.new(Spree::Config[:currency]).symbol}
@@ -23,6 +20,7 @@
       </div>
     </div>
   </div>
+
 
   <% @searcher.aggregations['properties'].each do |p| %>
     <% next if p.last.length <= 1 %>
