@@ -1,7 +1,7 @@
 Spree::Product.class_eval do
   def content_per_package
-    value = /\d+(,|.)\d*/.match(property(Spree::Config.content_per_package_property))
-    return nil if value.nil?
+    value = /\d+((,|.)\d)*/.match(property(Spree::Config.content_per_package_property))
+    return nil if value.nil? || value[0].to_d <= 0
     value[0].gsub(',', '.').to_f
   end
 
