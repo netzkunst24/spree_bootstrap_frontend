@@ -1,4 +1,13 @@
 Spree::BaseHelper.module_eval do
+
+  def nav_link(link_text, link_path)
+    class_name = current_page?(link_path) ? 'active ' : ''
+
+    content_tag(:li, :class => class_name + 'dropdown megadrop-fw') do
+      link_to link_text, link_path
+    end
+  end
+
   def link_to_cart(text = nil)
     return "" if current_spree_page?(spree.cart_path)
 
