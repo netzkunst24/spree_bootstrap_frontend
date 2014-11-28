@@ -78,14 +78,23 @@ th.no-border, td.no-border { border: none!important; }
 }
 
 
-.flooring-icon {
+.flooring-icon, .color-icon {
   width: 50px;
   height: 50px;
 }
 
-.properties.panel.icon-list .panel-heading { margin-bottom: 0px;}
+.properties.panel .panel-heading {
+  small {
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 75%;
+    color: #000;
+  }
+  margin-bottom: 0px;
+}
 
-.icon-list .list-group-item {
+.properties.panel.preis .list-group-item { padding: 10px 20px 5px;  }
+
+.icon_list .list-group-item {
   .badge {
     position: absolute;
     right: 8px;
@@ -93,8 +102,8 @@ th.no-border, td.no-border { border: none!important; }
   }
 }
 
-.icon-list .list-group-item {
-  border-top-width: 0!important;
+.icon_list .list-group-item {
+  border-width: 0!important;
   color: #999!important;
   padding-bottom: 0;
   font-size: 11px;
@@ -103,15 +112,19 @@ th.no-border, td.no-border { border: none!important; }
   }
 }
 
-.icon-list .list-group-item.active {
+.icon_list .list-group-item.active {
   background: #fff!important;
   border-bottom-width: 0!important;
+  .badge {
+    color: #fff;
+    background:$brand-primary;
+  }
   .flooring-icon {
-    fill: #EC6621;
+    fill: $brand-primary;
   }
 }
 
-.icon-list .list-group-item.disabled {
+.icon_list .list-group-item.disabled {
   color: #999;
   .flooring-icon {
     fill: #999;
@@ -119,6 +132,11 @@ th.no-border, td.no-border { border: none!important; }
 }
 
 @import "bootstrap/dropdowns";
+
+#ws-user-nav .dropdown-menu {
+  z-index: 2000;
+}
+
 @import "bootstrap/button-groups";
 @import "bootstrap/input-groups";
 @import "bootstrap/navs";
@@ -126,15 +144,18 @@ th.no-border, td.no-border { border: none!important; }
 
 @import "triangle";
 
-.navbar-inverse .navbar-nav > li > a {
-  font-size: 19px;
-  &:hover {
-    @include box-shadow(0 6px 12px rgba(0,0,0,.175));
-    z-index: $zindex-popover;
-  }
-  @media (min-width:$screen-md-min) {
-    padding-left: 24px;
-    padding-right: 24px;
+.navbar-inverse .navbar-nav > li {
+  &.active {@include box-shadow(0px 0px 6px rgba(0, 0, 0, .175));}
+  & > a {
+    font-size: 19px;
+    &:hover {
+      @include box-shadow(0 6px 6px rgba(0, 0, 0, .175));
+      z-index: $zindex-popover;
+    }
+    @media (min-width: $screen-md-min) {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
   }
 }
 
@@ -376,7 +397,8 @@ body {
   margin-top: 50px;
   z-index: 999;
   .btn.adjust-icon {
-    padding: 9px 20px 3px;
+    padding: 8px 20px 4px;
+    line-height: 1.4;
   }
   .form-group {
     width: 100%;
@@ -464,7 +486,10 @@ body {
         font-weight: normal;
         line-height: 1;
         font-size: 14px;
-        padding-left: 4px;
+        padding-left: 8px;
+        &.size-2 { font-size: 12px; }
+        &.size-3 { font-size: 10px; }
+        &.size-4 {}
       }
       span {
         z-index: $zindex-tooltip;
