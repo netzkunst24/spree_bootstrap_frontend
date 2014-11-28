@@ -1,5 +1,7 @@
 $ ->
-  $("#search-bar button.dropdown-toggle").html $("#search-select option:selected").text() + " <span class='caret'></span>"
+  selected_taxon = $("#search-select option:selected").text()
+  $("#search-bar button.dropdown-toggle").html selected_taxon + " <span class='caret'></span>"
+  $("#search-bar form").attr('action', '/t/kategorie/' + selected_taxon.toLowerCase()) if selected_taxon
   $("#search-bar .dropdown-menu").on "click", "li a", (event) ->
     event.preventDefault()
     $this = $(this)
@@ -9,6 +11,7 @@ $ ->
     $("#search-select").val $this.data("value")
     keywords = $('.typeahead').typeahead('val');
     $(".typeahead").typeahead('val', '').focus().typeahead('val', keywords).focus() if keywords
+    $this.parents('form').attr('action', '/t/kategorie/' + $this.text().toLowerCase()) if $this.text()
 
 
   $("#search-bar").on "submit", "form", ->
