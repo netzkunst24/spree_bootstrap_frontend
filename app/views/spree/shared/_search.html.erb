@@ -1,13 +1,14 @@
 <% @taxons = @taxon && @taxon.parent ? @taxon.parent.children : get_categories %>
-<%= form_tag spree.products_path, :method => :get, class: '' do %>
-  <% if @taxons %>
+<% if @taxons %>
     <span class="hidden">
       <%= select_tag :taxon,
                      options_for_select([[Spree.t(:all_departments), '']] +
                                                 @taxons.map {|t| [t.name, t.id]},
                                         @taxon ? @taxon.id : params[:taxon]), 'aria-label' => 'Taxon', id: 'search-select' %>
     </span>
-    <% end %>
+<% end %>
+<%= form_tag spree.products_path, :method => :get, class: '' do %>
+
 <div class="form-group">
   <div class="input-group">
     <div class="input-group-btn">
