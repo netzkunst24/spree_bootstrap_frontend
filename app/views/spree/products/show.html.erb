@@ -60,12 +60,13 @@
 
     <div class="col-md-6">
         <%= render partial: 'spree/shared/related_products', locals: {related_type: 'accessories', headline: Spree.t(:related_accessories)} %>
+      <div class="col-md-12" data-hook="product_ratings">
+      </div>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-md-12" data-hook="product_ratings">
-    </div>
+
   </div>
 
   <div class="row">
