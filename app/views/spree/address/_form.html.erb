@@ -1,14 +1,13 @@
 <% address_id = address_type.chars.first %>
 <div class="inner row" data-hook=<%="#{address_type}_inner" %>>
 
-  <div class="control-group radio_buttons col-xs-12" id=<%="#{address_id}salutation" %>>
-    <%= form.label :salutation, Spree.t(:salutation), class: 'radio_buttons control_label' %><span class="required">*</span>
+  <div class="form-group radio_buttons col-xs-12" id=<%="#{address_id}salutation" %>>
     <div class="controls">
-      <%= label :salutation, :m, class: 'radio inline' do %>
+      <%= label :salutation, :m, class: 'radio-inline' do %>
         <%= form.radio_button :salutation, 'm', :class => 'radio_buttons required' %>
         Herr
       <% end %>
-      <%= label :salutation, :f, class: 'radio inline' do %>
+      <%= label :salutation, :f, class: 'radio-inline' do %>
         <%= form.radio_button :salutation, 'f', :class => 'radio_buttons required' %>
         Frau
       <% end %>
@@ -43,7 +42,7 @@
   <div class="field form-group <%= 'hidden' if 1 >= available_countries.size %>" id=<%="#{address_id}country" %>>
     <%= form.label :country_id, Spree.t(:country), class: 'sr-only' %><span class="required sr-only">*</span>
     <span id=<%="#{address_id}country-selection" %>>
-      <%= form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'form-control required '} %>
+      <%= form.collection_select :country_id, available_countries, :id, :name, {}, {class: 'form-control required '} %>
     </span>
   </div>
 

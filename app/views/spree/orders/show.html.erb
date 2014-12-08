@@ -1,0 +1,32 @@
+<fieldset id="order_summary" data-hook>
+ <!-- <legend><%= Spree.t(:order_number, :number => @order.number) %></legend>-->
+  <h1><%= accurate_title %></h1>
+
+  <div id="order" data-hook>
+    <% if flash[:commerce_tracking] %>
+        <h1><%= Spree.t(:thank_you_for_your_order) %></h1>
+    <% end %>
+    <% if @order.payments.select { |p| p.payment_method.type == 'Spree::PaymentMethod::Check' }.present? && @order.payments.first.state != 'completed' %>
+        <div class="well">
+            <p>Sie haben die Zahlung per Vorkasse gewählt. Bitte überweisen Sie die Gesamtsumme auf folgendes Konto:</p>
+            <p>Volksbank Lüneburger Heide<br>
+              BIC:  GENODEF1NBU<br>
+              IBAN: DE45 2406 0300 8523 0510 01<br>
+              Verwendugszweck: <%= @order.number %>
+            </p>
+        </div>
+    <% end %>
+    <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
+
+    <br class="clear" />
+
+    <p data-hook="links">
+      <%= link_to Spree.t(:back_to_store), spree.root_path, :class => 'btn btn-primary' %>
+      <% unless flash[:commerce_tracking] %>
+          <% if try_spree_current_user && respond_to?(:spree_account_path) %>
+              <%= link_to Spree.t(:my_account), spree_account_path, :class => 'btn btn-primary' %>
+          <% end %>
+      <% end %>
+    </p>
+  </div>
+</fieldset>

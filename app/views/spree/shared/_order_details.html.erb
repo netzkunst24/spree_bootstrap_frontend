@@ -1,22 +1,19 @@
 <div class="row steps-data">
 
-  <% if order.has_step?("address") %>
-
-    <% if order.has_step?("delivery") %>
+  <% if order.has_step?('address') %>
       <div class="col-md-3" data-hook="order-ship-address">
-        <h4><%= Spree.t(:shipping_address) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:address) unless @order.completed? %></h4>
+        <h4><%= Spree.t(:shipping_address) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:address), class: 'small' unless @order.completed? %></h4>
         <%= render :partial => 'spree/shared/address', :locals => { :address => order.ship_address } %>
       </div>
-    <% end %> 
 
     <div class="col-md-3" data-hook="order-bill-address">
-      <h4><%= Spree.t(:billing_address) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:address) unless @order.completed? %></h4>
+      <h4><%= Spree.t(:billing_address) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:address), class: 'small' unless @order.completed? %></h4>
       <%= render :partial => 'spree/shared/address', :locals => { :address => order.bill_address } %>
     </div>
 
-    <% if @order.has_step?("delivery") %>
+    <% if @order.has_step?('delivery') && @order.needs_delivery? %>
       <div class=" col-md-3">
-        <h4><%= Spree.t(:shipments) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:delivery) unless @order.completed? %></h4>
+        <h4><%= Spree.t(:shipments) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:delivery), class: 'small' unless @order.completed? %></h4>
         <div class="delivery">
           <% order.shipments.each do |shipment| %>
             <%= shipment.stock_location.name %>
@@ -29,8 +26,8 @@
     <% end %>
   <% end %>
 
-  <div class="col-md-3">
-    <h4><%= Spree.t(:payment_information) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:payment) unless @order.completed? %></h4>
+  <div class="col-md-4">
+    <h4><%= Spree.t(:payment_information) %> <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:payment), class: 'small' unless @order.completed? %></h4>
     <div class="payment-info">
       <% order.payments.valid.each do |payment| %>
         <%= render payment%><br/>
@@ -71,11 +68,11 @@
         <td data-hook="order_item_description">
           <h4><%= item.variant.product.name %></h4>
           <%= truncated_product_description(item.variant.product) %>
-          <%= "(" + item.variant.options_text + ")" unless item.variant.option_values.empty? %>
+          <%= '(' + item.variant.options_text + ')' unless item.variant.option_values.empty? %>
         </td>
-        <td data-hook="order_item_price" class="lead text-primary price"><span><%= item.single_money.to_html %></span></td>
+        <td data-hook="order_item_price" class="price"><span><%= item.single_money.to_html %></span></td>
         <td data-hook="order_item_qty"><%= item.quantity %></td>
-        <td data-hook="order_item_total" class="lead text-primary total"><span><%= item.display_amount.to_html %></span></td>
+        <td data-hook="order_item_total" class="total"><span><%= item.display_amount.to_html %></span></td>
       </tr>
     <% end %>
   </tbody>

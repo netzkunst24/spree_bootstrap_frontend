@@ -21,7 +21,9 @@
       <span class="locality"><%= address.city %></span>
       <span class="region"><%= address.state_text %></span>
       <span class="postal-code"><%= address.zipcode %></span>
-      <div class="country-name"><%= address.country.try(:name) %></div>
+      <% unless address.country.try(:name) == 'Germany' %>
+        <div class="country-name"><%= address.country.try(:name) %></div>
+      <% end %>
     </div>
   </div>
   <% unless address.phone.blank? %>

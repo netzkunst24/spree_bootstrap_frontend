@@ -12,15 +12,14 @@
   <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
 <!-- ENV = <%= Rails.env %> -->
     <%= render :partial => 'spree/shared/header' %>
-
     <div class="container">
+      <%= flash_messages %>
       <div class="row" data-hook>
         <%= breadcrumbs(@taxon) %>
         <%= render :partial => 'spree/home/first_row' if content_for? :first_row %>
       </div>
       <div class="row">
         <div id="content" class="<%= !content_for?(:sidebar) ? "col-sm-12" : "col-sm-8 col-md-9" %>" data-hook>
-          <%= flash_messages %>
           <%= yield %>
         </div>
         <%= yield :templates %>

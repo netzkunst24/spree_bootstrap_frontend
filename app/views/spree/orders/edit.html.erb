@@ -1,95 +1,85 @@
 <% @body_id = 'cart' %>
 
 <% content_for :sidebar_right do %>
-  <div class="list-group">
-    <div href="#" class="list-group-item">
-      <h4 class="list-group-item-heading">Service und Sicherheit</h4>
-      <p class="list-group-item-text">
-        <ul>
-          <li>Profis im Kundenservice</li>
+    <div class="list-group">
+      <div href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Service und Sicherheit</h4>
+        <ul class="list-unstyled icon-list plus list-group-item-text">
+          <li>Beratung vom Profi</li>
           <li>Kostenlose Retouren</li>
-          <li>Sichere Zahlung mit SSL-Verschlüsselung</li>
-          <li>...</li>
+          <li>Sichere Zahlung</li>
+          <li>SSL-Verschlüsselung</li>
         </ul>
-      </p>
+      </div>
+      <div href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Zahlungsarten</h4>
+        <%= payment_methods type: :symbol, css_class: 'list-group-item-text' %>
+      </div>
+      <div href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Versand</h4>
+        <p class="list-group-item-text">Ihre Ware wird sicher per Spedition geliefert. Dafür zahlen Sie nichst!</p>
+      </div>
+      <div href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Kontakt</h4>
+        <p class="list-group-item-text">
+          0 41 31 / 927 968 6<br>
+          <small>Mo-Fr: 9-19 Uhr, Sa: 9-17 Uhr</small><br><br>
+          kundenservice@meinwohnstore.de
+        </p>
+      </div>
     </div>
-    <div href="#" class="list-group-item">
-      <h4 class="list-group-item-heading">Zahlungsarten</h4>
-      <%= payment_methods %>
-    </div>
-    <div href="#" class="list-group-item">
-      <h4 class="list-group-item-heading">Versand</h4>
-      <p class="list-group-item-text">Ihre Ware wird sicher per Spedition geliefert. Dafür zahlen Sie ab einem Bestellwert von 250€ nichst!</p>
-    </div>
-    <div href="#" class="list-group-item">
-      <h4 class="list-group-item-heading">Kontakt</h4>
-      <p class="list-group-item-text">0 41 32 / 999 39 00**</p>
-      <p class="list-group-item-text"><small>Mo-Fr: 9-19 Uhr, Sa: 9-17 Uhr<br>**dtms, 14ct./min. aus dem deutschen Festnetz; Mobilfunk max 42 ct./min</small>small></p>
-    </div>
-    <div href="#" class="list-group-item">
-      <h4 class="list-group-item-heading">Hilfe</h4>
-      <p class="list-group-item-text">FAQ</p>
-    </div>
-  </div>
 <% end %>
 
-
-<h1><%= Spree.t(:shopping_cart) %></h1>
-
 <% if @order.line_items.empty? %>
-
-  <div data-hook="empty_cart">
-    <div class="alert alert-info"><%= Spree.t(:your_cart_is_empty) %></div>
-    <p><%= link_to Spree.t(:continue_shopping), products_path, :class => 'btn btn-default' %></p>
-  </div>
+    <h1><%= Spree.t(:shopping_cart) %></h1>
+    <div data-hook="empty_cart">
+      <div class="alert alert-info"><%= Spree.t(:your_cart_is_empty) %></div>
+      <p><%= link_to Spree.t(:continue_shopping), products_path, :class => 'btn btn-default' %></p>
+    </div>
 
 <% else %>
-  <div data-hook="outside_cart_form">
-    <%= form_for @order, :url => update_cart_path, :html => {:id => 'update-cart'} do |order_form| %>
+    <div data-hook="outside_cart_form">
+      <%= form_for @order, :url => update_cart_path, :html => {:id => 'update-cart'} do |order_form| %>
+          <div data-hook="inside_cart_form" class="row">
+            <h1 class="col-md-4"><%= Spree.t(:shopping_cart) %></h1>
 
-      <div data-hook="inside_cart_form" class="row">
-        <div class="links col-md-12 text-right pull-right navbar-form" data-hook="cart_buttons">
-          <%= link_to Spree.t(:continue_shopping), products_path, :class => 'continue btn btn-default' %>
-          <%= button_tag :class => 'btn btn-primary', :id => 'checkout-link-top', :name => 'checkout' do %>
-            <%= Spree.t(:checkout) %> <span class="glyphicon glyphicon-chevron-right"></span>
-          <% end %>
-          <br>
-        </div>
+            <div class="links col-md-6 text-right pull-right navbar-form" data-hook="cart_buttons">
+              <%= link_to Spree.t(:continue_shopping), products_path, :class => 'continue btn btn-default' %>
+              <%= button_tag :class => 'btn btn-primary', :id => 'checkout-link-top', :name => 'checkout' do %>
+                  <%= Spree.t(:checkout) %> <span class="glyphicon glyphicon-chevron-right"></span>
+              <% end %>
+              <br>
+            </div>
 
-        <div data-hook="cart_items" class="col-md-12">
-          <%= render :partial => 'form', :locals => { :order_form => order_form } %>
-        </div>
+            <div data-hook="cart_items" class="col-md-12">
+              <%= render :partial => 'form', locals: {order_form: order_form} %>
+            </div>
 
-        <div id="subtotal" data-hook class="well col-md-12 text-right">
-          <%= Spree.t(:subtotal) %>: <span class="lead text-primary order-total"><%= @order.display_total.to_html %></span>
-        </div>
+            <div id="subtotal" data-hook class="col-md-12 text-right">
+              <div>
+                <%= Spree.t(:subtotal) %>:
+                <span class="lead text-primary order-total"><%= @order.display_total.to_html %></span>
+              </div>
+            </div>
 
-        <div class="links col-md-6 navbar-form pull-right text-right" data-hook="cart_buttons">
-          <div class="input-group">
-            <%= order_form.text_field :coupon_code, :size => 10, :placeholder => Spree.t(:coupon_code), class: "form-control" %>
-            <span class="input-group-btn">
+            <div class="links col-md-6 navbar-form pull-right text-right" data-hook="cart_buttons">
+              <div class="input-group">
+                <%= order_form.text_field :coupon_code, :size => 15, :placeholder => Spree.t(:coupon_code), class: 'form-control' %>
+                <span class="input-group-btn">
               <%= button_tag :class => 'btn btn-default', :id => 'update-button' do %>
                 <%= Spree.t(:add) %>
               <% end %>
             </span>
+              </div>
+              <%= button_tag :class => 'btn btn-default', :id => 'update-button' do %>
+                  <%= Spree.t(:update) %>
+              <% end %>
+              <%= button_tag :class => 'btn btn-primary', :id => 'checkout-link', name: 'checkout' do %>
+                  <%= Spree.t(:checkout) %> <span class="glyphicon glyphicon-chevron-right"></span>
+              <% end %>
+            </div>
           </div>
-          <%= button_tag :class => 'btn btn-default', :id => 'update-button' do %>
-            <%= Spree.t(:update) %>
-          <% end %>
-          <%= button_tag :class => 'btn btn-primary', :id => 'checkout-link', :name => 'checkout' do %>
-            <%= Spree.t(:checkout) %> <span class="glyphicon glyphicon-chevron-right"></span>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <div id="empty-cart" class="col-md-6 pull-left" data-hook>
-    <%= form_tag empty_cart_path, :method => :put do %>
-      <p id="clear_cart_link" data-hook>
-        <%= submit_tag Spree.t(:empty_cart), :class => 'btn btn-default' %>
-      </p>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
 
 <% end %>

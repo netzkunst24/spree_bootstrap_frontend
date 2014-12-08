@@ -82,15 +82,22 @@ Spree::BaseHelper.module_eval do
     content_tag(:nav, crumb_list, id: 'breadcrumbs', class: 'col-md-12')
   end
 
-  def payment_methods(opts = {})
-    #TODO defaults and merge hash ?
-    icon = opts[:icon] || false
-    link = opts[:link] || false
-    content_tag :ul, class: 'payment-methods' do
+  def payment_methods(type: :text, css_class: '')
+    classes = type == :symbol ? 'payment-methods list-inline symbol ' + css_class.to_s : type.to_s + ' payment_methods ' + css_class.to_s
+    content_tag :ul, class: classes do
       Spree::PaymentMethod.available(:front_end).collect do |payment|
-        icon_tag = icon ?  tag(:span, class: 'glyphicon glyphicon-chevron-right') : ''
-        link_tag = link ?  link_to(payment.name, '#') : payment.name
-        concat content_tag :li, (link_tag + icon_tag).html_safe, class: payment.name.downcase
+        p = payment.name
+        p = type == :link ?  link_to(p, '#') : p
+        p = type == :bullet_icon ?  p + tag(:span, class: 'glyphicon glyphicon-chevron-right') : p
+        p = type == :symbol ? tag(:span, class: "pf pf-#{payment.name.downcase}") : p
+        if type == :symbol && payment.name == 'Kreditkarte'
+          concat content_tag :li, tag(:span, class: "pf pf-mastercard"), class: payment.name.downcase
+          concat content_tag :li, tag(:span, class: "pf pf-visa"), class: payment.name.downcase
+        elsif type == :symbol && payment.name == 'Vorkasse'
+          concat content_tag :li, payment.name, class: payment.name.downcase
+        else
+          concat content_tag :li, p.html_safe, class: payment.name.downcase
+        end
       end
     end
   end
@@ -103,7 +110,7 @@ Spree::BaseHelper.module_eval do
 
   def link_to_wishlist
     if spree_current_user
-      #TODO Wishlist Size Bdge is onlly form first/default list either allow only one list or count all or remove badge!
+      #TODO Wishlist Size Bdge is only form first/default list either allow only one list or count all or remove badge!
       wishlist_length = spree_current_user.wishlist.wished_products.length
       text = "Merkliste <span class='badge'>#{wishlist_length}</span>".html_safe
       link_to text, spree.wishlists_path

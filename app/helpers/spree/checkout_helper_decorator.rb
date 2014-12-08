@@ -1,8 +1,9 @@
 Spree::CheckoutHelper.module_eval do
 	def checkout_progress
       states = checkout_states
-      items = states.map do |state|
-        text = Spree.t("order_state.#{state}").titleize
+      items = states.map.with_index do |state, index|
+        next if state == 'delivery' && !@order.needs_delivery?
+        text = "#{index + 1}. #{Spree.t('order_state.' + state).titleize}"
 
         css_classes = []
         current_index = states.index(@order.state)

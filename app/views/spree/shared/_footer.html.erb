@@ -3,30 +3,27 @@
   <div class="container">
     <div class="row ws-footer-toprow">
       <div id="footer-left" class="col-xs-9" data-hook>
-        <span class="ws-font-catch">Fragen? Rufen Sie unsere WohnStore-Profis an: <span>0 41 32 / 999 39 00</span></span>
-      </div>
-      <div id="footer-right" class="col-xs-3">
-        <ul id="ws-social" class="ws-social list-inline">
-          <li class="ws-facebook">facebook</li>
-          <li class="ws-twitter">twitter</li>
-          <li class="ws-feed">feed</li>
-        </ul>
+        <span class="ws-font-catch">Fragen? Rufen Sie unsere WohnStore-Profis an: <span>0 41 31 / 927 968 6</span></span>
       </div>
     </div>
 
     <div class="row ws-footer-mainrow">
+      <% unless @body_id == 'checkout' %>
       <div id="footer-first" class="col-sm-3" data-hook>
         <h3>Service</h3>
       </div>
-      <div id="footer-second" class="col-sm-3" data-hook>
-        <h3>meinWohnStore</h3>
+      <% end %>
+      <div id="footer-second" class="<%= @body_id == 'checkout' ? 'col-sm-6' : 'col-sm-3' %>" data-hook>
+        <% unless @body_id == 'checkout' %><h3>meinWohnStore</h3><% end %>
       </div>
+      <% unless @body_id == 'checkout' %>
       <div id="footer-third" class="col-sm-3" data-hook>
         <h3>Zahlungsarten</h3>
-        <%= payment_methods({icon: true}) %>
+        <%= payment_methods type: :bullet_icon %>
       </div>
       <div id="footer-fourth" class="col-sm-3" data-hook>
       </div>
+      <% end %>
     </div>
   </div>
 </footer>
