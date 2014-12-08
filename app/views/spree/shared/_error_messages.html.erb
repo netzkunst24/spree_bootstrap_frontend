@@ -4,9 +4,9 @@
     <p><%= Spree.t(:there_were_problems_with_the_following_fields) %>:</p>
      <ul>
      <% target.errors.full_messages.each do |msg| %>
-       <li><%= msg %></li>
+           <%# TODO remove Hacky removal of untranslated "payments klarna" in front of each validation error %>
+       <li><%= msg.gsub('Payments klarna','') %></li>
      <% end %>
      </ul>
-     <br/>
   </div>
 <% end %>
