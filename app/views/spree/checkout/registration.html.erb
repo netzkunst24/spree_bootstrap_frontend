@@ -1,18 +1,20 @@
+<% @body_id = 'checkout' %>
+
 <% content_for :sidebar_right do %>
-  <%= render :partial => 'spree/shared/mini_order_details', locals: {order: @order} %>
+  <%= render partial: 'spree/shared/mini_order_details', locals: {order: @order} %>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => {:target => @user} %>
+<%= render partial: 'spree/shared/error_messages', locals: {target: @user} %>
 <h1><%= Spree.t(:registrate) %></h1>
 <div id="registration" class="row" data-hook>
   <div id="login">
     <div class="col-md-4">
-      <%= render :partial => 'spree/shared/login' %>
+      <%= render partial: 'spree/shared/login' %>
     </div>
   </div>
   <div id="account">
     <div class="col-md-4">
-      <%= render :partial => 'new_user' %>
+      <%= render partial: 'new_user' %>
     </div>
   </div>
   <% if Spree::Config[:allow_guest_checkout] %>
@@ -22,15 +24,12 @@
           <h3 class="panel-title"><%= Spree.t(:guest_user_account) %><br><small><%= Spree.t(:checkout_without_registration) %></small></h3>
         </div>
         <div id="guest_checkout" class="panel-body" data-hook>
-          <% if flash[:registration_error] %>
-            <div class='flash error'><%= flash[:registration_error] %></div>
-          <% end %>
-          <%= form_for @order, :url => update_checkout_registration_path, :method => :put, :html => {:id => 'checkout_form_registration'} do |f| %>
-            <p>
-              <%= f.email_field :email, :class => 'form-control title', :placeholder => Spree.t(:email) %>
-            </p>
+          <%= form_for @order, url: update_checkout_registration_path, method: :put, html: { id: 'checkout_form_registration' } do |f| %>
+            <div class="form-group">
+              <%= f.email_field :email, class: 'form-control title', placeholder: Spree.t(:email) %>
+            </div>
 
-            <p><%= f.submit Spree.t(:continue), :class => 'btn btn-lg btn-primary btn-block' %></p>
+            <div class="form-group"><%= f.submit Spree.t(:continue).capitalize, :class => 'btn btn-primary btn-block' %></div>
           <% end %>
         </div>
       </div>

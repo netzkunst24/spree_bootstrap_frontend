@@ -1,4 +1,6 @@
-<p class="login_newsletter_subscribe">
-  <%= f.check_box :is_mail_list_subscriber, :class => 'title' %>&nbsp;
-  <%= f.label :is_mail_list_subscriber, Spree.t(:do_subscribe_to_our_mailing_list) %>
-</p>
+<div class="checkbox login_newsletter_subscribe">
+  <%= f.label :is_mail_list_subscriber do %>
+    <%= f.check_box :is_mail_list_subscriber, :class => 'title' %>
+      <%= Spree.t(:do_subscribe_to_our_mailing_list) %>
+  <% end %>
+</div>
