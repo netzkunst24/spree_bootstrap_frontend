@@ -1,7 +1,8 @@
 <% if @taxon.present? && @taxon.parent.present? %>
   <div id="taxonomies">
     <h1><%= @taxon.name %></h1>
-    <%= link_to 'Alle Kategorien anzeigen', seo_url(Spree::Taxon.find_by name: 'Kategorie'), class: 'show-all-taxons' %>
+    <%# TODO Config Kategorie Taxon in initializer not on every render of this partial...%>
+    <%= link_to 'Alle Kategorien anzeigen', seo_url(Spree::Taxon.find_by name: Spree::Config.category_taxon), class: 'show-all-taxons' %>
   </div>
 <% else %>
   <nav id="taxonomies" class="sidebar-item" data-hook>
