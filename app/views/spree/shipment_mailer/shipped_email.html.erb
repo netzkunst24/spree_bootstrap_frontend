@@ -1,0 +1,100 @@
+<table>
+  <tr>
+    <td>
+      <p class="lede">
+        <%= Spree.t('shipment_mailer.shipped_email.dear_customer') %>
+      </p>
+      <%= simple_format(Spree.t('shipment_mailer.shipped_email.instructions')) %>
+      <table class="row">
+        <tbody>
+        <tr>
+          <td class="wrapper">
+            <br />
+            <table class="twelve columns">
+              <tbody>
+              <tr>
+                <td style="border-bottom:1px solid #ccc">
+                  <h6><%= Spree.t('shipment_mailer.shipped_email.order_summary') %></h6>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <br />
+            <table class="twelve columns">
+              <tbody>
+              <tr>
+                <td class="six sub-columns">
+                  Kundennummer: <%= "#{@shipment.order.user.id}/#{@shipment.order.user.ship_address_id}/#{@shipment.order.user.bill_address_id}" %><br />
+                  Bestellnummer: <%= @shipment.order.number %>
+                </td>
+                <td class="six sub-columns last">
+                  Zahlart: <% @shipment.order.payments.valid.each do |payment| %>
+                      <%= render payment%><br/>
+                  <% end %>
+                  Versand: Spedition
+                </td>
+                <td class="expander"></td>
+              </tr>
+              <tr>
+                <td class="six sub-columns">
+                  Lieferung an:
+                  <%= render :partial => 'spree/shared/address', :locals => { :address => @shipment.order.ship_address } %>
+                </td>
+                <td class="six sub-columns last">
+                  Rechnung an:
+                  <%= render :partial => 'spree/shared/address', :locals => { :address => @shipment.order.bill_address } %>
+                </td>
+                <td class="expander"></td>
+              </tr>
+              </tbody>
+            </table>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <br />
+      <table class="twelve columns">
+        <tbody>
+        <tr>
+          <td style="border-bottom:1px solid #ccc">
+            <h6><%= Spree.t('shipment_mailer.shipped_email.shipment_summary') %></h6>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <br />
+      <table class="twelve columns">
+        <% @shipment.manifest.each do |item| %>
+            <tr>
+              <td class="nine sub-columns">
+                <%= raw(item.variant.product.name) %><br />
+                <%= raw(item.variant.options_text) + '<br />' if item.variant.options_text.present? %>
+              </td>
+              <td class="three sub-columns last" style="text-align: right;"><%=item.quantity%>x</td>
+            </tr>
+        <% end %>
+        <tr>
+          <td class="nine sub-columns" style="font-weight: bold;">
+            Gesamtsumme:
+          </td>
+          <td class="three sub-columns last" style="font-weight: bold; text-align: right;">
+            <%= @shipment.order.display_total %>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <%= Spree.t('shipment_mailer.shipped_email.track_information', :tracking => @shipment.tracking)     if @shipment.tracking %>
+      </p>
+      <p>
+        <%= Spree.t('shipment_mailer.shipped_email.track_link',        :url      => @shipment.tracking_url) if @shipment.tracking_url %>
+      </p>
+
+      <%= simple_format(Spree.t('shipment_mailer.shipped_email.thanks')) %>
+      <br />
+      <br />
+      <%= raw Spree::Page.by_slug('/widerrufsbelehrung').first.try(:body) %>
+    </td>
+    <td class="expander"></td>
+  </tr>
+</table>
