@@ -6,6 +6,7 @@
     <% if flash[:commerce_tracking] %>
         <h1><%= Spree.t(:thank_you_for_your_order) %></h1>
     <% end %>
+    <%# TODO only show if order was accepted! %>
     <% if @order.payments.select { |p| p.payment_method.type == 'Spree::PaymentMethod::Check' }.present? && @order.payments.first.state != 'completed' %>
         <div class="well">
             <p>Sie haben die Zahlung per Vorkasse gewählt. Bitte überweisen Sie die Gesamtsumme auf folgendes Konto:</p>
@@ -29,4 +30,6 @@
       <% end %>
     </p>
   </div>
+
+  <div id="trustedShopsCheckout" style="display:none;">thankYouPage</div>
 </fieldset>
