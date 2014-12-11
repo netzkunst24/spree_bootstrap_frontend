@@ -10,19 +10,19 @@
     </td>
     <td class="cart-item-description" data-hook="cart_item_description">
       <h4><%= link_to line_item.name, product_path(variant.product) %></h4>
-      <%= variant.options_text %>
+
       <% if @order.insufficient_stock_lines.include? line_item %>
         <span class="out-of-stock">
           <%= Spree.t(:out_of_stock) %>&nbsp;&nbsp;<br />
         </span>
       <% end %>
       <span class="line-item-description" data-hook="line_item_description">
+        <%= variant.options_text %><br>
         Artikelnummer: <%= line_item.product.sku %>
       </span>
       <br>
-      <br>
       <span class="line-item-options" data-hook="line_item_options">
-              <%= link_to('#') do %>
+        <%= link_to('#', class: 'delete', id: "delete_#{dom_id(line_item)}") do %>
             <i class="glyphicon glyphicon-remove_2"></i> <%= Spree.t(:delete) %>
         <% end %>
       </span>
