@@ -1,7 +1,7 @@
 $ ->
-  selected_taxon = $("#search-select option:selected").text()
-  $("#search-bar button.dropdown-toggle").html selected_taxon + " <span class='caret'></span>"
-  $("#search-bar form").attr('action', '/t/kategorie/' + selected_taxon.toLowerCase()) if selected_taxon
+  selected_taxon = $("#search-select option:selected")
+  $("#search-bar button.dropdown-toggle").html selected_taxon.text() + " <span class='caret'></span>"
+  $("#search-bar form").attr('action', '/t/kategorie/' + selected_taxon.text().toLowerCase()) if selected_taxon.val()
   $("#search-bar .dropdown-menu").on "click", "li a", (event) ->
     event.preventDefault()
     $this = $(this)
@@ -11,12 +11,14 @@ $ ->
     $("#search-select").val $this.data("value")
     keywords = $('.typeahead').typeahead('val');
     $(".typeahead").typeahead('val', '').focus().typeahead('val', keywords).focus() if keywords
-    $this.parents('form').attr('action', '/t/kategorie/' + $this.text().toLowerCase()) if $this.text()
+    if $("#search-select option:selected").val()
+      $this.parents('form').attr('action', '/t/kategorie/' + $this.text().toLowerCase())
+    else
+      $this.parents('form').attr('action', '/products')
 
 
   $("#search-bar").on "submit", "form", ->
       false  if $.trim($("#keywords").val()) is ""
-
 
 
   # TODO check if product is package based
@@ -72,7 +74,3 @@ $ ->
     scrollBy: 1
     prevPage:  $wrap.find('.prev')
     nextPage:  $wrap.find('.next')
-
-
-
-
