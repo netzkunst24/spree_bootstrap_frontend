@@ -88,7 +88,7 @@
             <td class="eight sub-columns">
               <%= image_tag item.product.images.first.attachment.url(:small), width: '100', alt: '', style: 'width: 100px;' %>
               <%= raw(item.variant.product.name) %><br />
-              <%= raw(item.variant.options_text) + '<br />' if item.variant.options_text.present? %>
+              <%= raw("#{item.variant.options_text}<br />") if item.variant.options_text.present? %>
               <%=item.quantity%> x <%= item.single_money %>
             </td>
             <td class="four sub-columns last" style="text-align: right;"><%= item.display_amount %></td>
