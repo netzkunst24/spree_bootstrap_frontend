@@ -10,17 +10,17 @@
         </small>
         <span itemprop="name"><%= accurate_title %></span>
       </h1>
-      <%= render :partial => 'taxons' %>
+      <%= render partial: 'taxons' %>
     </div>
 
     <div class="col-md-4" data-hook="product_left_part">
       <div class="center-block" data-hook="product_left_part_wrap">
         <div id="product-images" data-hook="product_images">
           <div id="main-image" data-hook>
-            <%= render :partial => 'image' %>
+            <%= render partial: 'image' %>
           </div>
           <div id="thumbnails" data-hook>
-            <%= render :partial => 'thumbnails' %>
+            <%= render partial: 'thumbnails' %>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
       <div data-hook="product_right_part_wrap">
         <div id="product-description" data-hook="product_description">
           <div id="cart-form" data-hook="cart_form">
-            <%= render :partial => 'cart_form' %>
+            <%= render partial: 'cart_form' %>
             <%= link_to request_quote_path(product: @product.id),
                         class: 'btn btn-info btn-block fancybox.ajax',
                         id: 'request-quote-button',
@@ -41,7 +41,7 @@
           <div id="additionals" class="row"></div>
         </div>
         <div data-hook="promotions">
-          <%= render :partial => 'promotions' %>
+          <%= render partial: 'promotions' %>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
         <%= product_description(@product) rescue Spree.t(:product_has_no_description) %>
       </div>
       <div data-hook="product_properties">
-        <%= render :partial => 'properties' %>
+        <%= render partial: 'properties' %>
       </div>
     </div>
 
@@ -66,7 +66,6 @@
   </div>
 
   <div class="row">
-
   </div>
 
   <div class="row">
