@@ -106,6 +106,7 @@ Spree::BaseHelper.module_eval do
     exclude = Array(opts[:not])
     categories = Spree::Taxonomy.find_by(name: Spree::Config.category_taxon)
     return categories.root.children.order(:position).reject { |taxon| exclude.include? taxon.name } if categories
+    []
   end
 
   def link_to_wishlist

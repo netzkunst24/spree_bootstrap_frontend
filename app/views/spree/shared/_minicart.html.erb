@@ -1,11 +1,10 @@
+<% @body_id = 'cart' %>
 <div id="minicart" class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-  <% @body_id = 'cart' %>
 
   <% if current_order.nil? || current_order.line_items.empty? %>
 
     <div class="ws-cart-action col-md-12" data-hook="empty_minicart">
-      <p><%= Spree.t(:your_cart_is_empty) %></p>
-      <%= link_to Spree.t(:view_shopping_cart), cart_path, :class => 'btn btn-primary btn-block' %>
+      <p class="text-center"><%= Spree.t(:your_cart_is_empty) %></p>
     </div>
 
   <% else %>

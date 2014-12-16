@@ -28,7 +28,7 @@
       </span>
     </td>
     <td class="cart-item-quantity" data-hook="cart_item_quantity">
-      <%= item_form.number_field :quantity, min: 0, class: 'form-control line_item_quantity input-sm', size: 5, class: 'col-md-8' %>
+      <%= item_form.number_field :quantity, min: 0, size: 5, class: 'form-control line_item_quantity input-sm col-md-8' %>
     </td>
     <td class="cart-item-price text-right" data-hook="cart_item_price">
       <%= line_item.single_money.to_html %>
