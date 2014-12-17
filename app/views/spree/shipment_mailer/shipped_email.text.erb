@@ -4,7 +4,7 @@
 ============================================================
 <%= Spree.t('shipment_mailer.shipped_email.order_summary') %>
 ============================================================
-Kundennummer: <%= "#{@shipment.order.user.try(:id) || 'A'}/#{@shipment.order.user.ship_address_id}/#{@shipment.order.user.bill_address_id}" %>
+Kundennummer: <%= "#{@shipment.order.user.try(:id) || 'A'}/#{@shipment.ship_address_id}/#{@shipment.bill_address_id}" %>
 Bestellnummer: <%= @shipment.order.number %>
 Zahlart: <% @shipment.order.payments.valid.each do |payment| %><%= payment.payment_method.name %><% end %>
 Versand: Spedition

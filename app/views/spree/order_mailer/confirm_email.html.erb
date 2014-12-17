@@ -42,7 +42,7 @@
                 <tbody>
                   <tr>
                     <td class="six sub-columns">
-                      Kundennummer: <%= "#{@order.user.try(:id) || 'A'}/#{@order.user.ship_address_id}/#{@order.user.bill_address_id}" %><br />
+                      Kundennummer: <%= "#{@order.user.try(:id) || 'A'}/#{@order.ship_address_id}/#{@order.bill_address_id}" %><br />
                       Bestellnummer: <%= @order.number %>
                     </td>
                     <td class="six sub-columns last">
