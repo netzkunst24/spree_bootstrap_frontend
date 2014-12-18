@@ -1,5 +1,16 @@
 Spree::BaseHelper.module_eval do
 
+  def api_user_key
+    Rails.cache.fetch('api_user_key') do
+      real_user_key = try_spree_current_user.try(:spree_api_key)
+      if real_user_key.present?
+        return real_user_key.to_s.inspect
+      else
+        return Spree::User.find_by(email: 'api@meinwohnstore.de').spree_api_key.to_s.inspect
+      end
+    end
+  end
+
   def nav_link(link_text, link_path)
     class_name = current_page?(link_path) ? 'active ' : ''
 
