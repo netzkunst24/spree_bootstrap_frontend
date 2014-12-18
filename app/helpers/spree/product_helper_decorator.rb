@@ -1,9 +1,20 @@
-Spree::BaseHelper.module_eval do
- def vat_and_shipping(product)
-   #TODO first is not neccessary the right
-   amount = (product.tax_category.tax_rates.first.amount * 100).to_s.gsub '.0', ''
-   "inkl. #{amount}% MwSt., zzgl. Versand"
- end
+Spree::ProductsHelper.module_eval do
+  # returns the formatted price for the specified variant as a difference from product price
+  def variant_price_diff(variant)
+    variant_amount = variant.amount_in(current_currency)
+    product_amount = variant.product.amount_in(current_currency)
+    return if variant_amount == product_amount || product_amount.nil?
+    diff   = variant.amount_in(current_currency) - product_amount
+    amount = Spree::Money.new(diff.abs, currency: current_currency).to_html
+    label  = diff > 0 ? '+' : '-'
+    "(#{label}#{amount})".html_safe
+  end
+
+  def vat_and_shipping(product)
+    #TODO first is not neccessary the right
+    amount = (product.tax_category.tax_rates.first.amount * 100).to_s.gsub '.0', ''
+    "inkl. #{amount}% MwSt., zzgl. Versand"
+  end
 
   def estimated_delivery(product)
     #TODO check for selected Variant here not for first !!!
