@@ -8,6 +8,7 @@ Kundennummer: <%= "#{@shipment.order.user.try(:id) || 'A'}/#{@shipment.order.shi
 Bestellnummer: <%= @shipment.order.number %>
 Zahlart: <% @shipment.order.payments.valid.each do |payment| %><%= payment.payment_method.name %><% end %>
 Versand: Spedition
+
 Lieferung an:
   <% sa = @shipment.order.ship_address %>
   <%= sa.firstname %> <%= sa.lastname %>
