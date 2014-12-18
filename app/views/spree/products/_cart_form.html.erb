@@ -28,7 +28,11 @@
         <div id="product-price">
           <div>
             <span class="unit price <%= 'selling' unless @product.is_flooring? %>" data-price-amount="<%= @product.price_in(current_currency).amount %>" itemprop="price">
-              <%= display_price_per(@product) %>
+              <% if @product.is_flooring? %>
+                <%= display_price_per(@product) %>
+              <% else %>
+                <%= display_price(@product) %>
+              <% end %>
             </span>
             <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
           </div>
