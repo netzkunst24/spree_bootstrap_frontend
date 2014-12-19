@@ -53,6 +53,7 @@ Spree::BaseHelper.module_eval do
       "#{product_or_variant.price_per_unit(current_currency)} &nbsp;<span class='per-unit'>/m²</span>".html_safe
     else
       "#{product_or_variant.price_per_unit(current_currency)}".html_safe
+
     end
   end
 
