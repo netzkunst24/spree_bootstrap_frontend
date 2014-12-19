@@ -52,7 +52,7 @@ Spree::BaseHelper.module_eval do
     if unit == :square_meter && product_or_variant.is_flooring?
       "#{product_or_variant.price_per_unit(current_currency)} &nbsp;<span class='per-unit'>/m²</span>".html_safe
     else
-      display_price(product_or_variant)
+      "#{product_or_variant.price_per_unit(current_currency)}".html_safe
     end
   end
 
