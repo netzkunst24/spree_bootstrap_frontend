@@ -299,8 +299,11 @@ th.no-border, td.no-border { border: none!important; }
 
 .ws-indicator {
   position: absolute;
-  top: 55%;
+  top: 60%;
   left: 70%;
+  .popover {
+    min-width: 300px;
+  }
   .ws-indicator-spot {
     color: white;
     font-size: 18px;
@@ -310,7 +313,7 @@ th.no-border, td.no-border { border: none!important; }
     border-radius: 25px;
     width: 50px;
     height: 50px;
-    padding: 9px;
+    padding: 8px 0 0 2px;
     @media (max-width: $grid-float-breakpoint) {
       width: 30px;
       height: 30px;
@@ -898,7 +901,6 @@ h1.product-title {
   margin: 0; // reset heading margin
   padding: 14px 14px 8px 14px;
   background-color: rgba(255,255,255,0.4);
-  border-bottom: none;
   border-radius: 5px 5px 0 0;
   font-family: $font-family-sans-serif-medium;
 }

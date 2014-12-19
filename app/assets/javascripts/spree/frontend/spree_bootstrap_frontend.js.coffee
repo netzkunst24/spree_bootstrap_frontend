@@ -1,4 +1,7 @@
 $ ->
+  $('[data-toggle="popover"]').popover
+    html: true
+
   selected_taxon = $("#search-select option:selected")
   $("#search-bar button.dropdown-toggle").html selected_taxon.text() + " <span class='caret'></span>"
   $("#search-bar form").attr('action', '/t/kategorie/' + selected_taxon.text().toLowerCase()) if selected_taxon.val()
