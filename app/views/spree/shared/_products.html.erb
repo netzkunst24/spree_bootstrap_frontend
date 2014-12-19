@@ -63,7 +63,13 @@
         <div class="product_main col-md-12">
           <% name = "#{category_and_manufacturer(product)} <span class='name' itemprop='name'>#{truncate(product.name, :length => 55)}</span>".html_safe %>
           <h3><%= link_to name, product_path(product.permalink), :class => 'info', :title => "#{product.cached_manufacturer.name} #{product.name}" %></h3>
-          <span class="price selling lead" itemprop="price"><%= display_price_per(product) %></span>
+          <span class="price selling lead" itemprop="price">
+            <% if @product.is_flooring? %>
+                <%= display_price_per(product) %>
+            <% else %>
+                <%= display_price(product) %>
+            <% end %>
+          </span>
         </div>
         <div class="product_footer col-sm-12">
           <div class="availability pull-left"><span class="glyphicon glyphicon-clock"></span>3-5 Werktage</div>
