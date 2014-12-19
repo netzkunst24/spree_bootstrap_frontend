@@ -4,7 +4,7 @@
     <h4>Nach Eigenschaften filtern</h4>
 
     <div class="properties panel panel-default preis">
-      <p class="panel-heading">Preis<%= '/m²' if Spree::Product.find_by_id(@products[10].id).is_flooring? %>
+      <p class="panel-heading">Preis<%= '/m²' if Spree::Product.find_by_id(@products.first.id).is_flooring? %>
 
       <div class="list-group">
         <div class="list-group-item">
