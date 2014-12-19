@@ -1,4 +1,14 @@
 Spree::ProductsHelper.module_eval do
+  # converts line breaks in product description into <p> tags (for html display purposes)
+  def product_description(product)
+    if Spree::Config[:show_raw_product_description]
+      raw(product.description)
+    else
+      raw(product.description.gsub(/(.*?)\r?\n\r?\n/m, '<p>\1</p>'))
+      raw(product.description.gsub(/(.*?)\r?\n/m, '\1<br>'))
+    end
+  end
+
   # returns the formatted price for the specified variant as a difference from product price
   def variant_price_diff(variant)
     variant_amount = variant.amount_in(current_currency)
