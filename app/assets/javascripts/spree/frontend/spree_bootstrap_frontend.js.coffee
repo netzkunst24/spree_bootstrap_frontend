@@ -35,7 +35,7 @@ $ ->
     ceiled = if amount != parseFloat(amountField.val()) then "(" + amount + ") " else ""
     amountField.next().text(ceiled + paket) if paket
     qmField.val(("" + (qmField.attr("min") * amount).toFixed(2)).replace(".", ",")) if qmField
-    priceTag.text((amount * $(".price.selling").data("price-amount")).toFixed(2).replace(".", ",") + " " + currency)
+    priceTag.text((amount * $(".price.selling").attr("data-price-amount")).toFixed(2).replace(".", ",") + " " + currency)
 
   # TODO REFACTOR
   $("body").on "keyup mouseup", ".add-to-cart input.qm", ->
@@ -48,7 +48,7 @@ $ ->
     amountField.val("" + amount)
     paket = if amount > 1 then "Pakete" else "Paket"
     amountField.next().text(paket) if paket
-    priceTag.text((amount * $(".price.selling").data("price-amount")).toFixed(2).replace(".", ",") + " " + currency)
+    priceTag.text((amount * $(".price.selling").attr("data-price-amount")).toFixed(2).replace(".", ",") + " " + currency)
     realQm = parseFloat((qmField.attr("min") * amount).toFixed(2))
     if qm != realQm then qmField.next().text( "(" + (realQm + "").replace(".", ",") + ") m²") else qmField.next().text("m²")
     #$(".add-to-cart input").first().trigger("keyup")
