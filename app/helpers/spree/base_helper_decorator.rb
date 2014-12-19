@@ -67,13 +67,16 @@ Spree::BaseHelper.module_eval do
     end
   end
 
-  def taxons_tree(root_taxon, current_taxon, max_level = 1)
+  def taxons_tree(root_taxon, current_taxon, max_level = 1, skip_level = 0, level = 0)
     return '' if max_level < 1 || root_taxon.children.empty? || !root_taxon.visible?
+    next_taxon = root_taxon.children[level - 1]
+    return taxons_tree(next_taxon, current_taxon, max_level - 1, skip_level - 1) if skip_level > 0
     content_tag :div, class: 'list-group' do
       root_taxon.children.map do |taxon|
         next unless taxon.visible?
         css_class = (current_taxon && current_taxon.self_and_ancestors.include?(taxon)) ? 'list-group-item active' : 'list-group-item'
-        link_to("#{taxon.name} <small class='badge'>#{taxon.products.count}</small>".html_safe, seo_url(taxon, {keep_params: true}), class: css_class) + taxons_tree(taxon, current_taxon, max_level - 1)
+        link_to("#{taxon.name} <small class='badge'>#{taxon.products.count}</small>".html_safe, seo_url(taxon, {keep_params: true}), class: css_class) +
+            taxons_tree(taxon, current_taxon, max_level - 1, level - 1)
       end.join("\n").html_safe
     end
   end

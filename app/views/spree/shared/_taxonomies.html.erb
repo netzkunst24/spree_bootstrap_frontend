@@ -1,4 +1,4 @@
-<% if @taxon.present? && @taxon.parent.present? %>
+<% if @taxon.present? && @taxon.parent.present? && !['Zubehoer', 'Zubehör'].include?(@taxon.name) %>
   <div id="taxonomies">
     <h1><%= @taxon.name %></h1>
     <%# TODO Config Kategorie Taxon in initializer not on every render of this partial...%>
@@ -10,7 +10,7 @@
       <% next unless taxonomy.root.visible? %>
       <%# next if @taxon && taxonomy.root.name == Spree::Config.category_taxon %>
       <!--<h4 class='taxonomy-root'><%= Spree.t(:shop_by_taxonomy, :taxonomy => taxonomy.name) %></h4>-->
-      <%= taxons_tree(taxonomy.root, @taxon, Spree::Config[:max_level_in_taxons_menu] || 1) %>
+      <%= taxons_tree(taxonomy.root, @taxon, 2, ['Zubehoer', 'Zubehör'].include?(@taxon.name) ? 1 : 0) %>
       <% end %>
   </nav>
 <% end %>
