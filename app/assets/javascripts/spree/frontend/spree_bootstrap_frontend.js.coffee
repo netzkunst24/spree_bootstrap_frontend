@@ -29,12 +29,14 @@ $ ->
   # TODO REFACTOR
   currency = "€"
   $("body").on "keyup mouseup", ".add-to-cart input.ve", ->
+    unit = $(".add-to-cart input.ve").next().data('unit')
+    unit_pl = if unit.slice(-1) == 'e' then unit else unit + 'e'
     amountField = $ this
     qmField = $ ".add-to-cart input.qm"
     amount = Math.ceil(amountField.val().replace(",", "."))
     return false if isNaN(amount)
     priceTag = $ "#add-to-cart-button .btn-price"
-    paket = if amount > 1 then "Pakete" else "Paket"
+    paket = if amount > 1 then unit_pl else unit
     ceiled = if amount != parseFloat(amountField.val()) then "(" + amount + ") " else ""
     amountField.next().text(ceiled + paket) if paket
     qmField.val(("" + (qmField.attr("min") * amount).toFixed(2)).replace(".", ",")) if qmField
@@ -42,6 +44,8 @@ $ ->
 
   # TODO REFACTOR
   $("body").on "keyup mouseup", ".add-to-cart input.qm", ->
+    unit = $(".add-to-cart input.ve").next().data('unit')
+    unit_pl = if unit.slice(-1) == 'e' then unit else unit + 'e'
     amountField = $(".add-to-cart input.ve")
     qmField = $ this
     priceTag = $ "#add-to-cart-button .btn-price"
@@ -49,7 +53,7 @@ $ ->
     return false if isNaN(qm)
     amount = Math.ceil(qm / qmField.attr("min"))
     amountField.val("" + amount)
-    paket = if amount > 1 then "Pakete" else "Paket"
+    paket = if amount > 1 then unit_pl else unit
     amountField.next().text(paket) if paket
     priceTag.text((amount * $(".price.selling").attr("data-price-amount")).toFixed(2).replace(".", ",") + " " + currency)
     realQm = parseFloat((qmField.attr("min") * amount).toFixed(2))
