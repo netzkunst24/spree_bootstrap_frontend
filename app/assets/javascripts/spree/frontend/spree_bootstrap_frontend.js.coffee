@@ -29,7 +29,7 @@ $ ->
   # TODO REFACTOR
   currency = "€"
   $("body").on "keyup mouseup", ".add-to-cart input.ve", ->
-    unit = $(".add-to-cart input.ve").next().data('unit')
+    unit = $(".add-to-cart input.ve").data('unit')
     unit_pl = if unit.slice(-1) == 'e' then unit else unit + 'e'
     amountField = $ this
     qmField = $ ".add-to-cart input.qm"
@@ -44,7 +44,7 @@ $ ->
 
   # TODO REFACTOR
   $("body").on "keyup mouseup", ".add-to-cart input.qm", ->
-    unit = $(".add-to-cart input.ve").next().data('unit')
+    unit = $(".add-to-cart input.ve").data('unit')
     unit_pl = if unit.slice(-1) == 'e' then unit else unit + 'e'
     amountField = $(".add-to-cart input.ve")
     qmField = $ this

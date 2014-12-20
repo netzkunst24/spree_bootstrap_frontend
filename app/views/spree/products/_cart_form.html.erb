@@ -1,6 +1,7 @@
 <%= form_for :order, :url => populate_orders_path do |f| %>
     <% sample = sample_variant(@product) %>
   <div class="row" id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
     <% if @product.variants_and_option_values(current_currency).reject{|v| v == sample }.any? %>
       <div id="product-variants" class="col-md-12">
         <h3 class="product-section-title"><%= Spree.t(:variants) %></h3>
@@ -76,15 +77,18 @@
 
         <div class="add-to-cart">
           <div class="form-inline row">
+
             <div class="col-md-6">
               <div class="form-group">
                 <div class="input-group">
+                  <% unit = @product.is_flooring? ? 'Paket' : 'Stück'%>
                   <%= number_field_tag (@product.variants_and_option_values.reject{|v| v == sample }.any? ? :quantity : "variants[#{@product.master.id}]"),
-                                       1, :class => 'title form-control ve', :min => 1 %>
-                  <span class="input-group-addon">Paket&nbsp;&nbsp;</span>
+                                       1, :class => 'title form-control ve', :min => 1, data: { unit: unit } %>
+                  <span class="input-group-addon"><%= unit %>&nbsp;&nbsp;</span>
                 </div>
               </div>
             </div>
+
             <% if @product.is_flooring? %>
               <div class="col-md-6">
                 <div class="form-group">
