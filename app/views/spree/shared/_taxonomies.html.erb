@@ -6,6 +6,7 @@
   </div>
 <% else %>
   <nav id="taxonomies" class="sidebar-item" data-hook>
+    <h1><%= @taxon.name %></h1>
     <% get_taxonomies.each do |taxonomy| %>
       <% next unless taxonomy.root.visible? %>
       <%# next if @taxon && taxonomy.root.name == Spree::Config.category_taxon %>
