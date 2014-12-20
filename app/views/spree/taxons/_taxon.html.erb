@@ -1,4 +1,7 @@
 <div class="taxon" data-hook="taxon">
-  <h5 class="subtaxon-title"><%= link_to taxon.name, seo_url(taxon), :class => 'breadcrumbs' %></h5>
-  <%= render :partial => 'spree/shared/products', :locals => { :products => taxon_preview(taxon), :taxon => taxon } %>
+  <h3 class="subtaxon-title"><%= link_to taxon.name, seo_url(taxon), :class => 'breadcrumbs' %></h3>
+  <%= render :partial => 'spree/shared/products', :locals => { :products => taxon_preview(taxon, 3), :taxon => taxon } %>
+  <%= link_to "#{Spree.t(:more)} #{taxon.name} #{Spree.t(:show).downcase}", seo_url(taxon), :class => 'btn btn-primary pull-right' %>
+  <br>
+  <br>
 </div>
