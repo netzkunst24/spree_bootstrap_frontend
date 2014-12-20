@@ -12,7 +12,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-    <% if products.empty? %>
+    <% if products.empty? && taxon.children.empty? %>
       <div class="alert alert-warning">
         <h3 class="search-results-title"><%= Spree.t(:no_products_found) %></h3>
         <% if @searcher.suggestions.any?  %>
