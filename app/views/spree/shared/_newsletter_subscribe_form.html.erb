@@ -2,7 +2,7 @@
   <h3>Newsletter</h3>
 
   <p>Unsere aktuellen Angebote und Empfehlungen per E-Mail</p>
-  <%= form_for :user, :url => :subscriptions, remote: true do |f| %>
+  <%= form_for :user, :url => :subscriptions do |f| %>
     <div class="input-group">
       <%= email_field_tag :email, '', id: 'subscribe_email', class: 'form-control email', placeholder: Spree.t(:enter_your_email) %>
       <%= content_tag :span, class: 'input-group-btn' do %>
