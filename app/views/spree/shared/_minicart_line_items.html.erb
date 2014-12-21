@@ -9,7 +9,7 @@
   <div data-hook="minicart_item_description">
     <div data-hook="minicart_item_name">
       <span class="ws-cart-title"><%= link_to variant.product.name, product_path(variant.product) %></span>
-      <div data-hook="minicart_item_delete">
+      <div data-hook="minicart_item_delete" class="hidden">
         <%= link_to '<span class="glyphicon glyphicon-remove_2"></span>'.html_safe, '#', :class => 'delete', :id => "delete_#{dom_id(line_item)}", :class => 'ws-cart-remove' %>
       </div>
       <span class="ws-cart-amount"><%= "#{line_item.quantity} x #{line_item.price}" -%></span>

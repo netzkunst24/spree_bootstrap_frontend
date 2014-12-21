@@ -31,16 +31,16 @@
   <% if paginated_products.respond_to?(:num_pages) %>
     <div id="paginator" class="col-sm-12">
       <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-4 col-md-3">
         <%= form_tag do %>
           <% options_sort = options_for_select([['Preis aufsteigend', 'a_price_per'],['Preis absteigend', 'price_per'],['Name', 'name']], params[:sort] || nil) %>
             <%= select_tag(:sort, options_sort, {class: 'form-control', prompt: Spree.t(:sort)}) %>
         <% end %>
       </div>
-      <div class="col-sm-4 entries-info">
+      <div class="col-sm-4 hidden-sm entries-info">
         <%= page_entries_info paginated_products, entry_name: Spree.t(:product) %>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-8 col-md-5">
         <div class="pull-right">
           <%= paginate paginated_products, theme: 'twitter-bootstrap-3', left: 1, right: 1, window: 3 %>
         </div>
@@ -61,7 +61,7 @@
           <span class="arrow"></span>
         </div>
         <div class="product_main col-md-12">
-          <% name = "#{category_and_manufacturer(product)} <span class='name' itemprop='name'>#{truncate(product.name, :length => 55)}</span>".html_safe %>
+          <% name = "#{category_and_manufacturer(product)} <span class='name' itemprop='name'>#{truncate(product.name, :length => 50)}</span>".html_safe %>
           <h3><%= link_to name, product_path(product.permalink), :class => 'info', :title => "#{product.cached_manufacturer.name} #{product.name}" %></h3>
           <span class="price selling lead" itemprop="price"><%= display_price_per(product) %></span>
         </div>

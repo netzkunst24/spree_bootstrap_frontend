@@ -1,3 +1,4 @@
+<div id="searchbox">
 <% @taxons = @taxon && @taxon.parent ? @taxon.parent.children : get_categories %>
 <% if @taxons %>
     <span class="hidden">
@@ -13,8 +14,8 @@
   <div class="input-group">
     <div class="input-group-btn">
       <% if @taxons %>
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Alles <span class="caret"></span></button>
-      <ul class="dropdown-menu">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="hidden-xs">Alles <span class="caret"></span></span></button>
+      <ul class="dropdown-menu taxon">
           <li><a href="#" data-value="">Alle Bereiche</a></li>
           <% @taxons.each do |taxon| %>
           <li><a href="#" data-value="<%= taxon.id %>"><%= taxon.name %></a></li>
@@ -23,9 +24,25 @@
       <% end %>
     </div>
     <%= search_field_tag :keywords, params[:keywords], :placeholder => Spree.t(:search), class: 'form-control typeahead' %>
-    <!--<span class="input-group-btn"><%= button_tag Spree.t(:search), :name => nil, class: 'btn btn-primary' %></span>-->
     <span class="input-group-btn"><%= button_tag '<span class="glyphicon glyphicon-search"></span>'.html_safe, :name => nil, class: 'btn btn-primary adjust-icon' %></span>
 
   </div>
 </div>
 <% end %>
+</div>
+<a class="show-search" href="/"  data-toggle="dropdown">
+  <span class="glyphicon glyphicon-search"></span>
+</a>
+<ul class="dropdown-menu layer-search">
+  <li class="clearfix col-md-12">
+
+    <%= form_tag spree.products_path, :method => :get, class: '' do %>
+        <div class="form-group">
+          <div class="input-group">
+            <%= search_field_tag :keywords, params[:keywords], :placeholder => Spree.t(:search), class: 'form-control typeahead', id: 'keywords-layer-search' %>
+            <span class="input-group-btn"><%= button_tag '<span class="glyphicon glyphicon-search"></span>'.html_safe, :name => nil, class: 'btn btn-primary adjust-icon' %></span>
+          </div>
+        </div>
+    <% end %>
+  </li>
+</ul>

@@ -20,7 +20,7 @@
         <%= render :partial => 'spree/shared/sidebar_right' if content_for? :sidebar_right %>
         <% content_classes = [] %>
         <% content_classes << (content_for?(:sidebar) || content_for?(:sidebar_right)? 'col-sm-8 col-md-9' : 'col-sm-12') %>
-        <% content_classes << 'col-sm-pull-3 ' if content_for?(:sidebar_right) %>
+        <% content_classes << 'col-sm-pull-4 col-md-pull-3' if content_for?(:sidebar_right) %>
         <div id="content" class="<%= content_classes.join(' ') %>" data-hook>
           <%= flash_messages %>
           <%= yield %>

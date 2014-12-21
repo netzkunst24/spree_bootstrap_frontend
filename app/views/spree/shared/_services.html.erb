@@ -1,4 +1,4 @@
-<ul class="ws-service-list list-inline hidden-xs col-md-8">
+<ul class="ws-service-list list-inline hidden-xs col-sm-8">
   <li>
     <i class="glyphicon glyphicon-envelope"></i>Kostenloser Versand
   </li>
@@ -8,7 +8,9 @@
   <li>
     <i class="glyphicon glyphicon-sampler"></i>Musterservice
   </li>
+  <% if Spree::PaymentMethod.where(name: 'Rechnung', active: true).present? %>
   <li>
     <i class="glyphicon glyphicon-notes"></i>Kauf auf Rechnung
   </li>
+  <% end %>
 </ul>

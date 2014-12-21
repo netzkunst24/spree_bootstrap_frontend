@@ -2,15 +2,22 @@ $ ->
   $('[data-toggle="popover"]').popover
     html: true
 
+  $("#search-bar .dropdown-menu.layer-search").click (e) ->
+    e.stopPropagation()
+    return
+
+
+
+
   selected_taxon = $("#search-select option:selected")
-  $("#search-bar button.dropdown-toggle").html selected_taxon.text() + " <span class='caret'></span>"
+  $("#search-bar button.dropdown-toggle").html '<span class="hidden-xs">' + selected_taxon.text() + ' </span><span class="caret"></span>'
   $("#search-bar form").attr('action', '/t/kategorie/' + selected_taxon.text().toLowerCase()) if selected_taxon.val()
-  $("#search-bar .dropdown-menu").on "click", "li a", (event) ->
+  $("#search-bar .dropdown-menu.taxon").on "click", "li a", (event) ->
     event.preventDefault()
     $this = $(this)
     $this.parents("ul").find("a").removeClass "active"
     $this.addClass "active"
-    $this.parents(".input-group-btn").find("button").html $this.text() + " <span class='caret'></span>"
+    $this.parents(".input-group-btn").find("button").html '<span class="hidden-xs">' + $this.text() + " </span><span class='caret'></span>"
     $("#search-select").val $this.data("value")
     keywords = $('.typeahead').typeahead('val');
     $(".typeahead").typeahead('val', '').focus().typeahead('val', keywords).focus() if keywords
@@ -21,7 +28,7 @@ $ ->
 
 
   $("#search-bar").on "submit", "form", ->
-      false  if $.trim($("#keywords").val()) is ""
+      false  if $.trim($("#keywords").val()) is "" and $.trim($("#keywords-layer-search").val()) is ""
 
 
   # TODO check if product is package based

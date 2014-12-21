@@ -1,10 +1,20 @@
-<nav class="navbar navbar-inverse megadrop collapse navbar-collapse bs-navbar-collapse">
-  <div id="main-nav-bar">
-    <ul class="nav navbar-nav" data-hook>
-      <!--li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>-->
-      <% get_categories({not: %w(Angebote Sale)}).each do |category| %>
-          <%= nav_link(category.name , seo_url(category)) %></li>
-      <% end %>
-    </ul>
-  </div>
-</nav>
+<div class="navbar navbar-inverse megadrop">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".ws-navbar-collapse">
+        <span class="sr-only">Navigation ein-/ausblenden</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+  <nav class="collapse navbar-collapse ws-navbar-collapse">
+    <div id="main-nav-bar">
+      <ul class="nav navbar-nav" data-hook>
+        <!--li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>-->
+        <% get_categories({not: %w(Angebote Sale)}).each do |category| %>
+            <%= nav_link(category.name , seo_url(category)) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</div>

@@ -251,7 +251,7 @@ th.no-border, td.no-border { border: none!important; }
       float: left;
       margin-left: 20px;
       @media (max-width: $screen-lg-min) {
-        background-position: right center;
+        #background-position: right center;
       }
     }
   }
@@ -262,7 +262,7 @@ th.no-border, td.no-border { border: none!important; }
       float: right;
       margin-right: 20px;
       @media (max-width: $screen-lg-min) {
-        background-position: left center;
+        #background-position: left center;
       }
     }
   }
@@ -300,6 +300,9 @@ th.no-border, td.no-border { border: none!important; }
 .ws-indicator {
   position: absolute;
   top: 60%;
+  @media (max-width: $screen-lg-min) {
+    top: 70%;
+  }
   left: 70%;
   .popover {
     min-width: 300px;
@@ -339,6 +342,10 @@ body {
   font-size: 14px;
 }
 
+#logo > a {
+  float: left;
+}
+
 .brand {
   display: block;
   width: 228px;
@@ -361,7 +368,6 @@ body {
   li {
     margin-right: 10px;
     letter-spacing: -0.0006em;
-    @media (max-width: $screen-sm-max) { margin-right: 52px; }
     i { margin-right: 5px; }
   }
   li:last-child {
@@ -414,12 +420,13 @@ body {
     }
   }
   .dropdown-menu {
+    top: -50px!important;
     text-align: left;
     .active {
       background: $gray-lighter;
     }
   }
-  @media (max-width: $screen-md) { padding-top: 41px; }
+  //@media (max-width: $screen-md) { padding-top: 41px; }
   > .show-search {
     font-size: 25px;
     line-height: 15px;
@@ -428,13 +435,13 @@ body {
   }
   @media (max-width: $grid-float-breakpoint) {
     float: left;
-    padding-top: 30px;
+    padding-top: 0px;
   }
   @media (max-width: $screen-xxs-min) {
     float: right;
-    padding-top: 56px;
+    padding-top: 7px;
     padding-left: 0;
-    .searchbox { display:none; }
+    #searchbox { display:none; }
     .dropdown-menu {
       float: left;
       left: -216px;
@@ -448,6 +455,7 @@ body {
   @media (max-width: $screen-xxxs-min) {
     padding-top: 10px;
     padding-right: 22px;
+    margin-top: 5px;
   }
 }
 
@@ -457,24 +465,36 @@ body {
 
 #ws-cart {
   text-align: center;
-  margin-top: 58px;
+  margin-top: 59px;
+  @media (max-width: $screen-xxxs-min) {
+  }
 
+
+  @media (max-width: $grid-float-breakpoint) {
+    padding-top: 19px;
+    a.cart-info { float: right !important; }
+    .dropdown-menu {
+      position: relative;
+      margin-top: 15px!important;
+      padding-top: 15px!important;
+    }
+  }
 
   #link-to-cart {
     @media (max-width: $screen-md) {
-      padding-top: 47px;
+      //padding-top: 47px;
       .basket-title { display: none; }
     }
 
     @media (max-width: $screen-xxs-min) {
-      padding-top: 83px;
+      padding-top: 0px;
       a { margin-right: 15px!important; }
       .basket-title {
         display:none;
       }
     }
 
-    > a {
+    a.cart-info {
       @include center-block();
       font-size: $font-size-large;
       font-family: $font-family-sans-serif-medium;
@@ -510,7 +530,15 @@ body {
   #minicart {
     margin-top: -45px;
     padding-top: 60px;
-    min-width: 293px;
+    @media (max-width: $screen-xs-max) {
+      width: 100%
+    }
+    @media (min-width: $screen-md-min) {
+      min-width: 245px;
+    }
+    @media (min-width: $screen-lg-min) {
+      min-width: 293px;
+    }
     #minicart-details {
       .order-total {
         font-size: $font-size-large;
@@ -552,15 +580,7 @@ body {
       }
     }
 
-    @media (max-width: $grid-float-breakpoint) {
-      padding-top: 57px;
-      > a { @extend .pull-right; }
-      .dropdown-menu {
-        position: relative;
-        margin-top: 15px!important;
-        padding-top: 15px!important;
-      }
-    }
+
     #minicart-footer {
       margin-bottom: -21px;
       padding-bottom: 33px;
@@ -653,6 +673,9 @@ body {
   .list-group-item {
     border-width: 0 0 2px 0;
     padding: 28px 15px;
+    @media (max-width: $screen-lg-min) {
+      padding: 14px 15px;
+    }
     background: none;
   }
 
@@ -798,6 +821,9 @@ body {
   .rating {
     text-align: right;
     color: $gray-light;
+    @media (max-width: $screen-lg-min) {
+      font-size: 12px;
+    }
   }
 
   .image {
@@ -900,6 +926,9 @@ h1.product-title {
 .popover-title {
   margin: 0; // reset heading margin
   padding: 14px 14px 8px 14px;
+  @media (max-width: $screen-lg-min) {
+     padding: 8px 14px 5px 14px;
+  }
   background-color: rgba(255,255,255,0.4);
   border-radius: 5px 5px 0 0;
   font-family: $font-family-sans-serif-medium;

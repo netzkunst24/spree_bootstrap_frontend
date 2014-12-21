@@ -4,7 +4,7 @@
     <%# TODO Config Kategorie Taxon in initializer not on every render of this partial...%>
     <%= link_to 'Alle Kategorien anzeigen', seo_url(Spree::Taxon.find_by name: Spree::Config.category_taxon), class: 'show-all-taxons' %>
   </div>
-<% else %>
+<% elsif @taxon.present? %>
   <nav id="taxonomies" class="sidebar-item" data-hook>
     <h1><%= @taxon.name %></h1>
     <% get_taxonomies.each do |taxonomy| %>
@@ -14,4 +14,11 @@
       <%= taxons_tree(taxonomy.root, @taxon, 2, ['Zubehoer', 'Zubehör'].include?(@taxon.name) ? 1 : 0) %>
       <% end %>
   </nav>
+<% else %>
+    <nav id="taxonomies" class="sidebar-item" data-hook>
+      <% get_taxonomies.each do |taxonomy| %>
+          <% next unless taxonomy.root.visible? %>
+          <%= taxons_tree(taxonomy.root, @taxon, 2, 0) %>
+      <% end %>
+    </nav>
 <% end %>

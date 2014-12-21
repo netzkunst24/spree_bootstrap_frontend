@@ -3,7 +3,7 @@
   <div class="row" id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
     <% if @product.variants_and_option_values(current_currency).reject{|v| v == sample }.any? %>
-      <div id="product-variants" class="col-md-12">
+      <div id="product-variants" class="col-sm-12">
         <h3 class="product-section-title"><%= Spree.t(:variants) %></h3>
         <ul class="list-group">
           <% @product.variants_and_option_values(current_currency).reject{|v| v == sample }.each_with_index do |variant, index| %>
@@ -24,7 +24,7 @@
     <% end %>
 
     <% if @product.price_in(current_currency) and !@product.price.nil? %>
-      <div data-hook="product_price" class="col-md-12">
+      <div data-hook="product_price" class="col-sm-12">
 
         <div id="product-price">
           <div>
@@ -59,7 +59,7 @@
            # TODO REFACTOR SAMPLE ORDERING and get this on load of app or cache!?
            if sample %>
           <div id="product-sample">
-            <ul class="list-group" class="col-md-12">
+            <ul class="list-group" class="col-sm-12">
               <li class="list-group-item">
                 <div class="checkbox">
                   <label for="<%= "products_#{@product.id}" %>">
@@ -78,7 +78,7 @@
         <div class="add-to-cart">
           <div class="form-inline row">
 
-            <div class="col-md-6">
+            <div class="col-sm-6">
               <div class="form-group">
                 <div class="input-group">
                   <% unit = @product.is_flooring? ? 'Paket' : 'Stück'%>
@@ -90,7 +90,7 @@
             </div>
 
             <% if @product.is_flooring? %>
-              <div class="col-md-6">
+              <div class="col-sm-6">
                 <div class="form-group">
                   <div class="input-group">
                     <% qm = @product.content_per_package.to_s.gsub(',', '.').to_f %>
@@ -106,11 +106,13 @@
             <% end %>
           </div>
           <div class="availability"><%= estimated_delivery(@product) %></div>
+
           <%= button_tag class: 'btn btn-primary btn-lg btn-block', id: 'add-to-cart-button', type: :submit do %>
             <span class="btn-left"><%= Spree.t(:add_to_cart) %></span>
             <span class="btn-separator"></span>
             <span class="btn-right"><span class="btn-price"><%= display_price(@product) %></span></span>
           <% end %>
+
           <br>
         </div>
       </div>
