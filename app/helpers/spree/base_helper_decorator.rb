@@ -105,11 +105,11 @@ Spree::BaseHelper.module_eval do
       Spree::PaymentMethod.available(:front_end).collect do |payment|
         p = payment.name
         p = type == :link ?  link_to(p, '#') : p
-        p = type == :bullet_icon ?  p + tag(:span, class: 'glyphicon glyphicon-chevron-right') : p
+        p = type == :bullet_icon ?  p + content_tag(:span, '' ,class: 'glyphicon glyphicon-chevron-right') : p
         p = type == :symbol ? tag(:span, class: "pf pf-#{payment.name.downcase}") : p
         if type == :symbol && payment.name == 'Kreditkarte'
-          concat content_tag :li, tag(:span, class: "pf pf-mastercard"), class: payment.name.downcase
-          concat content_tag :li, tag(:span, class: "pf pf-visa"), class: payment.name.downcase
+          concat content_tag :li, tag(:span, class: 'pf pf-mastercard'), class: payment.name.downcase
+          concat content_tag :li, tag(:span, class: 'pf pf-visa'), class: payment.name.downcase
         elsif type == :symbol && payment.name == 'Vorkasse'
           concat content_tag :li, payment.name, class: payment.name.downcase
         else
