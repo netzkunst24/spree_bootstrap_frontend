@@ -109,11 +109,12 @@
           <%= button_tag class: 'btn btn-primary btn-lg btn-block', id: 'add-to-cart-button', type: :submit do %>
             <span class="btn-left"><%= Spree.t(:add_to_cart) %></span>
             <span class="btn-separator"></span>
-            <span class="btn-right"><span class="btn-price"><%= display_price(@product) %></span>
+            <span class="btn-right"><span class="btn-price"><%= display_price(@product) %></span></span>
           <% end %>
           <br>
         </div>
       </div>
+
     <% else %>
       <div id="product-price">
         <div>
