@@ -6,7 +6,7 @@
       <h1 class="product-title">
         <small>
           <span class="product-brand" itemprop="brand"><%= @product.manufacturer_name unless @product.manufacturer.nil? %> - </span>
-          <span class="product-category" itemprop=""><%= @product.category_name unless @product.category.nil?%></span>
+          <span class="product-category" itemprop="category"><%= @product.category_name unless @product.category.nil?%></span>
         </small>
         <span itemprop="name"><%= accurate_title %></span>
       </h1>

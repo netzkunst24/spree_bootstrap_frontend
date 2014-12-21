@@ -94,10 +94,11 @@
                 <div class="form-group">
                   <div class="input-group">
                     <% qm = @product.content_per_package.to_s.gsub(',', '.').to_f %>
-                    <%= text_field_tag 'qm',
-                                       qm.to_s.gsub('.', ','),
+                    <%= number_field_tag 'qm',
+                                       qm.to_s.gsub(',', '.'),
                                        class: 'title form-control qm',
-                                       min: qm %>
+                                       min: qm,
+                                       step: qm %>
                     <span class="input-group-addon">m²</span>
                   </div>
                 </div>
@@ -106,14 +107,13 @@
           </div>
           <div class="availability"><%= estimated_delivery(@product) %></div>
           <%= button_tag class: 'btn btn-primary btn-lg btn-block', id: 'add-to-cart-button', type: :submit do %>
-            <div class="btn-left"><%= Spree.t(:add_to_cart) %></div>
+            <span class="btn-left"><%= Spree.t(:add_to_cart) %></span>
             <span class="btn-separator"></span>
-            <div class="btn-right"><span class="btn-price"><%= display_price(@product) %></div>
+            <span class="btn-right"><span class="btn-price"><%= display_price(@product) %></span>
           <% end %>
           <br>
         </div>
       </div>
-
     <% else %>
       <div id="product-price">
         <div>

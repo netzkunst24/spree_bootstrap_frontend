@@ -39,7 +39,7 @@ $ ->
     paket = if amount > 1 then unit_pl else unit
     ceiled = if amount != parseFloat(amountField.val()) then "(" + amount + ") " else ""
     amountField.next().text(ceiled + paket) if paket
-    qmField.val(("" + (qmField.attr("min") * amount).toFixed(2)).replace(".", ",")) if qmField
+    qmField.val(("" + (qmField.attr("min") * amount).toFixed(2)).replace(",", ".")) if qmField
     priceTag.text((amount * $(".price.selling").attr("data-price-amount")).toFixed(2).replace(".", ",") + " " + currency)
 
   # TODO REFACTOR
