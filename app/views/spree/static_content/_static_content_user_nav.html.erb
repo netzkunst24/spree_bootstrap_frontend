@@ -1,1 +1,3 @@
-<%= render :partial => "spree/static_content/static_content_list", :collection => Spree::Page.visible.header_links, :as => :page, :locals => {:icon => false} %>
+<%= render :partial => "spree/static_content/static_content_list",
+           :collection => Spree::Page.visible.header_links,
+           :as => :page, :locals => {:static_list_icon => false} %>

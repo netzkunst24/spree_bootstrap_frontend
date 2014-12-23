@@ -1,3 +1,5 @@
 <ul class="<%= 'list-inline' if @body_id == 'checkout' %>">
-  <%= render partial: 'spree/static_content/static_content_list', collection: Spree::Page.visible.footer_second, as: :page, locals: {icon: true} %>
+  <%= render partial: 'spree/static_content/static_content_list',
+             collection: Spree::Page.visible.footer_second,
+             as: :page, locals: {static_list_icon: true} %>
 </ul>

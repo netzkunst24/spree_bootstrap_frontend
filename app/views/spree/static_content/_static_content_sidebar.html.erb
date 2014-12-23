@@ -1,0 +1,8 @@
+<% if Spree::Page.visible.sidebar_links.any? %>
+<nav id="sidebar-pages-menu" class="sidebar-item">
+  <ul class="nav nav-pills nav-stacked"><%= render :partial => "spree/static_content/static_content_list",
+                 :collection => Spree::Page.visible.sidebar_links,
+                 :as => :page, :locals => {:static_list_icon => false} %>
+  </ul>
+</nav>
+<% end %>

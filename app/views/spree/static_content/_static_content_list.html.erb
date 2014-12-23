@@ -1,8 +1,12 @@
-<% chevron = icon.nil? || !icon ? '' : '<span class="glyphicon glyphicon-chevron-right"></span>'.html_safe %>
+<% chevron = static_list_icon.nil? || !static_list_icon ? '' : '<span class="glyphicon glyphicon-chevron-right"></span>'.html_safe %>
 <% if page.foreign_link.present? %>
   <li class='not'><%= chevron %><%= link_to page.title, page.foreign_link %></li>
 <% else %>
-  <% page_uri = Rails.application.routes.named_routes[:spree].path.spec.to_s == '/' ? page.slug : Rails.application.routes.named_routes[:spree].path.spec.to_s + page.slug %>
+  <% page_uri = if Rails.application.routes.named_routes[:spree].path.spec.to_s == '/'
+                  page.slug
+                else
+                  Rails.application.routes.named_routes[:spree].path.spec.to_s + page.slug
+                end %>
   <li class=<%=(request.fullpath.gsub('//','/') == page_uri) ? 'current' : 'not'%>><%= chevron %><%= link_to page.title, page_uri  %></li>
 <% end %>
 
