@@ -1,0 +1,57 @@
+<% Spree::Config.show_facets.each do |name_symbol, name| %>
+    <% next unless has_buckets = @products.results.response.response.aggregations.send(name_symbol).send(name_symbol).buckets.present? || params[name_symbol].present? %>
+    <%# next if @products.results.response.response.aggregations.send(name_symbol).send(name_symbol).buckets.size <= 1 %>
+    <% type = Spree::Config.facet_types[name][:type] %>
+    <% icon_list = type == 'icon_list' %>
+    <% color_list = type == 'color_list' %>
+    <div class="properties panel panel-default color_list icon_list <%= name_symbol %>">
+      <p class="panel-heading"><%= name %><%= link_to('<small>Auswahl aufheben</small>'.html_safe, url_for(params.merge(name_symbol => nil)), class: 'pull-right') if params[name_symbol].present? %></p>
+      <div class="list-group clearfix">
+        <% if has_buckets %>
+            <% buckets =@products.results.response.response.aggregations.send(name_symbol).send(name_symbol).buckets %>
+            <% buckets.each do |prop| %>
+                <% lost_values =  @searcher.lost_params[name_symbol] || [] %>
+                <%
+                   prop[:key] = 'k.A.' unless prop[:key].present?
+                   v = prop[:key]; k = name_symbol
+                   v = 'k.A.' if v == 'keine Angabe'
+                   params[k] ||= []
+                   title = v.html_safe
+                   #badge = content_tag(:small, params[k].include?(v) ? '-' : '+', class: 'badge').html_safe
+                   badge = content_tag(:small, prop[:doc_count], class: 'badge').html_safe
+                   icon = "<svg class='flooring-icon flooring-icon-#{v.downcase.gsub('.', '')}'><use xlink:href='#{asset_path('flooring-icons.svg')}#icon-#{v.downcase.gsub('.', '')}'></use></svg>".html_safe
+                   color = image_tag asset_path("colors/#{v.downcase.gsub('ß','ss').gsub('ü', 'ue').gsub('.','')}.jpg"), class: 'color-icon'
+                   icon_tag = icon if icon_list
+                   icon_tag = color if color_list
+                   icon_tag ||= ''
+                   #badge = ''
+                %>
+
+                <%=
+                    if params[k].include?(v)
+                      # Value is already in URI link_to remove it
+                      link_to url_for(params.merge({k => params[k] - ([v] + lost_values)})),
+                              class: 'list-group-item active col-sm-4' do
+                        icon_tag.html_safe + title.html_safe + badge.html_safe
+                      end
+                    elsif prop[:doc_count] == 0 && params[k].empty?
+                      # Property is not in URI and the aggregation size is 0 only show disabled text
+                      content_tag(:span, icon_tag.html_safe + title.html_safe, class: "list-group-item col-sm-4 #{'disabled' if prop[:doc_count] == 0}")
+                    else
+                      # Property can be added
+                      link_to url_for(params.merge({k => params[k] | [v]})),
+                              class: 'list-group-item col-sm-4' do
+                        icon_tag.html_safe + title.html_safe + badge.html_safe
+                      end
+                    end
+                %>
+
+
+
+            <% end %>
+        <% elsif !has_buckets &&  params[name_symbol].present? %>
+            <%= "Filter zurücksetzen" %>
+        <% end %>
+      </div>
+    </div>
+<% end %>
