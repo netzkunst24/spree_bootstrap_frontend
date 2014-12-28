@@ -1,10 +1,11 @@
 <div id="searchbox">
 <% @taxons = @taxon && @taxon.parent ? @taxon.parent.children : get_categories %>
+<% taxons_select = @taxon && @taxon.root ? @taxon.root.children : get_categories %>
 <% if @taxons %>
     <span class="hidden">
       <%= select_tag :taxon,
                      options_for_select([[Spree.t(:all_departments), '']] +
-                                                @taxon.root.children.map {|t| [t.name, t.id]},
+                                                taxons_select.map {|t| [t.name, t.id]},
                                         @taxon ? @taxon.id : params[:taxon]), 'aria-label' => 'Taxon', id: 'search-select' %>
     </span>
 <% end %>
@@ -17,7 +18,7 @@
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="hidden-xs">Alles <span class="caret"></span></span></button>
       <ul class="dropdown-menu taxon">
           <li><a href="#" data-value="">Alle Bereiche</a></li>
-          <% @taxon.root.children.each do |taxon| %>
+          <% taxons_select.each do |taxon| %>
           <li><a href="#" data-value="<%= taxon.id %>"><%= taxon.name %></a></li>
           <% end %>
       </ul>
