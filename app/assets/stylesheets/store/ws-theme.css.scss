@@ -230,7 +230,7 @@ th.no-border, td.no-border { border: none!important; }
     height: 58px;
     background: asset-url('ws-sprite.png');
     top: 50%;
-    position: relative;
+    position: absolute;
     margin-top: -29px;
   }
   background-repeat: no-repeat!important;
