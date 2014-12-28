@@ -4,7 +4,7 @@
     <span class="hidden">
       <%= select_tag :taxon,
                      options_for_select([[Spree.t(:all_departments), '']] +
-                                                @taxons.map {|t| [t.name, t.id]},
+                                                @taxon.root.children.map {|t| [t.name, t.id]},
                                         @taxon ? @taxon.id : params[:taxon]), 'aria-label' => 'Taxon', id: 'search-select' %>
     </span>
 <% end %>
@@ -17,7 +17,7 @@
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="hidden-xs">Alles <span class="caret"></span></span></button>
       <ul class="dropdown-menu taxon">
           <li><a href="#" data-value="">Alle Bereiche</a></li>
-          <% @taxons.each do |taxon| %>
+          <% @taxon.root.children.each do |taxon| %>
           <li><a href="#" data-value="<%= taxon.id %>"><%= taxon.name %></a></li>
           <% end %>
       </ul>
