@@ -6,9 +6,6 @@ $ ->
     e.stopPropagation()
     return
 
-
-
-
   selected_taxon = $("#search-select option:selected")
   $("#search-bar button.dropdown-toggle").html '<span class="hidden-xs">' + selected_taxon.text() + ' </span><span class="caret"></span>'
   $("#search-bar form").attr('action', '/t/kategorie/' + selected_taxon.text().toLowerCase()) if selected_taxon.val()
@@ -67,6 +64,7 @@ $ ->
     if qm != realQm then qmField.next().text( "(" + (realQm + "").replace(".", ",") + ") m²") else qmField.next().text("m²")
     #$(".add-to-cart input").first().trigger("keyup")
 
+  $(".add-to-cart input.qm").trigger('keyup')
 
   # TODO move to carousel extension
   $frame = $ "#ws-accessories .frame"
