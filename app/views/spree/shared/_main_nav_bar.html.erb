@@ -10,7 +10,6 @@
   <nav class="collapse navbar-collapse ws-navbar-collapse">
     <div id="main-nav-bar">
       <ul class="nav navbar-nav" data-hook>
-        <!--li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>-->
         <% get_categories({not: %w(Angebote Sale)}).each do |category| %>
             <%= nav_link(category.name , seo_url(category)) %></li>
         <% end %>
