@@ -15,6 +15,13 @@
     <% if products.empty? && taxon.children.empty? %>
       <div class="alert alert-warning">
         <h3 class="search-results-title"><%= Spree.t(:no_products_found) %></h3>
+
+        <% if params.key?(:keywords) && @taxon %>
+          <p><i class="glyphicon glyphicon-circle_info"></i> Sie haben nur in der Kategorie <%= @taxon.name %> gesucht. Möchten Sie vielleicht
+            <% #TODO get category taxon on initialize or cache it %>
+            <%= link_to 'alle Kategorien in die Suche einbeziehen', products_path(params.except(:id)), class: 'show-all-taxons' %>?</p>
+        <% end %>
+
         <% if @searcher.suggestions.any?  %>
           <p>Meinten Sie vielleicht
             <%= @searcher.suggestions.map {|suggestion| suggestion[:text]}.uniq.map do |term|
@@ -22,6 +29,7 @@
             end.to_sentence(words_connector: ', ', two_words_connector: " #{Spree.t(:or)} ", last_word_connector: " #{Spree.t(:or)} ").html_safe %>?
           </p>
         <% end %>
+
       </div>
     <% elsif params.key?(:keywords) %>
       <h6 class="search-results-title"><%= Spree.t(:search_results, :keywords => h(params[:keywords])) %> <%= products.total_count %> <%= Spree.t(:articles) %></h6>
