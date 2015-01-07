@@ -4,8 +4,9 @@
     <% type = Spree::Config.facet_types[name][:type] %>
     <% icon_list = type == 'icon_list' %>
     <% color_list = type == 'color_list' %>
+    <% filter = params.except(:page) #do not mess with params! %>
     <div class="properties panel panel-default color_list icon_list <%= name_symbol %>">
-      <p class="panel-heading"><%= name %><%= link_to('<small>Auswahl aufheben</small>'.html_safe, url_for(params.merge(name_symbol => nil)), class: 'pull-right') if params[name_symbol].present? %></p>
+      <p class="panel-heading"><%= name %><%= link_to('<small>Auswahl aufheben</small>'.html_safe, url_for(filter.merge(name_symbol => nil)), class: 'pull-right') if filter[name_symbol].present? %></p>
       <div class="list-group clearfix">
         <% if has_buckets %>
             <% buckets =@products.results.response.response.aggregations.send(name_symbol).send(name_symbol).buckets %>
@@ -15,7 +16,7 @@
                    prop[:key] = 'k.A.' unless prop[:key].present?
                    v = prop[:key]; k = name_symbol
                    v = 'k.A.' if v == 'keine Angabe'
-                   params[k] ||= []
+                   filter[k] ||= []
                    title = v.html_safe
                    #badge = content_tag(:small, params[k].include?(v) ? '-' : '+', class: 'badge').html_safe
                    badge = content_tag(:small, prop[:doc_count], class: 'badge').html_safe
@@ -28,18 +29,18 @@
                 %>
 
                 <%=
-                    if params[k].include?(v)
+                    if filter[k].include?(v)
                       # Value is already in URI link_to remove it
-                      link_to url_for(params.merge({k => params[k] - ([v] + lost_values)})),
+                      link_to url_for(filter.merge({k => filter[k] - ([v] + lost_values)})),
                               class: 'list-group-item active col-sm-4' do
                         icon_tag.html_safe + title.html_safe + badge.html_safe
                       end
-                    elsif prop[:doc_count] == 0 && params[k].empty?
+                    elsif prop[:doc_count] == 0 && filter[k].empty?
                       # Property is not in URI and the aggregation size is 0 only show disabled text
                       content_tag(:span, icon_tag.html_safe + title.html_safe, class: "list-group-item col-sm-4 #{'disabled' if prop[:doc_count] == 0}")
                     else
                       # Property can be added
-                      link_to url_for(params.merge({k => params[k] | [v]})),
+                      link_to url_for(filter.merge({k => filter[k] | [v]})),
                               class: 'list-group-item col-sm-4' do
                         icon_tag.html_safe + title.html_safe + badge.html_safe
                       end
@@ -50,7 +51,7 @@
 
             <% end %>
         <% elsif !has_buckets &&  params[name_symbol].present? %>
-            <%= "Filter zurücksetzen" %>
+            <%= 'Filter zurücksetzen' %>
         <% end %>
       </div>
     </div>
