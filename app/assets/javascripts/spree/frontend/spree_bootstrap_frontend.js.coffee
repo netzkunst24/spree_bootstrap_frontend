@@ -1,4 +1,8 @@
 $ ->
+  $(".page_ajax").fancybox
+    maxWidth: 650,
+    maxHeight: 600
+
   $('[data-toggle="popover"]').popover
     html: true
 
