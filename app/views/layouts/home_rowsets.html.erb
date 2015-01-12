@@ -27,12 +27,12 @@
     </div>
 
     <%= render :partial => 'spree/shared/footer' %>
-    <%= render :partial => 'spree/shared/google_analytics' %>
-    <%= render :partial => 'spree/shared/crazyegg' %>
     <script>
       Spree.api_key = <%= raw(api_user_key) %>;
       Spree.routes.product_search = '<%= spree.api_products_url %>';
     </script>
+    <%= render :partial => 'spree/shared/google_analytics' %>
+    <%= render :partial => 'spree/shared/crazyegg' %>
     <%= render :partial => 'spree/shared/trusted_shops' %>
   </body>
 </html>
