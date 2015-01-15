@@ -61,7 +61,8 @@
 <% if products.any? %>
 <div id="products" class="row" data-hook>
   <% products.each do |product| %>
-    <div id="product_<%= product.id %>" class="<%= content_for?(:sidebar) ? 'col-md-4 col-sm-6' : 'col-md-3 col-sm-6' %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+      <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
+      <div id="product_<%= product.id %>" class="<%= content_for?(:sidebar) ? 'col-md-4 col-sm-6' : 'col-md-3 col-sm-6' %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
       <div class="ws-product clearfix">
         <div class="image">
           <%#= link_to list_image(product, :itemprop => "image"), product, :itemprop => 'url' %>
@@ -81,6 +82,7 @@
         </div>
       </div>
     </div>
+    <% end %>
   <% end %>
   <% reset_cycle('classes') %>
 </div>
