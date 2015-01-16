@@ -2,7 +2,7 @@
   <div id="taxonomies">
     <h1><%= @taxon.name %></h1>
     <%# TODO Config Kategorie Taxon in initializer not on every render of this partial...%>
-    <%= link_to 'Alle Kategorien anzeigen', seo_url(Spree::Config.category_taxon), class: 'show-all-taxons' %>
+    <%= link_to 'Alle Kategorien anzeigen', seo_url(Spree::Taxon.find Spree::Config.category_taxon), class: 'show-all-taxons' %>
   </div>
 <% elsif @taxon.present? %>
   <nav id="taxonomies" class="sidebar-item" data-hook>
