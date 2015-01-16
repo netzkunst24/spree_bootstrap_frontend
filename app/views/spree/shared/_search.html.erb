@@ -1,6 +1,6 @@
 <div id="searchbox">
 <% #@taxons = @taxon && @taxon.parent ? @taxon.parent.children : get_categories %>
-<% taxons_select = @taxon && @taxon.root ? @taxon.root.children : get_categories %>
+<% taxons_select = get_categories %>
 <% if taxons_select %>
     <span class="hidden">
       <%= select_tag :taxon,

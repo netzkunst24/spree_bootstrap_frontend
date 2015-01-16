@@ -128,16 +128,14 @@ Spree::BaseHelper.module_eval do
   def cache_key_for_categories
     count          = Spree::Taxon.count
     max_updated_at = Spree::Taxon.maximum(:updated_at).try(:utc).try(:to_s, :number)
-    "taxons/categories-#{count}-#{max_updated_at}"
+    "categories-#{count}-#{max_updated_at}"
   end
 
   def get_categories(opts = {})
-    Rails.cache.fetch(cache_key_for_categories) do
       exclude = Array(opts[:not])
       categories = Spree::Taxon.find(Spree::Config.category_taxon)
       return categories.root.children.order(:position).reject{ |taxon| exclude.include? taxon.name } if categories
       []
-    end
   end
 
   def link_to_wishlist
