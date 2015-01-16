@@ -127,8 +127,8 @@ Spree::BaseHelper.module_eval do
 
   def get_categories(opts = {})
     exclude = Array(opts[:not])
-    categories = Spree::Taxonomy.find_by(name: Spree::Config.category_taxon)
-    return categories.root.children.order(:position).reject { |taxon| exclude.include? taxon.name } if categories
+    categories = Spree::Config.category_taxon
+    return categories.root.children.order(:position).reject{ |taxon| exclude.include? taxon.name } if categories
     []
   end
 
