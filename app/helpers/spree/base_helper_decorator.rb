@@ -99,6 +99,13 @@ Spree::BaseHelper.module_eval do
     content_tag(:nav, crumb_list, id: 'breadcrumbs', class: 'col-md-12')
   end
 
+  def cache_key_for_payment_methods
+    pm = Spree::PaymentMethod.available(:front_end)
+    count          = pm.count
+    max_updated_at = pm.maximum(:updated_at).try(:utc).try(:to_s, :number)
+    "paymentmethods/available-#{count}-#{max_updated_at}"
+  end
+
   def payment_methods(type: :text, css_class: '')
     classes = type == :symbol ? 'payment-methods list-inline symbol ' + css_class.to_s : type.to_s + ' payment_methods ' + css_class.to_s
     content_tag :ul, class: classes do

@@ -19,7 +19,9 @@
       <% unless @body_id == 'checkout' %>
       <div id="footer-third" class="col-sm-3" data-hook>
         <h3>Zahlungsarten</h3>
-        <%= payment_methods type: :bullet_icon %>
+        <% cache([I18n.locale, cache_key_for_payment_methods]) do %>
+          <%= payment_methods type: :bullet_icon %>
+        <% end %>
       </div>
       <div id="footer-fourth" class="col-sm-3" data-hook>
       </div>
