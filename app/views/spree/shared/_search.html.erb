@@ -1,7 +1,7 @@
 <div id="searchbox">
-<% @taxons = @taxon && @taxon.parent ? @taxon.parent.children : get_categories %>
+<% #@taxons = @taxon && @taxon.parent ? @taxon.parent.children : get_categories %>
 <% taxons_select = @taxon && @taxon.root ? @taxon.root.children : get_categories %>
-<% if @taxons %>
+<% if taxons_select %>
     <span class="hidden">
       <%= select_tag :taxon,
                      options_for_select([[Spree.t(:all_departments), '']] +
@@ -14,7 +14,7 @@
 <div class="form-group">
   <div class="input-group">
     <div class="input-group-btn">
-      <% if @taxons %>
+      <% if taxons_select %>
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="hidden-xs">Alles <span class="caret"></span></span></button>
       <ul class="dropdown-menu taxon">
           <li><a href="#" data-value="">Alle Bereiche</a></li>

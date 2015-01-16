@@ -100,9 +100,8 @@ Spree::BaseHelper.module_eval do
   end
 
   def cache_key_for_payment_methods
-    pm = Spree::PaymentMethod.available(:front_end)
-    count          = pm.count
-    max_updated_at = pm.maximum(:updated_at).try(:utc).try(:to_s, :number)
+    count          = Spree::PaymentMethod.count
+    max_updated_at = Spree::PaymentMethod.maximum(:updated_at).try(:utc).try(:to_s, :number)
     "paymentmethods/available-#{count}-#{max_updated_at}"
   end
 
