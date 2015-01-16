@@ -1,37 +1,42 @@
 <div id="searchbox">
-<% #@taxons = @taxon && @taxon.parent ? @taxon.parent.children : get_categories %>
-<% taxons_select = get_categories %>
-<% if taxons_select %>
+  <% taxons_select = get_categories %>
+  <% if taxons_select %>
+      <% cache(@taxon.present? ? ['search_select', I18n.locale, current_currency, @taxon, cache_key_for_categories] : ['search_select', I18n.locale, current_currency, cache_key_for_categories]) do %>
     <span class="hidden">
       <%= select_tag :taxon,
                      options_for_select([[Spree.t(:all_departments), '']] +
-                                                taxons_select.map {|t| [t.name, t.id]},
+                                                taxons_select.map { |t| [t.name, t.id] },
                                         @taxon ? @taxon.id : params[:taxon]), 'aria-label' => 'Taxon', id: 'search-select' %>
     </span>
-<% end %>
-<%= form_tag spree.products_path, :method => :get, class: '' do %>
-
-<div class="form-group">
-  <div class="input-group">
-    <div class="input-group-btn">
-      <% if taxons_select %>
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="hidden-xs">Alles <span class="caret"></span></span></button>
-      <ul class="dropdown-menu taxon">
-          <li><a href="#" data-value="">Alle Bereiche</a></li>
-          <% taxons_select.each do |taxon| %>
-          <li><a href="#" data-value="<%= taxon.id %>"><%= taxon.name %></a></li>
-          <% end %>
-      </ul>
       <% end %>
-    </div>
-    <%= search_field_tag :keywords, params[:keywords], :placeholder => Spree.t(:search), class: 'form-control typeahead' %>
-    <span class="input-group-btn"><%= button_tag '<span class="glyphicon glyphicon-search"></span>'.html_safe, :name => nil, class: 'btn btn-primary adjust-icon' %></span>
+  <% end %>
 
-  </div>
+  <%= form_tag spree.products_path, :method => :get, class: '' do %>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-btn">
+            <% if taxons_select %>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <span class="hidden-xs">Alles <span class="caret"></span></span></button>
+                <ul class="dropdown-menu taxon">
+                  <li><a href="#" data-value="">Alle Bereiche</a></li>
+                  <% cache(@taxon.present? ? ['search_list', I18n.locale, current_currency, @taxon, cache_key_for_categories] : ['search_list', I18n.locale, current_currency, cache_key_for_categories]) do %>
+                      <% taxons_select.each do |taxon| %>
+                          <li><a href="#" data-value="<%= taxon.id %>"><%= taxon.name %></a></li>
+                      <% end %>
+                  <% end %>
+                </ul>
+            <% end %>
+          </div>
+          <%= search_field_tag :keywords, params[:keywords], :placeholder => Spree.t(:search), class: 'form-control typeahead' %>
+          <span class="input-group-btn"><%= button_tag '<span class="glyphicon glyphicon-search"></span>'.html_safe, :name => nil, class: 'btn btn-primary adjust-icon' %></span>
+
+        </div>
+      </div>
+  <% end %>
+
 </div>
-<% end %>
-</div>
-<a class="show-search" href="/"  data-toggle="dropdown">
+<a class="show-search" href="/" data-toggle="dropdown">
   <span class="glyphicon glyphicon-search"></span>
 </a>
 <ul class="dropdown-menu layer-search">
