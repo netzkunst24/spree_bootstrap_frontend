@@ -15,7 +15,7 @@
       <% end %>
     </ul>
 
-    <ul class="nav col-md-9" id="payment-methods" data-hook>
+    <ul class="col-md-9" id="payment-methods" data-hook>
       <% @order.available_payment_methods.each do |method| %>
         <li id="payment_method_<%= method.id %>" class="<%= 'last' if method == @order.available_payment_methods.last %>" data-hook>
             <%= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
@@ -23,7 +23,7 @@
       <% end %>
     </ul>
     <% if Spree::Promotion.with_code.count > 0 %>
-    <p class='field' data-hook='coupon_code'>
+    <p class='col-md-6 field' data-hook='coupon_code'>
       <%= form.label :coupon_code %><br />
       <%= form.text_field :coupon_code, :class => 'form-control' %>
     </p>
