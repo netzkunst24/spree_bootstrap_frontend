@@ -2,24 +2,16 @@
 
 <% content_for :sidebar_right do %>
     <div class="list-group hidden-xs">
-      <div href="#" class="list-group-item">
-        <h4 class="list-group-item-heading">Service und Sicherheit</h4>
-        <ul class="list-unstyled icon-list plus list-group-item-text">
-          <li>Beratung vom Profi</li>
-          <li>Kostenlose Retouren</li>
-          <li>Sichere Zahlung</li>
-          <li>SSL-Verschlüsselung</li>
-        </ul>
-      </div>
-      <div href="#" class="list-group-item">
+      <%= render_snippet '/cart-security' %>
+      <div class="list-group-item">
         <h4 class="list-group-item-heading">Zahlungsarten</h4>
         <%= payment_methods type: :symbol, css_class: 'list-group-item-text' %>
       </div>
-      <div href="#" class="list-group-item">
+      <div class="list-group-item">
         <h4 class="list-group-item-heading">Versand</h4>
         <p class="list-group-item-text">Ihre Ware wird sicher per Spedition geliefert. Dafür zahlen Sie nichts!</p>
       </div>
-      <div href="#" class="list-group-item">
+      <div class="list-group-item">
         <h4 class="list-group-item-heading">Kontakt</h4>
         <p class="list-group-item-text">
           0 41 31 / 927 968 6<br>
