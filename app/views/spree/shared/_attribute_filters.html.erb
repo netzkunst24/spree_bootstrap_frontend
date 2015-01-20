@@ -21,7 +21,7 @@
                    #badge = content_tag(:small, params[k].include?(v) ? '-' : '+', class: 'badge').html_safe
                    badge = content_tag(:small, prop[:doc_count], class: 'badge').html_safe
                    icon = "<svg class='flooring-icon flooring-icon-#{v.downcase.gsub('.', '')}'><use xlink:href='#{asset_path('flooring-icons.svg')}#icon-#{v.downcase.gsub('.', '')}'></use></svg>".html_safe
-                   color = image_tag asset_path("colors/#{v.downcase.gsub('ß','ss').gsub('ü', 'ue').gsub('.','')}.jpg"), class: 'color-icon'
+                   color = image_tag asset_path("colors/holzboden/#{v.downcase.gsub('ß','ss').gsub('ü', 'ue').gsub('.','')}.jpg"), class: 'color-icon'
                    icon_tag = icon if icon_list
                    icon_tag = color if color_list
                    icon_tag ||= ''
