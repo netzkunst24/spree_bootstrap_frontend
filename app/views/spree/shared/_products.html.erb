@@ -25,7 +25,7 @@
         <% if @searcher.suggestions.any?  %>
           <p>Meinten Sie vielleicht
             <%= @searcher.suggestions.map {|suggestion| suggestion[:text]}.uniq.map do |term|
-              link_to term, spree.products_path(params.merge keywords: term)
+              link_to term, spree.nested_taxons_path(@taxon.permalink, keywords: term)
             end.to_sentence(words_connector: ', ', two_words_connector: " #{Spree.t(:or)} ", last_word_connector: " #{Spree.t(:or)} ").html_safe %>?
           </p>
         <% end %>
