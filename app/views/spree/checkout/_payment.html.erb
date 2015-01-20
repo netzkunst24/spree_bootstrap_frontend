@@ -15,7 +15,7 @@
       <% end %>
     </ul>
 
-    <ul class="col-md-9" id="payment-methods" data-hook>
+    <ul class="col-md-9 list-unstyled" id="payment-methods" data-hook>
       <% @order.available_payment_methods.each do |method| %>
         <li id="payment_method_<%= method.id %>" class="<%= 'last' if method == @order.available_payment_methods.last %>" data-hook>
             <%= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
